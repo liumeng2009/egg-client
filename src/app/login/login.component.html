@@ -1,0 +1,39 @@
+
+<div style="width: 100%;height:100%;padding-top: 150px;background-color: #eee;">
+  <div nz-row class="login-container">
+    <div nz-col [nzSpan]="1">
+
+    </div>
+    <div nz-col [nzXs]="22" [nzSm]="10" [nzLg]="10" [nzMd]="10">
+      <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-user">
+              <input type="text" nz-input formControlName="userName" placeholder="Username">
+            </nz-input-group>
+            <nz-form-explain *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors">请输入用户名!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-lock">
+              <input type="password" nz-input  formControlName="password" placeholder="Password">
+            </nz-input-group>
+            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <a class="login-form-forgot" class="login-form-forgot">忘记密码？</a>
+            <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+
+            <a href="">没有账号？</a>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+    <div nz-col [nzSpan]="1">
+
+    </div>
+  </div>
+</div>
