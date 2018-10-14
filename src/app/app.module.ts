@@ -9,14 +9,18 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {AppRoutingModule} from './app-routing.module';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent} from './back/login/login.component';
+import {ToolService} from './util/tool.service';
+import {MainComponent} from './back/main/main.component';
+import {CookieService} from 'angular2-cookie/core';
 
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,12 @@ registerLocaleData(zh);
     NgZorroAntdModule,
     AppRoutingModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [
+    { provide: NZ_I18N, useValue: zh_CN },
+    CookieService,
+    ToolService,
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

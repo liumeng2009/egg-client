@@ -1,8 +1,9 @@
 export class ResponseData {
   constructor(
-    public status: number,
-    public message:string,
-    public data:any,
-    public total:number
+    public code: number,
+    public error: string,
+    public message: string,
+    public data: any,
+    public total: number,
   ) {  }
 }

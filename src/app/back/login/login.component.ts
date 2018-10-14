@@ -1,8 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import {CookieService} from 'angular2-cookie/core';
+import * as moment from 'moment';
 import {LoginService} from './login.service';
-import {User} from '../bean/user';
-import {ResponseData} from '../bean/responseData';
+import {User} from '../../bean/user';
+import {ResponseData} from '../../bean/responseData';
+import {ToolService} from '../../util/tool.service';
+
 
 @Component({
   selector: 'app-login-page',
@@ -15,7 +19,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private toolService: ToolService,
+    private cookieService: CookieService,
   ) {
 
   }
@@ -35,12 +41,18 @@ export class LoginComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       const mobile = this.validateForm.get('userName').value;
-      const password = this.validateForm.get('userName').value;
+      const password = this.validateForm.get('password').value;
       const user: User = new User(null, null, password, null,
         null, null, null, mobile);
       this.loginService.login(user).subscribe(
         (data: ResponseData) => {
-          console.log(data);
+          const result = this.toolService.apiResult(data);
+          if (result) {
+            const expires = moment().add(30, 'day').toDate();
+            this.cookieService.put('eduToken', result.data.user.token, {expires: expires});
+            console.log(result);
+
+          }
         },
         error => {
 
