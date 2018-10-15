@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {CookieService} from 'angular2-cookie/core';
 import * as moment from 'moment';
@@ -6,6 +7,7 @@ import {LoginService} from './login.service';
 import {User} from '../../bean/user';
 import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
+import {Router, ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -22,14 +24,17 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private toolService: ToolService,
     private cookieService: CookieService,
+    private title: Title,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
-
+    this.title.setTitle('登录');
   }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [ null, [ Validators.required ] ],
-      password: [ null, [ Validators.required ] ],
+      userName: [ '15822927208', [ Validators.required ] ],
+      password: [ 'admin', [ Validators.required ] ],
       remember: [ true ]
     });
   }
@@ -51,7 +56,7 @@ export class LoginComponent implements OnInit {
             const expires = moment().add(30, 'day').toDate();
             this.cookieService.put('eduToken', result.data.user.token, {expires: expires});
             console.log(result);
-
+            this.router.navigate(['admin'], );
           }
         },
         error => {

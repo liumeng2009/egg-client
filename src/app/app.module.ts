@@ -13,6 +13,8 @@ import {LoginComponent} from './back/login/login.component';
 import {ToolService} from './util/tool.service';
 import {MainComponent} from './back/main/main.component';
 import {CookieService} from 'angular2-cookie/core';
+import {TokenGuard} from './back/main/tokenGuard.service';
+import {AuthService} from './back/auth/auth.service';
 
 registerLocaleData(zh);
 
@@ -35,7 +37,8 @@ registerLocaleData(zh);
     { provide: NZ_I18N, useValue: zh_CN },
     CookieService,
     ToolService,
-
+    AuthService,
+    TokenGuard,
   ],
   bootstrap: [AppComponent]
 })
