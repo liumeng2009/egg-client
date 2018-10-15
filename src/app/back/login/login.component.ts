@@ -8,6 +8,7 @@ import {User} from '../../bean/user';
 import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
 import {Router, ActivatedRoute} from '@angular/router';
+import {RememberService} from '../main/remember.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     private title: Title,
     private router: Router,
     private route: ActivatedRoute,
+    private rememberService: RememberService,
   ) {
     this.title.setTitle('登录');
   }
@@ -55,7 +57,8 @@ export class LoginComponent implements OnInit {
           if (result) {
             const expires = moment().add(30, 'day').toDate();
             this.cookieService.put('eduToken', result.data.user.token, {expires: expires});
-            console.log(result);
+            const userResult: User = {...result.data.user};
+            this.rememberService.setUser(userResult);
             this.router.navigate(['admin'], );
           }
         },

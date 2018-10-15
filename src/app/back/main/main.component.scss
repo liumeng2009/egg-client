@@ -1,0 +1,37 @@
+.logo{
+  width: 120px;
+  height: 31px;
+  background: rgba(255,255,255,.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
+::ng-deep .ant-layout-sider-collapsed{
+  .ant-menu-submenu{
+    .ant-menu-submenu-title{
+      left: 0;
+      text-overflow: clip;
+      padding: 0 32px!important;
+      .anticon{
+        font-size: 16px;
+        line-height: 40px;
+        margin: 0;
+      }
+      .anticon+span{
+        display: none;
+      }
+      .ant-menu-submenu-arrow{
+        display: none;
+      }
+    }
+  }
+}
+
+.trigger{
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+  color:#f0f2f5;
+}
+

@@ -18,7 +18,7 @@ export class ToolService {
   apiResult(data: ResponseData) {
     // token不存在，跳转login页面
     if (data.code === 53302) {
-      this.message.error(data.error);
+      this.message.error(data.error + '，请重新登录！');
       this.router.navigate(['/login']);
     } else if (data.code === 10001) {
 

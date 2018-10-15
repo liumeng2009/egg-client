@@ -15,6 +15,7 @@ import {MainComponent} from './back/main/main.component';
 import {CookieService} from 'angular2-cookie/core';
 import {TokenGuard} from './back/main/tokenGuard.service';
 import {AuthService} from './back/auth/auth.service';
+import {RememberService} from './back/main/remember.service';
 
 registerLocaleData(zh);
 
@@ -38,6 +39,7 @@ registerLocaleData(zh);
     CookieService,
     ToolService,
     AuthService,
+    RememberService,
     TokenGuard,
   ],
   bootstrap: [AppComponent]

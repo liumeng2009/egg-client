@@ -9,7 +9,9 @@ import {Location} from '@angular/common';
 import {AuthService} from '../auth/auth.service';
 import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
-import {Observable} from 'rxjs';
+import {RememberService} from './remember.service';
+import {User} from '../../bean/user';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
@@ -20,6 +22,8 @@ export class TokenGuard implements CanActivate {
     private route: ActivatedRoute,
     private location: Location,
     private toolService: ToolService,
+    private rememberService: RememberService,
+    private message: NzMessageService,
   ) {
 
   }
@@ -29,6 +33,13 @@ export class TokenGuard implements CanActivate {
       await this.authService.checkToken().subscribe(
         (data: ResponseData) => {
           const result = this.toolService.apiResult(data);
+          const user: User = {...result.data.user};
+          if (this.rememberService.getUser()) {
+
+          } else {
+            this.message.success(user.mobile + '，登录成功！');
+          }
+          this.rememberService.setUser(user);
           if (result) {
             resolve(true);
           } else {

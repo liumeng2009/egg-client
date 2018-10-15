@@ -1,9 +1,55 @@
-<nz-layout>
-  <nz-header>header</nz-header>
+<nz-layout style="height:100%">
+  <nz-header>
+    <div class="logo">
+
+    </div>
+    <i class="anticon trigger anticon-menu-unfold" *ngIf="collapsed" (click)="toggleCollapse()"></i>
+    <i class="anticon trigger anticon-menu-fold" *ngIf="!collapsed" (click)="toggleCollapse()"></i>
+  </nz-header>
   <nz-layout>
-    <nz-sider>left sidebar</nz-sider>
-    <nz-content>main content</nz-content>
-    <nz-sider>right sidebar</nz-sider>
+    <nz-sider [nzCollapsed]="collapsed">
+      <div style="height:100%;padding-top: .1px;margin-top: -.1px;">
+
+        <div nz-menu nzTheme="dark" nzMode="{{collapsed?'vertical':'inline'}}">
+          <li nz-submenu>
+          <span title>
+            <i class="anticon anticon-mail"></i>
+            <span>菜单1</span>
+          </span>
+            <ul>
+              <li nz-menu-item>子菜单1</li>
+            </ul>
+          </li>
+          <li nz-submenu>
+          <span title>
+            <i class="anticon anticon-mail"></i>
+            <span>菜单2</span>
+          </span>
+            <ul>
+              <li nz-menu-item>子菜单1</li>
+            </ul>
+          </li>
+        </div>
+      </div>
+    </nz-sider>
+    <nz-layout>
+      <nz-content style="margin:0 16px;">
+        <nz-breadcrumb style="padding:16px 0px;position: fixed;background-color: #f0f2f5;width: 100%;">
+          <nz-breadcrumb-item>
+            Home
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <a>Application List</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            An Application
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <div [ngStyle]="contentStyle">
+          123
+        </div>
+      </nz-content>
+      <nz-footer>Designed By liumeng</nz-footer>
+    </nz-layout>
   </nz-layout>
-  <nz-footer>footer</nz-footer>
 </nz-layout>
