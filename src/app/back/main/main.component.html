@@ -1,32 +1,47 @@
 <nz-layout style="height:100%">
-  <nz-header>
+  <nz-header style="padding-right:8px;">
     <div class="logo">
 
     </div>
     <i class="anticon trigger anticon-menu-unfold" *ngIf="collapsed" (click)="toggleCollapse()"></i>
     <i class="anticon trigger anticon-menu-fold" *ngIf="!collapsed" (click)="toggleCollapse()"></i>
+    <div class="avatar-area">
+      <nz-dropdown>
+        <a nz-dropdown nz-row nzType="flex" nzAlign="middle">
+          <nz-avatar nz-col nzIcon="anticon anticon-user"></nz-avatar>
+          <span nz-col class="username">{{user?.mobile}}</span>
+          <i nz-col class="anticon anticon-down"></i>
+        </a>
+        <ul nz-menu nzSelectable>
+          <li nz-menu-item>
+            <a>
+              <i class="anticon anticon-setting"></i>
+              设置
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a>
+              <i class="anticon anticon-logout"></i>
+              切换用户
+            </a>
+          </li>
+        </ul>
+      </nz-dropdown>
+    </div>
   </nz-header>
   <nz-layout>
     <nz-sider [nzCollapsed]="collapsed">
       <div style="height:100%;padding-top: .1px;margin-top: -.1px;">
-
-        <div nz-menu nzTheme="dark" nzMode="{{collapsed?'vertical':'inline'}}">
-          <li nz-submenu>
-          <span title>
-            <i class="anticon anticon-mail"></i>
-            <span>菜单1</span>
-          </span>
+        <div nz-menu nzTheme="dark" [nzInlineCollapsed]="collapsed" nzMode="inline">
+          <li nz-submenu *ngFor="let route of (router.config[2].children)" [nzOpen]="checkOpen(route.path)" (click)="clickSubMenuTitle(route.path)" >
+            <span title class="{{route.children && route.children.length>0 ? '' : 'noarrow'}}">
+              <i class="anticon anticon-{{route.data.icon}}"></i>
+              <span>{{route.data.name ? route.data.name : 'home'}}</span>
+            </span>
             <ul>
-              <li nz-menu-item>子菜单1</li>
-            </ul>
-          </li>
-          <li nz-submenu>
-          <span title>
-            <i class="anticon anticon-mail"></i>
-            <span>菜单2</span>
-          </span>
-            <ul>
-              <li nz-menu-item>子菜单1</li>
+              <li nz-menu-item *ngFor="let child of route.children" [nzSelected]="checkSelected(route.path+'/'+child?.path)">
+                <a routerLink="{{route.path+'/'+child?.path}}" (click)="clickStop($event)">{{child?.data?.name}}</a>
+              </li>
             </ul>
           </li>
         </div>
@@ -35,18 +50,12 @@
     <nz-layout>
       <nz-content style="margin:0 16px;">
         <nz-breadcrumb style="padding:16px 0px;position: fixed;background-color: #f0f2f5;width: 100%;">
-          <nz-breadcrumb-item>
-            Home
-          </nz-breadcrumb-item>
-          <nz-breadcrumb-item>
-            <a>Application List</a>
-          </nz-breadcrumb-item>
-          <nz-breadcrumb-item>
-            An Application
+          <nz-breadcrumb-item *ngFor="let bread of breadcrumb">
+            <a routerLink="{{bread.path}}" routerLinkActive="active" >{{bread.name}}</a>
           </nz-breadcrumb-item>
         </nz-breadcrumb>
         <div [ngStyle]="contentStyle">
-          123
+          <router-outlet></router-outlet>
         </div>
       </nz-content>
       <nz-footer>Designed By liumeng</nz-footer>

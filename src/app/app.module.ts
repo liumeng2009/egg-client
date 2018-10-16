@@ -16,6 +16,12 @@ import {CookieService} from 'angular2-cookie/core';
 import {TokenGuard} from './back/main/tokenGuard.service';
 import {AuthService} from './back/auth/auth.service';
 import {RememberService} from './back/main/remember.service';
+import {AuthComponent} from './back/auth/auth.component';
+import {UserComponent} from './back/auth/user/user.component';
+import {UserListComponent} from './back/auth/user/list/user-list.component';
+import {UserAddComponent} from './back/auth/user/add/user-add.component';
+import {UserEditComponent} from './back/auth/user/edit/user-edit.component';
+import {TotalComponent} from './back/total/total.component';
 
 registerLocaleData(zh);
 
@@ -24,6 +30,12 @@ registerLocaleData(zh);
     AppComponent,
     LoginComponent,
     MainComponent,
+    TotalComponent,
+    AuthComponent,
+    UserComponent,
+    UserListComponent,
+    UserAddComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,

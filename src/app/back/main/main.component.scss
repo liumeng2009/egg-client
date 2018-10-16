@@ -26,6 +26,10 @@
   }
 }
 
+::ng-deep .noarrow+i{
+  display: none;
+}
+
 .trigger{
   font-size: 18px;
   line-height: 64px;
@@ -33,5 +37,18 @@
   cursor: pointer;
   transition: color .3s;
   color:#f0f2f5;
+}
+
+.avatar-area{
+  float:right;
+  height:100%;
+  .username{
+    color:#f0f2f5;
+    margin-left: 8px;
+  }
+  .anticon{
+    color:#f0f2f5;
+    margin-left: 8px;
+  }
 }
 
