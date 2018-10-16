@@ -6,6 +6,8 @@ import {Bread} from '../../bean/bread';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {User} from '../../bean/user';
 import {RememberService} from './remember.service';
+import {CookieService} from 'angular2-cookie/core';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-main-page',
@@ -23,6 +25,8 @@ export class MainComponent implements OnInit {
     private router: Router,
     private location: Location,
     private rememberService: RememberService,
+    private cookieService: CookieService,
+    private message: NzMessageService,
   ) {
     this.title.setTitle('首页');
   }
@@ -44,7 +48,7 @@ export class MainComponent implements OnInit {
   }
   initHeight() {
     const screenHeight = document.documentElement.clientHeight;
-    this.contentStyle.minHeight = screenHeight - (32 + 64 + 69 + 21) + 'px';
+    this.contentStyle.minHeight = screenHeight - (32 + 64 + 69 + 21 + 16) + 'px';
     this.contentStyle.marginTop = ( 21 + 32) + 'px';
   }
   toggleCollapse() {
@@ -166,5 +170,13 @@ export class MainComponent implements OnInit {
 
   private initLoginUser() {
     this.user = this.rememberService.getUser();
+  }
+
+  private logout() {
+      this.cookieService.remove('eduToken');
+      this.message.
+      setTimeout(()=>{
+        this.routerCopy.navigateByUrl('login');
+      },2000);
   }
 }

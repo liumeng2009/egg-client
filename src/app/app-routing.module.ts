@@ -9,9 +9,10 @@ import {UserListComponent} from './back/auth/user/list/user-list.component';
 import {UserAddComponent} from './back/auth/user/add/user-add.component';
 import {UserEditComponent} from './back/auth/user/edit/user-edit.component';
 import {TotalComponent} from './back/total/total.component';
+import {OtherComponent} from './back/myComponents/noFound/other.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/admin', pathMatch: 'full', data: {name: '首页'}},
+  {path: '', redirectTo: '/admin/total', pathMatch: 'full', data: {name: '首页'}},
   {path: 'login', component: LoginComponent , data: {name: '登录'}},
   {path: 'admin', component: MainComponent, data: {name: '首页'}, canActivate: [TokenGuard], children: [
       {path: 'total', component: TotalComponent, canActivate: [TokenGuard], data: {name: '网站信息', icon: 'appstore'}},
@@ -23,6 +24,7 @@ const routes: Routes = [
           ]},
       ]}
   ]},
+  {path: '**', component: OtherComponent, data: {name: '页面未找到'}}
 ];
 
 @NgModule({

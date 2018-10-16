@@ -22,6 +22,7 @@ import {UserListComponent} from './back/auth/user/list/user-list.component';
 import {UserAddComponent} from './back/auth/user/add/user-add.component';
 import {UserEditComponent} from './back/auth/user/edit/user-edit.component';
 import {TotalComponent} from './back/total/total.component';
+import {OtherComponent} from './back/myComponents/noFound/other.component';
 
 registerLocaleData(zh);
 
@@ -36,6 +37,7 @@ registerLocaleData(zh);
     UserListComponent,
     UserAddComponent,
     UserEditComponent,
+    OtherComponent,
   ],
   imports: [
     BrowserModule,
