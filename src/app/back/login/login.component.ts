@@ -51,6 +51,9 @@ export class LoginComponent implements OnInit {
       const password = this.validateForm.get('password').value;
       const user: User = new User(null, null, password, null,
         null, null, null, mobile);
+      const urlTree = this.router.parseUrl(this.router.url);
+      const queryParams = urlTree.queryParams;
+      const rememberUrl = queryParams.redirectTo;
       this.loginService.login(user).subscribe(
         (data: ResponseData) => {
           const result = this.toolService.apiResult(data);
@@ -59,7 +62,11 @@ export class LoginComponent implements OnInit {
             this.cookieService.put('eduToken', result.data.user.token, {expires: expires});
             const userResult: User = {...result.data.user};
             this.rememberService.setUser(userResult);
-            this.router.navigate(['admin'], );
+            if (rememberUrl && rememberUrl !== '') {
+              this.router.navigate([rememberUrl]);
+            } else {
+              this.router.navigate(['/admin']);
+            }
           }
         },
         error => {

@@ -23,6 +23,11 @@ import {UserAddComponent} from './back/auth/user/add/user-add.component';
 import {UserEditComponent} from './back/auth/user/edit/user-edit.component';
 import {TotalComponent} from './back/total/total.component';
 import {OtherComponent} from './back/myComponents/noFound/other.component';
+import {RoleComponent} from './back/auth/role/role.component';
+import {RoleListComponent} from './back/auth/role/list/role-list.component';
+import {RoleAddComponent} from './back/auth/role/add/role-add.component';
+import {RoleEditComponent} from './back/auth/role/edit/role-edit.component';
+import {RoleService} from './back/auth/role/role.service';
 
 registerLocaleData(zh);
 
@@ -37,6 +42,10 @@ registerLocaleData(zh);
     UserListComponent,
     UserAddComponent,
     UserEditComponent,
+    RoleComponent,
+    RoleListComponent,
+    RoleAddComponent,
+    RoleEditComponent,
     OtherComponent,
   ],
   imports: [
@@ -52,9 +61,10 @@ registerLocaleData(zh);
     { provide: NZ_I18N, useValue: zh_CN },
     CookieService,
     ToolService,
-    AuthService,
     RememberService,
     TokenGuard,
+    AuthService,
+    RoleService,
   ],
   bootstrap: [AppComponent]
 })

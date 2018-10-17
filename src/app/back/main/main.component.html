@@ -8,8 +8,13 @@
     <div class="avatar-area">
       <nz-dropdown>
         <a nz-dropdown nz-row nzType="flex" nzAlign="middle">
-          <nz-avatar nz-col nzIcon="anticon anticon-user"></nz-avatar>
-          <span nz-col class="username">{{user?.mobile}}</span>
+          <nz-avatar nz-col nzIcon="anticon anticon-user"
+            [nzSrc]="getAvatarImageUrl(user)"
+          ></nz-avatar>
+          <span nz-col class="username">
+            {{(user?.role?.name) ? (user?.role?.name + '：') : ''}}
+            {{user?.realname ? user?.realname : user?.mobile }}
+          </span>
           <i nz-col class="anticon anticon-down"></i>
         </a>
         <ul nz-menu nzSelectable>

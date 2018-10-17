@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-12 offset-sm-12">
+    <div class="card">
+      <div class="card-block">
+        <form class="k-form"  (ngSubmit)="onSubmit()" #roleForm="ngForm">
+          <label class="k-form-field">
+            <span for="name">角色名<span class="k-required">*</span></span>
+            <input id="name" class="k-textbox" placeholder="角色名" required [(ngModel)]="role.name" name="name" />
+          </label>
+          <label class="k-form-field">
+            <span for="remark">备注<span class="k-required">*</span></span>
+            <input id="remark" type="text" class="k-textbox" value="" placeholder="备注" required [(ngModel)]="role.remark" name="remark" />
+          </label>
+
+          <div class="text-left">
+            <button class="k-button k-primary" [disabled]="!roleForm.form.valid">提交</button>
+            <button class="k-button">重置</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

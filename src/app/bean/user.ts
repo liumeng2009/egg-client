@@ -7,6 +7,6 @@ export class User {
     public role: any,
     public avatar: string,
     public avatarUseImg: string,
-    public mobile: string
+    public mobile: string,
   ) {  }
 }

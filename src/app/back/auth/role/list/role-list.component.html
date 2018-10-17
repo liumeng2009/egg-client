@@ -1,0 +1,26 @@
+<kendo-grid [data]="gridData" [scrollable]="virtual" [height]="height" >
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoButton  (click)="add()" [icon]="'plus'" *ngIf="showAddBtn"></button>
+    <button kendoButton style="float:right" class="k-button"  (click)="refresh()" title="刷新数据">
+      <span style="color:green" class="k-icon k-i-refresh"></span>
+    </button>
+  </ng-template>
+
+  <kendo-grid-column field="name" title="角色名">
+  </kendo-grid-column>
+
+  <kendo-grid-column field="id" title="操作" [width]="150">
+    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+      <button kendoButton (click)="editRow(dataItem.id)" *ngIf="showListEditBtn"  [icon]="'edit'"></button>
+      <button kendoButton (click)="editRow(dataItem.id)" *ngIf="!showListEditBtn"  [icon]="'zoom'"></button>
+      <button kendoButton (click)="deleteRow(dataItem.id)"  *ngIf="showListDeleteBtn" [icon]="'delete'" ></button>
+    </ng-template>
+  </kendo-grid-column>
+
+  <ng-template kendoGridNoRecordsTemplate>
+    <div *ngIf="!isLoading">暂时还没有记录 <a href="javascript:;" (click)="refresh()">点击刷新</a>.</div>
+    <span  *ngIf="isLoading" class="k-icon k-i-loading" style="font-size: 32px;color:#ff6b58;left:50%;margin-left:-16px;margin-top: 50px;"></span>
+  </ng-template>
+</kendo-grid>
+<div kendoDialogContainer></div>
+

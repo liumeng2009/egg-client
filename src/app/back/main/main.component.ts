@@ -8,6 +8,7 @@ import {User} from '../../bean/user';
 import {RememberService} from './remember.service';
 import {CookieService} from 'angular2-cookie/core';
 import {NzMessageService} from 'ng-zorro-antd';
+import {EduConfig} from '../../config/config';
 
 @Component({
   selector: 'app-main-page',
@@ -40,6 +41,9 @@ export class MainComponent implements OnInit {
   private breadcrumb: Bread[] = [];
 
   private user: User;
+
+  private baseImageUrl: string = new EduConfig().serverPath;
+  private avatarImagePath = this.baseImageUrl + '/public/uploads/avatar/dongman/6.jpg';
   ngOnInit(): void {
     this.initHeight();
     this.createBreadCrumb();
@@ -59,14 +63,14 @@ export class MainComponent implements OnInit {
 
     this.breadcrumb.splice(0, this.breadcrumb.length);
 
-    let firstBread: Bread = {
+    const firstBread: Bread = {
       name: '首页',
       path: '/admin'
     };
     this.title.setTitle(firstBread.name);
     this.breadcrumb.push(firstBread);
     if (this.route.firstChild) {
-      let secondBread: Bread = {
+      const secondBread: Bread = {
         name: '',
         path: ''
       };
@@ -83,7 +87,7 @@ export class MainComponent implements OnInit {
       }));
     }
     if (this.route.firstChild && this.route.firstChild.firstChild) {
-      let thirdBread: Bread={
+      const thirdBread: Bread = {
         name: '',
         path: ''
       };
@@ -101,7 +105,7 @@ export class MainComponent implements OnInit {
     }
 
     if (this.route.firstChild && this.route.firstChild.firstChild && this.route.firstChild.firstChild.firstChild) {
-      let fourBread: Bread = {
+      const fourBread: Bread = {
         name: '',
         path: ''
       };
@@ -172,11 +176,27 @@ export class MainComponent implements OnInit {
     this.user = this.rememberService.getUser();
   }
 
+  private getAvatarImageUrl(user) {
+    if (user) {
+      if (user.avatar) {
+        if (user.avatarUseSys === 0) {
+          // 说明是上传的图片
+          return this.baseImageUrl + '/uploads/' + user.avatar;
+        } else {
+          return this.baseImageUrl + user.avatar;
+        }
+      } else {
+        return this.avatarImagePath;
+      }
+    }
+
+  }
+
   private logout() {
       this.cookieService.remove('eduToken');
-      this.message.
-      setTimeout(()=>{
-        this.routerCopy.navigateByUrl('login');
-      },2000);
+      this.message.warning(new EduConfig().closing);
+      setTimeout(() => {
+        this.router.navigateByUrl('login');
+      }, 2000);
   }
 }
