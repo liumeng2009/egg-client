@@ -16,16 +16,14 @@ export class RoleListComponent implements OnInit {
 
   private searchkey = '';
   private isLoading = false;
-  private roles: Role[];
+  private roles: Role[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   private tableHeight = {
     y : '0px'
   }
   private total = 0;
-  //private pageSize = new EduConfig().pageSize;
-  private pageSize = 2;
+  private pageSize = new EduConfig().pageSize;
   private pageIndex = 1;
-  private pagechanged: EventEmitter<number>;
 
   constructor(
     private roleService: RoleService,
@@ -35,15 +33,13 @@ export class RoleListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getData(undefined, this.pageSize, undefined);
+    console.log(this.pageIndex);
+    this.getData(this.pageIndex, this.pageSize, undefined);
     this.initHeight();
-    this.pagechanged.subscribe((_pageindex) => {
-      alert(_pageindex);
-    });
   }
 
   private initHeight() {
-    this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7)) + 'px';
+    this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
   }
 
   private getData(page, pagesize, searchkey) {
@@ -51,14 +47,11 @@ export class RoleListComponent implements OnInit {
     this.roleService.getRoleList(page, pagesize, searchkey)
       .subscribe(
         (data: ResponseData) => {
-          console.log(data);
           this.isLoading = false;
           const result = this.toolService.apiResult(data);
           if (result) {
-            console.log(result);
             this.roles = [...result.data.rows];
             this.total = result.data.count;
-            console.log(this.roles);
           }
         },
         error => {
@@ -68,7 +61,7 @@ export class RoleListComponent implements OnInit {
   }
   private refresh() {
     console.log(this.searchkey);
-    this.getData(undefined, this.pageSize, this.searchkey);
+    this.getData(this.pageIndex, this.pageSize, this.searchkey);
   }
   private add() {
     this.router.navigate(['add'], {relativeTo: this.route.parent});
@@ -76,5 +69,14 @@ export class RoleListComponent implements OnInit {
 
   private edit(id) {
     this.router.navigate([id], {relativeTo: this.route.parent});
+  }
+
+  private delete(id) {
+    alert(id);
+  }
+
+  private pageChanged(_pageindex) {
+    this.pageIndex = _pageindex;
+    this.getData(_pageindex, this.pageSize, this.searchkey);
   }
 }

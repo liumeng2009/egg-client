@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {CookieService} from 'angular2-cookie/core';
 import * as moment from 'moment';
 import {LoginService} from './login.service';

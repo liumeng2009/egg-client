@@ -8,15 +8,15 @@ import {EduConfig} from '../../../config/config';
 import {CookieService} from 'angular2-cookie/core';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
+import {Role} from '../../../bean/role';
 
 
 @Injectable()
 export class RoleService {
-  private listurl = new EduConfig().serverPath + '/api/role/index';
-  private addurl = new EduConfig().serverPath + '/api/role/add';
+  private role_url = new EduConfig().serverPath + '/api/role';
+
   private editurl = new EduConfig().serverPath + '/api/role/edit';
   private deleteurl = new EduConfig().serverPath + '/api/role/delete';
-  private geturl = new EduConfig().serverPath + '/api/role';
 
 
   private authInRoleAddUrl = new EduConfig().serverPath + '/api/authInRole/add';
@@ -46,10 +46,46 @@ export class RoleService {
     const params = new HttpParams().set('page', pageParams)
       .set('pagesize', pageSizeParams)
       .set('searchkey', searchKeyParams);
-    return this.http.get(this.listurl, {
+    return this.http.get(this.role_url, {
       headers: headers,
       params: params,
     })
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  create(role: Role): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.post(this.role_url, role, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  show(id): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.get(this.role_url + '/' + id, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  update(role: Role): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.put(this.role_url, role, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

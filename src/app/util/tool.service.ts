@@ -23,14 +23,16 @@ export class ToolService {
       setTimeout(() => {
         this.gotoLoginPage();
       }, 2000);
-    } else if (data.code === 10001) {
-
     } else if (data.code === 0) {
       if (data.message) {
         this.message.success(data.message);
       }
       return data;
+    } else if (data.code === 422) {
+      // 服务器内部错误
+      this.message.error('传入的参数异常');
     } else {
+      console.log(data);
       this.message.error(data.error);
     }
   }

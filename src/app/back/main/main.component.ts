@@ -153,6 +153,7 @@ export class MainComponent implements OnInit {
               this.createBreadCrumb();
             });
           }
+          this.createBreadCrumb();
         }
       });
   }

@@ -1,0 +1,27 @@
+<nz-card [nzTitle]="'新增角色'">
+  <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzRequired]="true" class="ant-col-4">
+        角色名
+      </nz-form-label>
+      <nz-form-control class="ant-col-12">
+        <input type="text" nz-input formControlName="name">
+        <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入角色名！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label class="ant-col-4">
+        备注
+      </nz-form-label>
+      <nz-form-control class="ant-col-12">
+        <textarea formControlName="remark" nz-input rows="2"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control class="ant-col-12 ant-col-offset-4">
+        <button nz-button [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>
+
