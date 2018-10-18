@@ -31,9 +31,21 @@ export class RoleService {
   getRoleList(page, pagesize, searchkey): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    const params = new HttpParams().set('page', page)
-      .set('pagesize', pagesize)
-      .set('searchkey', searchkey);
+    let pageParams = '',
+      pageSizeParams = '',
+      searchKeyParams = '';
+    if (page) {
+      pageParams = page;
+    }
+    if (pagesize) {
+      pageSizeParams = pagesize;
+    }
+    if (searchkey) {
+      searchKeyParams = searchkey;
+    }
+    const params = new HttpParams().set('page', pageParams)
+      .set('pagesize', pageSizeParams)
+      .set('searchkey', searchKeyParams);
     return this.http.get(this.listurl, {
       headers: headers,
       params: params,

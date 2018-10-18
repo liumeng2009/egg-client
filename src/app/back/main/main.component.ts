@@ -128,7 +128,14 @@ export class MainComponent implements OnInit {
   private pathAutoToList() {
     const url = this.location.path();
     if (url === '/admin/auth/user') {
-      this.router.navigateByUrl('/admin/auth/user/list');
+      this.router.navigateByUrl('/admin/auth/user/list').then(() => {
+        this.createBreadCrumb();
+      });
+    }
+    if (url === '/admin/auth/role') {
+      this.router.navigateByUrl('/admin/auth/role/list').then(() => {
+        this.createBreadCrumb();
+      });
     }
 
     this.router.events
@@ -138,6 +145,11 @@ export class MainComponent implements OnInit {
           urlNow = urlNow.substring(1, urlNow.length);
           if (event.url === '/admin/auth/user') {
             this.router.navigateByUrl('/admin/auth/user/list').then(() => {
+              this.createBreadCrumb();
+            });
+          }
+          if (event.url === '/admin/auth/role') {
+            this.router.navigateByUrl('/admin/auth/role/list').then(() => {
               this.createBreadCrumb();
             });
           }
@@ -192,11 +204,11 @@ export class MainComponent implements OnInit {
 
   }
 
-  private logout() {
+  private confirmExit() {
       this.cookieService.remove('eduToken');
       this.message.warning(new EduConfig().closing);
       setTimeout(() => {
         this.router.navigateByUrl('login');
-      }, 2000);
+      }, 1000);
   }
 }

@@ -1,26 +1,51 @@
-<kendo-grid [data]="gridData" [scrollable]="virtual" [height]="height" >
-  <ng-template kendoGridToolbarTemplate>
-    <button kendoButton  (click)="add()" [icon]="'plus'" *ngIf="showAddBtn"></button>
-    <button kendoButton style="float:right" class="k-button"  (click)="refresh()" title="刷新数据">
-      <span style="color:green" class="k-icon k-i-refresh"></span>
-    </button>
-  </ng-template>
-
-  <kendo-grid-column field="name" title="角色名">
-  </kendo-grid-column>
-
-  <kendo-grid-column field="id" title="操作" [width]="150">
-    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-      <button kendoButton (click)="editRow(dataItem.id)" *ngIf="showListEditBtn"  [icon]="'edit'"></button>
-      <button kendoButton (click)="editRow(dataItem.id)" *ngIf="!showListEditBtn"  [icon]="'zoom'"></button>
-      <button kendoButton (click)="deleteRow(dataItem.id)"  *ngIf="showListDeleteBtn" [icon]="'delete'" ></button>
-    </ng-template>
-  </kendo-grid-column>
-
-  <ng-template kendoGridNoRecordsTemplate>
-    <div *ngIf="!isLoading">暂时还没有记录 <a href="javascript:;" (click)="refresh()">点击刷新</a>.</div>
-    <span  *ngIf="isLoading" class="k-icon k-i-loading" style="font-size: 32px;color:#ff6b58;left:50%;margin-left:-16px;margin-top: 50px;"></span>
-  </ng-template>
-</kendo-grid>
-<div kendoDialogContainer></div>
+<nz-table #roleListTable [nzData]="roles"
+          [nzTitle]="headerTemplate"
+          [nzLoading]="isLoading"
+          [nzSize]="'small'"
+          [nzBordered]="true"
+          [nzScroll]="tableHeight"
+          [nzFrontPagination]="'false'"
+          [nzTotal]="total"
+          [nzPageIndex]="pageIndex"
+          [nzPageSize]="pageSize"
+          (nzPageIndexChange)="pagechanged"
+>
+  <thead>
+  <tr>
+    <th width="80%">
+      名称
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
+        <div class="custom-filter-dropdown">
+          <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="关键字" [(ngModel)]="searchkey">
+          <button nz-button [nzType]="'primary'" (click)="refresh()">查询</button>
+        </div>
+      </nz-dropdown>
+    </th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of roleListTable.data">
+    <td width="80%">{{data.name}}</td>
+    <td>
+      <button nz-button nzType="primary">
+        <i class="anticon anticon-edit"></i>
+      </button>
+      <button nz-button nzType="danger">
+        <i class="anticon anticon-delete"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #headerTemplate>
+  <button nz-button (click)="add()" [nzType]="'primary'">
+    <i class="anticon anticon-file-add"></i>
+    新增
+  </button>
+  <button nz-button (click)="refresh()" style="float:right;" >
+    <i class="anticon anticon-reload"></i>
+  </button>
+</ng-template>
 

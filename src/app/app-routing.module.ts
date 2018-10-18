@@ -10,6 +10,10 @@ import {UserAddComponent} from './back/auth/user/add/user-add.component';
 import {UserEditComponent} from './back/auth/user/edit/user-edit.component';
 import {TotalComponent} from './back/total/total.component';
 import {OtherComponent} from './back/myComponents/noFound/other.component';
+import {RoleComponent} from './back/auth/role/role.component';
+import {RoleEditComponent} from './back/auth/role/edit/role-edit.component';
+import {RoleAddComponent} from './back/auth/role/add/role-add.component';
+import {RoleListComponent} from './back/auth/role/list/role-list.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/admin/total', pathMatch: 'full', data: {name: '首页'}},
@@ -21,6 +25,11 @@ const routes: Routes = [
               {path: 'list', component: UserListComponent, canActivate: [TokenGuard], data: {name: '列表'}},
               {path: 'add', component: UserAddComponent, canActivate: [TokenGuard], data: {name: '新增'}},
               {path: ':id', component: UserEditComponent, canActivate: [TokenGuard], data: {name: '编辑'}}
+          ]},
+          { path: 'role', component: RoleComponent, canActivate: [TokenGuard], data: {name: '角色管理'}, children: [
+              {path: 'list', component: RoleListComponent, canActivate: [TokenGuard], data: {name: '列表'}},
+              {path: 'add', component: RoleAddComponent, canActivate: [TokenGuard], data: {name: '新增'}},
+              {path: ':id', component: RoleEditComponent, canActivate: [TokenGuard], data: {name: '编辑'}}
           ]},
       ]}
   ]},
