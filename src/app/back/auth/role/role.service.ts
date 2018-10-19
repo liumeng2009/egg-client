@@ -94,6 +94,18 @@ export class RoleService {
       );
   }
 
+  delete(id): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.delete(this.role_url + '/' + id, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
       this.message.error(error.statusText);

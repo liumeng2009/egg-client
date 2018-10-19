@@ -1,1 +1,82 @@
-<h1>用户列表</h1>
+<nz-table #roleListTable
+          [nzData]="users"
+          [nzTitle]="headerTemplate"
+          [nzLoading]="isLoading"
+          [nzSize]="'small'"
+          [nzBordered]="true"
+          [nzScroll]="tableHeight"
+          [nzFrontPagination]="'false'"
+          [nzTotal]="total"
+          [nzPageIndex]="pageIndex"
+          [nzPageSize]="pageSize"
+          (nzPageIndexChange)="pageChanged($event)"
+>
+  <thead>
+  <tr>
+    <th width="30%">
+      手机号（登录用户名）
+    </th>
+    <th width="20%">
+      昵称
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
+        <div class="custom-filter-dropdown">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="关键字" [(ngModel)]="searchkey">
+            </li>
+          </ul>
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" ><span>确定</span></a>
+          </div>
+        </div>
+      </nz-dropdown>
+    </th>
+    <th width="30%">
+      角色名
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
+        <div class="custom-filter-dropdown">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <label nz-checkbox [ngModel]="roleFilterAllStatus()" (ngModelChange)="roleFilterAllChanged($event)"></label>
+            </li>
+            <li nz-menu-item *ngFor="let role of roles">
+              <label nz-checkbox [(ngModel)]="role.checked">{{role.name}}</label>
+            </li>
+          </ul>
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="filterByRole()" ><span>确定</span></a>
+          </div>
+        </div>
+      </nz-dropdown>
+    </th>
+    <th width="20%">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of roleListTable.data">
+    <td width="30%">{{data.mobile}}</td>
+    <td width="20%">{{data.realname}}</td>
+    <td width="30%">{{data.role?.name}}</td>
+    <td width="20%">
+      <button nz-button nzType="primary" (click)="edit(data.id)" [title]="'编辑'">
+        <i class="anticon anticon-edit"></i>
+      </button>
+      <button nz-button nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
+        <i class="anticon anticon-delete"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #headerTemplate>
+  <button nz-button (click)="add()" [nzType]="'primary'" [title]="'新增'">
+    <i class="anticon anticon-plus"></i>
+  </button>
+  <button nz-button (click)="refresh()" style="float:right;" [title]="'刷新'" >
+    <i class="anticon anticon-reload"></i>
+  </button>
+</ng-template>
+
+

@@ -17,6 +17,7 @@ export class RoleListComponent implements OnInit {
   private searchkey = '';
   private isLoading = false;
   private roles: Role[] = [];
+  private roleDelete: Role;
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   private tableHeight = {
     y : '0px'
@@ -33,7 +34,6 @@ export class RoleListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.pageIndex);
     this.getData(this.pageIndex, this.pageSize, undefined);
     this.initHeight();
   }
@@ -72,7 +72,38 @@ export class RoleListComponent implements OnInit {
   }
 
   private delete(id) {
-    alert(id);
+    this.roleService.delete(id).subscribe(
+      (data: ResponseData) => {
+        const result = this.toolService.apiResult(data);
+        if (result) {
+          this.roleDelete = {...result.data};
+          console.log(this.roleDelete);
+          this.deleteRoleInArray(this.roleDelete);
+        }
+      },
+      error => {
+
+      }
+    );
+  }
+
+  private deleteRoleInArray(role: Role) {
+    let index = 0;
+    for (const per of this.roles) {
+      if (per.id === role.id) {
+        this.roles.splice(index, 1);
+        this.total--;
+        break;
+      }
+      index++;
+    }
+    if (this.roles.length === 0) {
+      // 被删完了,往前页跳
+      if (this.pageIndex > 1) {
+        this.pageIndex--;
+        this.getData(this.pageIndex, this.pageSize, this.searchkey);
+      }
+    }
   }
 
   private pageChanged(_pageindex) {

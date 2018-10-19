@@ -28,6 +28,7 @@ import {RoleListComponent} from './back/auth/role/list/role-list.component';
 import {RoleAddComponent} from './back/auth/role/add/role-add.component';
 import {RoleEditComponent} from './back/auth/role/edit/role-edit.component';
 import {RoleService} from './back/auth/role/role.service';
+import {UserService} from './back/auth/user/user.service';
 
 registerLocaleData(zh);
 
@@ -65,6 +66,7 @@ registerLocaleData(zh);
     TokenGuard,
     AuthService,
     RoleService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

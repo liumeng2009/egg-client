@@ -45,10 +45,6 @@ export class RoleEditComponent implements OnInit {
         const result = this.toolService.apiResult(data);
         if (result) {
           this.role = {...result.data};
-/*          this.validateForm = this.fb.group({
-            name: [ this.role.name, [ Validators.required ] ],
-            remark: [ this.role.remark ],
-          });*/
           this.validateForm.setValue({name: this.role.name, remark: this.role.remark});
         }
       },

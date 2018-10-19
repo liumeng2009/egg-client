@@ -42,7 +42,7 @@ export class RoleAddComponent implements OnInit {
       this.isLoading = true;
       const name = this.validateForm.get('name').value;
       const remark = this.validateForm.get('remark').value;
-      this.role = new Role(null, name, remark);
+      this.role = new Role(null, name, remark, null);
       this.roleService.create(this.role).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
