@@ -43,7 +43,8 @@ export class MainComponent implements OnInit {
   private user: User;
 
   private baseImageUrl: string = new EduConfig().serverPath;
-  private avatarImagePath = this.baseImageUrl + '/public/uploads/avatar/dongman/6.jpg';
+  //private avatarImagePath = this.baseImageUrl + '/public/uploads/avatar/dongman/6.jpg';
+  private avatarImagePath = '';
   ngOnInit(): void {
     this.initHeight();
     this.createBreadCrumb();
@@ -202,7 +203,6 @@ export class MainComponent implements OnInit {
         return this.avatarImagePath;
       }
     }
-
   }
 
   private confirmExit() {

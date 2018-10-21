@@ -4,9 +4,9 @@ export class User {
     public realname: string,
     public password: string,
     public age: number,
-    public role: any,
+    public roleId: any,
     public avatar: string,
-    public avatarUseImg: string,
+    public avatarUseSys: number,
     public mobile: string,
   ) {  }
 }

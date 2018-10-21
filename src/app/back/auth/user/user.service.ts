@@ -12,7 +12,8 @@ import {NzMessageService} from 'ng-zorro-antd';
 
 @Injectable()
 export class UserService {
-  private userurl = new EduConfig().serverPath + '/api/user';
+  private user_url = new EduConfig().serverPath + '/api/user';
+  private avatar_url = new EduConfig().serverPath + '/api/avatar';
 
   constructor(private http: HttpClient,
               private cookieService: CookieService,
@@ -26,10 +27,22 @@ export class UserService {
       .set('pagesize', pagesize)
       .set('searchkey', searchkey)
       .set('roles', roles);
-    console.log(params);
-    return this.http.get(this.userurl, {
+    return this.http.get(this.user_url, {
       headers: headers,
       params: params,
+    })
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  getAvatarList(): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.get(this.avatar_url, {
+      headers: headers,
     })
       .pipe(
         tap((data: ResponseData) => {
