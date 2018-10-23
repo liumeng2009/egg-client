@@ -29,11 +29,7 @@ export class UserListComponent implements OnInit {
   private total = 0;
   private pageSize = new EduConfig().pageSize;
   private pageIndex = 1;
-  private radioStyle = {
-    display   : 'block',
-    height    : '30px',
-    lineHeight: '30px'
-  };
+  private userDelete: User;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -120,19 +116,37 @@ export class UserListComponent implements OnInit {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
   private delete(id) {
-/*    this.roleService.delete(id).subscribe(
+    this.userService.delete(id).subscribe(
       (data: ResponseData) => {
         const result = this.toolService.apiResult(data);
         if (result) {
-          this.roleDelete = {...result.data};
-          console.log(this.roleDelete);
-          this.deleteRoleInArray(this.roleDelete);
+          this.userDelete = {...result.data};
+          console.log(this.userDelete);
+          this.deleteRoleInArray(this.userDelete);
         }
       },
       error => {
 
       }
-    );*/
+    );
+  }
+  private deleteRoleInArray(user: User) {
+    let index = 0;
+    for (const per of this.users) {
+      if (per.id === user.id) {
+        this.users.splice(index, 1);
+        this.total--;
+        break;
+      }
+      index++;
+    }
+    if (this.users.length === 0) {
+      // 被删完了,往前页跳
+      if (this.pageIndex > 1) {
+        this.pageIndex--;
+        this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
+      }
+    }
   }
   private pageChanged(_pageindex) {
     this.pageIndex = _pageindex;

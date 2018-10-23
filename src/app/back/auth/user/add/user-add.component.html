@@ -1,44 +1,45 @@
 <nz-card [ngStyle]="formHeight">
   <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzRequired]="true" class="ant-col-4">
-        用户名
+      <nz-form-label [nzRequired]="true" class="ant-col-6">
+        用户名（手机号）
       </nz-form-label>
-      <nz-form-control class="ant-col-12">
+      <nz-form-control class="ant-col-16">
         <input type="text" nz-input formControlName="mobile">
-        <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors">请输入登录用户名！</nz-form-explain>
+        <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.required">请输入登录用户名！</nz-form-explain>
+        <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.errorPhone">手机号格式不正确！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label class="ant-col-4">
+      <nz-form-label class="ant-col-6">
         昵称
       </nz-form-label>
-      <nz-form-control class="ant-col-12">
+      <nz-form-control class="ant-col-16">
         <input type="text" nz-input formControlName="realname">
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzRequired]="true" class="ant-col-4">
+      <nz-form-label [nzRequired]="true" class="ant-col-6">
         密码（默认：123456）
       </nz-form-label>
-      <nz-form-control class="ant-col-12">
+      <nz-form-control class="ant-col-16">
         <input type="password" nz-input formControlName="password">
         <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label class="ant-col-4">
+      <nz-form-label class="ant-col-6">
         年龄
       </nz-form-label>
-      <nz-form-control class="ant-col-12">
+      <nz-form-control class="ant-col-16">
         <nz-input-number  formControlName="age" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzRequired]="true" class="ant-col-4">
+      <nz-form-label [nzRequired]="true" class="ant-col-6">
         所属角色
       </nz-form-label>
-      <nz-form-control class="ant-col-12">
+      <nz-form-control class="ant-col-16">
         <nz-select formControlName="roleId">
           <nz-option [nzValue]="role.id" [nzLabel]="role.name" *ngFor="let role of roles"></nz-option>
         </nz-select>
@@ -46,19 +47,23 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label class="ant-col-4">
+      <nz-form-label class="ant-col-6">
         设置头像
       </nz-form-label>
-      <nz-form-control class="ant-col-12">
+      <nz-form-control class="ant-col-16">
         <div nz-row>
-            <nz-avatar [nzSrc]="''" style="width: 108px;height:108px;font-size: 72px;line-height: 108px;" [nzIcon]="'anticon anticon-user'">
+            <nz-avatar [nzSrc]="user.avatar ? (serverPath + user.avatar) : ''" style="width: 108px;height:108px;font-size: 72px;line-height: 108px;" [nzIcon]="'anticon anticon-user'">
 
             </nz-avatar>
             <nz-tabset [nzSelectedIndex]="avaTabSelectedIndex">
               <nz-tab [nzTitle]="'从本地上传'">
                 <div>
                   <nz-upload
-                    nzAction="https://jsonplaceholder.typicode.com/posts/">
+                    [nzAction]="uploadPath"
+                    [nzShowUploadList]="false"
+                    [nzBeforeUpload]="beforeUpload"
+                    (nzChange)="handleChange($event)"
+                  >
                     <button nz-button>
                       <i nz-icon type="upload"></i><span>点击上传</span>
                     </button>
@@ -68,7 +73,7 @@
               <nz-tab [nzTitle]="ava.name" *ngFor="let ava of avatars">
                 <div nz-row>
                   <div nz-col  [nzXs]="12" [nzSm]="6" [nzLg]="3" [nzMd]="6" style="margin:8px 0px" *ngFor="let path of ava.imgs">
-                    <nz-avatar [nzSrc]="serverPath + path" [nzSize]="'large'" (click)="setSysAvatar(path)"></nz-avatar>
+                    <nz-avatar style="cursor: pointer;" [nzSrc]="serverPath + path" [nzSize]="'large'" (click)="setSysAvatar(path)"></nz-avatar>
                   </div>
                 </div>
               </nz-tab>
@@ -78,7 +83,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-control class="ant-col-12 ant-col-offset-4">
+      <nz-form-control class="ant-col-16 ant-col-offset-6">
         <button nz-button [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
       </nz-form-control>
     </nz-form-item>

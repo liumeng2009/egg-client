@@ -9,6 +9,8 @@ import {Role} from '../../../../bean/role';
 import {UserService} from '../user.service';
 import {Avatar} from '../../../../bean/avatar';
 import {EduConfig} from '../../../../config/config';
+import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {ConstomValidators} from '../../../../util/validators';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class UserAddComponent implements OnInit {
     height : '0px'
   }
   serverPath = new EduConfig().serverPath;
+  uploadPath = this.serverPath + '/api/upload';
   avaTabSelectedIndex = 0;
   constructor(
     private fb: FormBuilder,
@@ -35,12 +38,13 @@ export class UserAddComponent implements OnInit {
     private roleService: RoleService,
     private userService: UserService,
     private toolService: ToolService,
+    private message: NzMessageService,
   ) {}
 
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      mobile: [ '', [ Validators.required ] ],
+      mobile: [ '', [ Validators.required, ConstomValidators.phoneValidator() ] ],
       realname: [ '' ],
       password: [ '123456', [ Validators.required ] ],
       age: [1],
@@ -88,9 +92,35 @@ export class UserAddComponent implements OnInit {
   }
 
   setSysAvatar(_avatar_path) {
-    alert(_avatar_path);
     this.user.avatarUseSys = 1;
     this.user.avatar = _avatar_path;
+  }
+  beforeUpload = (file: File) => {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+      this.message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this.message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+  }
+  handleChange(info: { file: UploadFile }): void {
+    if (info.file.status === 'uploading') {
+
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      console.log(info);
+/*      this.getBase64(info.file.originFileObj, (img: string) => {
+        this.loading = false;
+        this.avatarUrl = img;
+      });*/
+      this.user.avatarUseSys = 0;
+      this.user.avatar = info.file.response.data.path;
+    }
   }
 
   private submitForm() {
@@ -111,6 +141,18 @@ export class UserAddComponent implements OnInit {
       this.user.age = age;
       this.user.roleId = roleId;
       console.log(this.user);
+      this.userService.create(this.user).subscribe(
+        (data: ResponseData) => {
+          this.isLoading = false;
+          const result = this.toolService.apiResult(data);
+          if (result) {
+            this.router.navigate(['list'], {relativeTo: this.route.parent});
+          }
+        },
+        error => {
+          this.isLoading = false;
+        }
+      );
     }
   }
 }

@@ -52,28 +52,4 @@ export class TokenGuard implements CanActivate {
       );
     });
   }
-
-/*  private rememberUrl(){
-    let url=this.location.path();
-    return url;
-  }
-
-  private gotoLoginPage(data){
-    //this.missionService.change.emit(new AlertData('danger',data.message+'需要重新登陆！'));
-    let urlTree=this.router.parseUrl(this.router.url);
-    let queryParams=urlTree.queryParams;
-    let rememberUrl=this.rememberUrl();
-    if(queryParams.redirectTo){
-
-    }
-    else{
-      queryParams.redirectTo=rememberUrl;
-    }
-    if(queryParams.redirectTo!=''&&queryParams.redirectTo.indexOf('login')<0){
-      this.router.navigate(['/login'],{queryParams:queryParams});
-    }
-    else{
-      this.router.navigate(['/login']);
-    }
-  }*/
 }
