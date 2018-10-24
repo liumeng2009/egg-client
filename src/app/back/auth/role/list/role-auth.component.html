@@ -1,29 +1,30 @@
-<div nz-row>
-  <div class="ant-col-6">
-    用户权限管理
-  </div>
-  <div class="ant-col-18">
-    <nz-checkbox-group [(ngModel)]="checkOptionsOne"></nz-checkbox-group>
-  </div>
-  <div class="ant-col-offset-3 ant-col-21">
-    <div nz-row>
-      <div class="ant-col-6">
-        用户管理
-      </div>
-      <div class="ant-col-18">
-        <nz-checkbox-group [(ngModel)]="checkOptionsOne"></nz-checkbox-group>
-      </div>
-    </div>
-  </div>
-  <div class="ant-col-offset-3 ant-col-21">
-    <div nz-row>
-      <div class="ant-col-6">
-        角色管理
-      </div>
-      <div class="ant-col-18">
-        <nz-checkbox-group [(ngModel)]="checkOptionsOne"></nz-checkbox-group>
-      </div>
-    </div>
-  </div>
-
+<div style="text-align: right">
+  <button nz-button type="button" (click)="refresh()" [title]="'刷新'" [nzLoading]="isLoading">
+    <i class="anticon anticon-reload"></i>
+  </button>
 </div>
+
+<div nz-row *ngFor="let auth of auths">
+  <div class="ant-col-6" style="text-align: right;font-weight: bolder">
+    {{auth.name}}
+  </div>
+  <div class="ant-col-offset-2 ant-col-16">
+    <div>
+      <label nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked" (ngModelChange)="authChanged($event,op.value,op)">{{op.label}}</label>
+    </div>
+  </div>
+  <div *ngFor="let child of auth.children">
+    <div nz-row>
+      <div class="ant-col-offset-3 ant-col-3" style="text-align: right">
+        {{child.name}}
+      </div>
+      <div class="ant-col-offset-2 ant-col-16">
+
+        <div>
+          <label nz-checkbox *ngFor="let op of child.ops" [(ngModel)]="op.checked" (ngModelChange)="authChanged($event,op.value,op)">{{op.label}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

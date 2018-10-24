@@ -3,6 +3,7 @@ import {NzModalRef} from 'ng-zorro-antd';
 import {AuthService} from '../../auth.service';
 import {ToolService} from '../../../../util/tool.service';
 import {ResponseData} from '../../../../bean/responseData';
+import {AuthList, Auth} from '../../../../bean/auth';
 
 @Component({
   selector: 'app-role-auth-page',
@@ -13,14 +14,7 @@ import {ResponseData} from '../../../../bean/responseData';
 export class RoleAuthComponent implements OnInit {
   @Input() roleId: number;
   isLoading = false;
-  checkOptionsOne = [
-    { label: 'Apple', value: 'Apple', checked: true },
-    { label: 'Pear', value: 'Pear', checked: false },
-    { label: 'Orange', value: 'Orange', checked: false },
-    { label: 'Apple', value: 'Apple', checked: true },
-    { label: 'Pear', value: 'Pear', checked: false },
-    { label: 'Orange', value: 'Orange', checked: false },
-  ];
+  auths: AuthList[];
   constructor(
     private modal: NzModalRef,
     private authService: AuthService,
@@ -37,14 +31,49 @@ export class RoleAuthComponent implements OnInit {
     this.isLoading = true;
     this.authService.getAuthList(roleId).subscribe(
       (data: ResponseData) => {
+        this.isLoading = false;
         const result = this.toolService.apiResult(data);
         if (result) {
-          console.log(result);
+          this.auths = [...result.data];
         }
       },
       error => {
-
+        this.isLoading = false;
       }
     );
+  }
+  refresh() {
+    this.getData(this.roleId);
+  }
+  authChanged(e, authId, authObj) {
+    if (e) {
+      // 新增
+      this.authService.create(new Auth(this.roleId, authId)).subscribe(
+        (data: ResponseData) => {
+          const result = this.toolService.apiResult(data);
+          if (result) {
+          } else {
+            authObj = !e;
+          }
+        },
+        error => {
+          authObj = !e;
+        }
+      );
+    } else {
+      // 删除
+      this.authService.destroy(new Auth(this.roleId, authId)).subscribe(
+        (data: ResponseData) => {
+          const result = this.toolService.apiResult(data);
+          if (result) {
+          } else {
+            authObj = !e;
+          }
+        },
+        error => {
+          authObj = !e;
+        }
+      );
+    }
   }
 }

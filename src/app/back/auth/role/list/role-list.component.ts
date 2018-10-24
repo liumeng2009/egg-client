@@ -124,7 +124,8 @@ export class RoleListComponent implements OnInit {
       nzComponentParams: {
         roleId: id,
       },
-      nzFooter: null
+      nzFooter: null,
+      nzWidth: 820,
     });
   }
 }

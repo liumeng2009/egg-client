@@ -9,6 +9,7 @@ import {EduConfig} from '../../config/config';
 import {CookieService} from 'angular2-cookie/core';
 
 import {ResponseData} from '../../bean/responseData';
+import {Auth} from '../../bean/auth';
 
 @Injectable()
 export class AuthService {
@@ -37,6 +38,30 @@ export class AuthService {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
     return this.http.get(this.auth_url + '/' + roleId, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  create(auth: Auth): Observable<ResponseData> {
+    console.log(auth);
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.post(this.auth_url, auth, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  destroy(auth: Auth): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.delete(this.auth_url + '/' + auth.roleId + '/' + auth.authId, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 
