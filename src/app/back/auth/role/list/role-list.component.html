@@ -18,8 +18,15 @@
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
         <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
         <div class="custom-filter-dropdown">
-          <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="关键字" [(ngModel)]="searchkey">
-          <button nz-button [nzType]="'primary'" (click)="refresh()">查询</button>
+          <ul nz-menu>
+            <li nz-menu-item>
+              <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="关键字" [(ngModel)]="searchkey">
+            </li>
+          </ul>
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" ><span>确定</span></a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoSearchKey()" ><span>重置</span></a>
+          </div>
         </div>
       </nz-dropdown>
     </th>
@@ -32,6 +39,9 @@
     <td>
       <button nz-button nzType="primary" (click)="edit(data.id)" [title]="'编辑'">
         <i class="anticon anticon-edit"></i>
+      </button>
+      <button nz-button nzType="primary" (click)="editAuth(data.id,data.name)" [title]="'权限'">
+        <i class="anticon anticon-safety"></i>
       </button>
       <button nz-button nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
         <i class="anticon anticon-delete"></i>

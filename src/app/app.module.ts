@@ -29,6 +29,7 @@ import {RoleAddComponent} from './back/auth/role/add/role-add.component';
 import {RoleEditComponent} from './back/auth/role/edit/role-edit.component';
 import {RoleService} from './back/auth/role/role.service';
 import {UserService} from './back/auth/user/user.service';
+import {RoleAuthComponent} from './back/auth/role/list/role-auth.component';
 
 registerLocaleData(zh);
 
@@ -47,7 +48,11 @@ registerLocaleData(zh);
     RoleListComponent,
     RoleAddComponent,
     RoleEditComponent,
+    RoleAuthComponent,
     OtherComponent,
+  ],
+  entryComponents: [
+    RoleAuthComponent,
   ],
   imports: [
     BrowserModule,

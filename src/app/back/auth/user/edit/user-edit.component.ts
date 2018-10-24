@@ -186,4 +186,8 @@ export class UserEditComponent implements OnInit {
       this.getData(params.id);
     });
   }
+  private returnToList(e) {
+    e.stopPropagation();
+    this.router.navigate(['list'], {relativeTo: this.route.parent});
+  }
 }

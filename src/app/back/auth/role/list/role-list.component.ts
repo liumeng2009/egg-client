@@ -5,6 +5,8 @@ import {RoleService} from '../role.service';
 import {ToolService} from '../../../../util/tool.service';
 import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
+import {RoleAuthComponent} from './role-auth.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-role-list-page',
@@ -31,6 +33,7 @@ export class RoleListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toolService: ToolService,
+    private modalService: NzModalService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +63,10 @@ export class RoleListComponent implements OnInit {
       );
   }
   private refresh() {
-    console.log(this.searchkey);
+    this.getData(this.pageIndex, this.pageSize, this.searchkey);
+  }
+  private refreshNoSearchKey() {
+    this.searchkey = '';
     this.getData(this.pageIndex, this.pageSize, this.searchkey);
   }
   private add() {
@@ -109,5 +115,16 @@ export class RoleListComponent implements OnInit {
   private pageChanged(_pageindex) {
     this.pageIndex = _pageindex;
     this.getData(_pageindex, this.pageSize, this.searchkey);
+  }
+
+  private editAuth(id, name) {
+    const modal = this.modalService.create({
+      nzTitle: '编辑' + name + '的权限',
+      nzContent: RoleAuthComponent,
+      nzComponentParams: {
+        roleId: id,
+      },
+      nzFooter: null
+    });
   }
 }

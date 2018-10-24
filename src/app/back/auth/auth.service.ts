@@ -14,7 +14,7 @@ import {ResponseData} from '../../bean/responseData';
 export class AuthService {
 
   private checktokenurl = new EduConfig().serverPath + '/api/user/checktoken';
-
+  private auth_url = new EduConfig().serverPath + '/api/auth';
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -25,6 +25,18 @@ export class AuthService {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
     return this.http.get(this.checktokenurl, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  getAuthList(roleId): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.get(this.auth_url + '/' + roleId, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

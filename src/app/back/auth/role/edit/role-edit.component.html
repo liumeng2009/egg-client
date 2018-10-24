@@ -1,5 +1,12 @@
-<nz-card [nzTitle]="cardHeaderTemplate">
+<nz-card>
   <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control class="ant-col-16 ant-col-offset-6">
+        <button nz-button type="button" style="float:right;" (click)="refresh()" [title]="'刷新'" [nzLoading]="isLoading">
+          <i class="anticon anticon-reload"></i>
+        </button>
+      </nz-form-control>
+    </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzRequired]="true" class="ant-col-4">
         角色名
@@ -25,10 +32,4 @@
     </nz-form-item>
   </form>
 </nz-card>
-<ng-template #cardHeaderTemplate>
-  <div style="float:left;line-height: 32px;">编辑角色</div>
-  <button nz-button (click)="refresh()" style="float:right;" [title]="'刷新'" [nzLoading]="isLoading" >
-    <i class="anticon anticon-reload"></i>
-  </button>
-</ng-template>
 

@@ -2,7 +2,7 @@
   <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-control class="ant-col-16 ant-col-offset-6">
-        <button nz-button style="float:right;" (click)="refresh()" [title]="'刷新'" [nzLoading]="isLoading">
+        <button nz-button type="button" style="float:right;" (click)="refresh()" [title]="'刷新'" [nzLoading]="isLoading">
           <i class="anticon anticon-reload"></i>
         </button>
       </nz-form-control>
@@ -92,6 +92,7 @@
     <nz-form-item>
       <nz-form-control class="ant-col-16 ant-col-offset-6">
         <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
+        <button nz-button type="button" (click)="returnToList($event)">返回</button>
       </nz-form-control>
     </nz-form-item>
   </form>

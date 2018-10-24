@@ -14,15 +14,6 @@ import {Role} from '../../../bean/role';
 @Injectable()
 export class RoleService {
   private role_url = new EduConfig().serverPath + '/api/role';
-
-  private editurl = new EduConfig().serverPath + '/api/role/edit';
-  private deleteurl = new EduConfig().serverPath + '/api/role/delete';
-
-
-  private authInRoleAddUrl = new EduConfig().serverPath + '/api/authInRole/add';
-  private authInRoleDeleteUrl = new EduConfig().serverPath + '/api/authInRole/delete';
-  private authInRoleListUrl = new EduConfig().serverPath + '/api/authInRole/list';
-
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
