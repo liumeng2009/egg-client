@@ -14,25 +14,28 @@ import {RoleComponent} from './back/auth/role/role.component';
 import {RoleEditComponent} from './back/auth/role/edit/role-edit.component';
 import {RoleAddComponent} from './back/auth/role/add/role-add.component';
 import {RoleListComponent} from './back/auth/role/list/role-list.component';
+import {AuthGuard} from './back/main/authGuard.service';
+import {NoAuthComponent} from './back/myComponents/noAuth/noAuth.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/admin/total', pathMatch: 'full', data: {name: '首页'}},
   {path: 'login', component: LoginComponent , data: {name: '登录'}},
   {path: 'admin', component: MainComponent, data: {name: '首页'}, canActivate: [TokenGuard], children: [
       {path: 'total', component: TotalComponent, canActivate: [TokenGuard], data: {name: '网站信息', icon: 'appstore'}},
-      {path: 'auth', component: AuthComponent, canActivate: [TokenGuard], data: {name: '用户权限管理', icon: 'user'}, children: [
-          { path: 'user', component: UserComponent, canActivate: [TokenGuard], data: {name: '用户管理'}, children: [
-              {path: 'list', component: UserListComponent, canActivate: [TokenGuard], data: {name: '列表'}},
-              {path: 'add', component: UserAddComponent, canActivate: [TokenGuard], data: {name: '新增'}},
-              {path: ':id', component: UserEditComponent, canActivate: [TokenGuard], data: {name: '编辑'}}
+      {path: 'auth', component: AuthComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '用户权限管理', icon: 'user'}, children: [
+          { path: 'user', component: UserComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '用户管理'}, children: [
+              {path: 'list', component: UserListComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '列表'}},
+              {path: 'add', component: UserAddComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '新增'}},
+              {path: ':id', component: UserEditComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '编辑'}}
           ]},
-          { path: 'role', component: RoleComponent, canActivate: [TokenGuard], data: {name: '角色管理'}, children: [
-              {path: 'list', component: RoleListComponent, canActivate: [TokenGuard], data: {name: '列表'}},
-              {path: 'add', component: RoleAddComponent, canActivate: [TokenGuard], data: {name: '新增'}},
-              {path: ':id', component: RoleEditComponent, canActivate: [TokenGuard], data: {name: '编辑'}}
+          { path: 'role', component: RoleComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '角色管理'}, children: [
+              {path: 'list', component: RoleListComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '列表'}},
+              {path: 'add', component: RoleAddComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '新增'}},
+              {path: ':id', component: RoleEditComponent, canActivate: [TokenGuard, AuthGuard], data: {name: '编辑'}}
           ]},
       ]}
   ]},
+  {path: 'noauth', component: NoAuthComponent, data: {name: '没有权限访问该页面'}},
   {path: '**', component: OtherComponent, data: {name: '页面未找到'}}
 ];
 

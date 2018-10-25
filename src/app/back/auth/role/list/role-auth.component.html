@@ -1,9 +1,3 @@
-<div style="text-align: right">
-  <button nz-button type="button" (click)="refresh()" [title]="'刷新'" [nzLoading]="isLoading">
-    <i class="anticon anticon-reload"></i>
-  </button>
-</div>
-
 <div nz-row *ngFor="let auth of auths">
   <div class="ant-col-6" style="text-align: right;font-weight: bolder">
     {{auth.name}}

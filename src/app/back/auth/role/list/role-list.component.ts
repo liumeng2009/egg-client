@@ -124,7 +124,15 @@ export class RoleListComponent implements OnInit {
       nzComponentParams: {
         roleId: id,
       },
-      nzFooter: null,
+      nzFooter: [{
+        label: '刷新',
+        loading: (componentInstance) => {
+          return componentInstance.isLoading;
+        },
+        onClick: (componentInstance) => {
+          componentInstance.refresh();
+        }
+      }],
       nzWidth: 820,
     });
   }

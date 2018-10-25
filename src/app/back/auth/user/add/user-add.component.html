@@ -63,6 +63,7 @@
                     [nzShowUploadList]="false"
                     [nzBeforeUpload]="beforeUpload"
                     (nzChange)="handleChange($event)"
+                    [nzCustomRequest]="customReq"
                   >
                     <button nz-button>
                       <i nz-icon type="upload"></i><span>点击上传</span>

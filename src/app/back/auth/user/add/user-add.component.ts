@@ -9,8 +9,10 @@ import {Role} from '../../../../bean/role';
 import {UserService} from '../user.service';
 import {Avatar} from '../../../../bean/avatar';
 import {EduConfig} from '../../../../config/config';
-import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {NzMessageService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
 import {ConstomValidators} from '../../../../util/validators';
+import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {CookieService} from 'angular2-cookie/core';
 
 
 @Component({
@@ -39,6 +41,8 @@ export class UserAddComponent implements OnInit {
     private userService: UserService,
     private toolService: ToolService,
     private message: NzMessageService,
+    private cookieService: CookieService,
+    private http: HttpClient,
   ) {}
 
 
@@ -108,19 +112,35 @@ export class UserAddComponent implements OnInit {
   }
   handleChange(info: { file: UploadFile }): void {
     if (info.file.status === 'uploading') {
-
       return;
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      console.log(info);
-/*      this.getBase64(info.file.originFileObj, (img: string) => {
-        this.loading = false;
-        this.avatarUrl = img;
-      });*/
-      this.user.avatarUseSys = 0;
-      this.user.avatar = info.file.response.data.path;
+      if (info.file.response.code === 0) {
+        this.user.avatarUseSys = 0;
+        this.user.avatar = info.file.response.data.path;
+      } else {
+        this.message.error(info.file.response.error);
+      }
+
     }
+  }
+  customReq = (item: UploadXHRArgs) => {
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    formData.append('file', item.file as any);
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'authorization': token ? token : ''});
+    const req = new HttpRequest('POST', item.action, formData, {headers: headers});
+    return this.http.request(req).subscribe((event: HttpEvent<{}>) => {
+      if (event instanceof HttpResponse) {
+        // 处理成功
+        item.onSuccess(event.body, item.file, event);
+      }
+    }, (err) => {
+      // 处理失败
+      item.onError(err, item.file);
+    });
   }
 
   private submitForm() {

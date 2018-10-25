@@ -6,14 +6,11 @@ import {CanActivate, Router,
 } from '@angular/router';
 import {Location} from '@angular/common';
 import {AuthService} from '../auth/auth.service';
-import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
-import {RememberService} from './remember.service';
-import {User} from '../../bean/user';
-import {NzMessageService} from 'ng-zorro-antd';
+import {ResponseData} from '../../bean/responseData';
 
 @Injectable()
-export class TokenGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
@@ -21,29 +18,45 @@ export class TokenGuard implements CanActivate {
     private route: ActivatedRoute,
     private location: Location,
     private toolService: ToolService,
-    private rememberService: RememberService,
-    private message: NzMessageService,
   ) {
 
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    return new Promise<boolean>(async(resolve, reject) => {
-      await this.authService.checkToken().subscribe(
+    let func = '';
+    let op = '';
+    // 处理，得到路径对应的func和op
+    const path = route.routeConfig.path;
+
+    switch (path) {
+      case 'add':
+        func = route.parent.routeConfig.path;
+        op = 'add';
+        break;
+      case 'list':
+        func = route.parent.routeConfig.path;
+        op = 'list';
+        break;
+      case ':id':
+        // 编辑
+        func = route.parent.routeConfig.path;
+        op = 'list';
+        break;
+      default:
+        func = route.routeConfig.path;
+        op = 'menu';
+        break;
+    }
+    return new Promise<boolean>(async (resolve, reject) => {
+      await this.authService.checkAuth(func, op).subscribe(
         (data: ResponseData) => {
           const result = this.toolService.apiResult(data);
           if (result) {
-            const user: User = {...result.data};
-            if (this.rememberService.getUser()) {
-
-            } else {
-              this.message.success((user.realname ? user.realname : user.mobile) + '，登录成功！');
-            }
-            this.rememberService.setUser(user);
-            console.log('验证token通过');
+            console.log('验证权限' + func + op + '通过');
             resolve(true);
           } else {
             resolve(false);
+            this.router.navigateByUrl('/noauth');
           }
         },
         error => {
@@ -51,5 +64,6 @@ export class TokenGuard implements CanActivate {
         }
       );
     });
+
   }
 }

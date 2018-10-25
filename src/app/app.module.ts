@@ -30,6 +30,8 @@ import {RoleEditComponent} from './back/auth/role/edit/role-edit.component';
 import {RoleService} from './back/auth/role/role.service';
 import {UserService} from './back/auth/user/user.service';
 import {RoleAuthComponent} from './back/auth/role/list/role-auth.component';
+import {AuthGuard} from './back/main/authGuard.service';
+import {NoAuthComponent} from './back/myComponents/noAuth/noAuth.component';
 
 registerLocaleData(zh);
 
@@ -50,6 +52,7 @@ registerLocaleData(zh);
     RoleEditComponent,
     RoleAuthComponent,
     OtherComponent,
+    NoAuthComponent,
   ],
   entryComponents: [
     RoleAuthComponent,
@@ -69,6 +72,7 @@ registerLocaleData(zh);
     ToolService,
     RememberService,
     TokenGuard,
+    AuthGuard,
     AuthService,
     RoleService,
     UserService,

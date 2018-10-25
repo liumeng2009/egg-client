@@ -13,7 +13,7 @@ import {AuthList, Auth} from '../../../../bean/auth';
 
 export class RoleAuthComponent implements OnInit {
   @Input() roleId: number;
-  isLoading = false;
+  isLoading = true;
   auths: AuthList[];
   constructor(
     private modal: NzModalRef,
@@ -67,11 +67,11 @@ export class RoleAuthComponent implements OnInit {
           const result = this.toolService.apiResult(data);
           if (result) {
           } else {
-            authObj = !e;
+            authObj.checked = !e;
           }
         },
         error => {
-          authObj = !e;
+          authObj.checked = !e;
         }
       );
     }

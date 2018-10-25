@@ -16,6 +16,7 @@ export class AuthService {
 
   private checktokenurl = new EduConfig().serverPath + '/api/user/checktoken';
   private auth_url = new EduConfig().serverPath + '/api/auth';
+  private auth_check_url = new EduConfig().serverPath + '/api/checkauth';
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -70,9 +71,21 @@ export class AuthService {
       );
   }
 
+  checkAuth(func, op): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.post(this.auth_check_url, {func: func, op: op}, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
+      console.log(error);
       if (error.name === 'HttpErrorResponse') {
         if (error.status === 404) {
           this.message.error('服务器错误：未找到请求路径！');
