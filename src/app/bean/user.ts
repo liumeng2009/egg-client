@@ -5,6 +5,7 @@ export class User {
     public password: string,
     public age: number,
     public roleId: any,
+    public role: any,
     public avatar: string,
     public avatarUseSys: number,
     public mobile: string,

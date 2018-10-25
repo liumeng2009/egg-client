@@ -23,7 +23,7 @@ import {CookieService} from 'angular2-cookie/core';
 
 export class UserAddComponent implements OnInit {
   validateForm: FormGroup;
-  user: User = new User(null, null, null, null, null, null, null, null);
+  user: User = new User(null, null, null, null, null, null, null, null, null);
   isLoading = false;
   roles: Role[] = [];
   avatars: Avatar[] = [];

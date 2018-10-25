@@ -56,7 +56,6 @@ export class AuthGuard implements CanActivate {
             resolve(true);
           } else {
             resolve(false);
-            this.router.navigateByUrl('/noauth');
           }
         },
         error => {

@@ -43,7 +43,6 @@ export class MainComponent implements OnInit {
   private user: User;
 
   private baseImageUrl: string = new EduConfig().serverPath;
-  //private avatarImagePath = this.baseImageUrl + '/public/uploads/avatar/dongman/6.jpg';
   private avatarImagePath = '';
   ngOnInit(): void {
     this.initHeight();
@@ -159,6 +158,44 @@ export class MainComponent implements OnInit {
       });
   }
 
+  // 根据角色，来改变angular的路由配置
+  private fixRouteConfig(auths) {
+    // auths与route作比较，auths中没有的，从route中删除
+    // 第一层
+    const cfg = this.router.config[2].children;
+    for (let i = 1; i < cfg.length; i++) {
+      if (this.isExistInRouteConfig(cfg[i], auths)) {
+
+      } else {
+        // 没有菜单权限，就把这个分支从config删除掉
+        cfg.splice(i, 1);
+        i--;
+      }
+      // 第二层
+      const cfgChildren = cfg[i].children;
+      if (cfgChildren) {
+        for (let j = 0; j < cfgChildren.length; j++) {
+          if (this.isExistInRouteConfig(cfgChildren[j], auths)) {
+
+          } else {
+            // 没有菜单权限，就把这个分支从config删除掉
+            cfgChildren.splice(j, 1);
+            j--;
+          }
+        }
+      }
+    }
+  }
+
+  private isExistInRouteConfig(pathObj, auths) {
+    for (const auth of auths) {
+      if (pathObj.path === auth.auth_opInFunc.auth_function.code && auth.auth_opInFunc.auth_operate.code === 'menu') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private checkSelected(path) {
     const url = this.location.path();
     if (url.indexOf(path) > -1) {
@@ -188,6 +225,7 @@ export class MainComponent implements OnInit {
 
   private initLoginUser() {
     this.user = this.rememberService.getUser();
+    this.fixRouteConfig(this.user.role.auth_authInRoles);
   }
 
   private getAvatarImageUrl(user) {

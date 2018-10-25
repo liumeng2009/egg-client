@@ -32,7 +32,6 @@ export class ToolService {
       // 服务器内部错误
       this.message.error('传入的参数异常');
     } else {
-      console.log(data);
       this.message.error(data.error);
     }
   }

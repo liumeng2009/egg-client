@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       const mobile = this.validateForm.get('userName').value;
       const password = this.validateForm.get('password').value;
       const user: User = new User(null, null, password, null,
-        null, null, null, mobile);
+        null, null, null, null, mobile);
       const urlTree = this.router.parseUrl(this.router.url);
       const queryParams = urlTree.queryParams;
       const rememberUrl = queryParams.redirectTo;

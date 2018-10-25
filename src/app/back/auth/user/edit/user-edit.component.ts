@@ -22,7 +22,7 @@ import {NzMessageService, UploadFile} from 'ng-zorro-antd';
 
 export class UserEditComponent implements OnInit {
   validateForm: FormGroup;
-  user: User = new User(null, null, null, null, null, null, null, null);
+  user: User = new User(null, null, null, null, null, null, null, null, null);
   isLoading = false;
   roles: Role[] = [];
   avatars: Avatar[] = [];
