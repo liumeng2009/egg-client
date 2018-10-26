@@ -13,6 +13,7 @@ import {RoleService} from '../../role/role.service';
 import {UserService} from '../user.service';
 import {ToolService} from '../../../../util/tool.service';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {RememberService} from '../../../main/remember.service';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -24,6 +25,7 @@ export class UserEditComponent implements OnInit {
   validateForm: FormGroup;
   user: User = new User(null, null, null, null, null, null, null, null, null);
   isLoading = false;
+  showEditBtn = false;
   roles: Role[] = [];
   avatars: Avatar[] = [];
   formHeight = {
@@ -40,6 +42,7 @@ export class UserEditComponent implements OnInit {
     private userService: UserService,
     private toolService: ToolService,
     private message: NzMessageService,
+    private rememberService: RememberService,
   ) {}
 
   ngOnInit() {
@@ -61,11 +64,47 @@ export class UserEditComponent implements OnInit {
   private initHeight() {
     this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69 )) + 'px';
   }
+  private auth() {
+    const user = this.rememberService.getUser();
+    if (user) {
+      const authArray = this.initAuth('user');
+      this.initComponentAuth(authArray);
+    }
+  }
+  private initAuth(functioncode) {
+    const resultArray = [];
+    const user = this.rememberService.getUser();
+    if (user && user.role && user.role.auth_authInRoles) {
+      const auths = user.role.auth_authInRoles;
+      console.log(auths);
+      for (const auth of auths) {
+        if (auth.auth_opInFunc
+          && auth.auth_opInFunc.auth_function
+          && auth.auth_opInFunc.auth_function.code
+          && auth.auth_opInFunc.auth_function.code === functioncode
+        ) {
+          resultArray.push(auth);
+        }
+      }
+    }
+    return resultArray;
+  }
+  // 根据auth数组，判断页面一些可操作组件的可用/不可用状态
+  private initComponentAuth(authArray) {
+    for (const auth of authArray) {
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'edit') {
+        this.showEditBtn = true;
+      }
+    }
+  }
   private initRoleList() {
     this.roleService.getRoleList(0, 0, '')
       .subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
+          const result = this.toolService.apiResult(data, false);
           if (result) {
             this.roles = [...result.data.rows];
             if (this.roles.length > 0) {

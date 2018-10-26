@@ -7,6 +7,7 @@ import {User} from '../../../../bean/user';
 import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
 import {RoleService} from '../../role/role.service';
+import {RememberService} from '../../../main/remember.service';
 
 
 @Component({
@@ -17,49 +18,114 @@ import {RoleService} from '../../role/role.service';
 
 export class UserListComponent implements OnInit {
 
-  private searchkey = '';
-  private isLoading = false;
-  private users: User[] = [];
-  private roles: Role[] = [];
-  private roleArray: number[] = [];
+  searchkey = '';
+  isLoading = false;
+  noResult = new EduConfig().noResult;
+  users: User[] = [];
+  roles: Role[] = [];
+  roleArray: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
-  private tableHeight = {
+  tableHeight = {
     y : '0px'
   }
-  private total = 0;
-  private pageSize = new EduConfig().pageSize;
-  private pageIndex = 1;
-  private userDelete: User;
+  total = 0;
+  pageSize = new EduConfig().pageSize;
+  pageIndex = 1;
+  userDelete: User;
+  isLoadingDelete = false;
+  showAddBtn = false;
+  showEditBtn = false;
+  showDelBtn = false;
+  roleList = false;
+  roleListError = '';
+  isLoadingRoleList = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
     private toolService: ToolService,
     private roleService: RoleService,
+    private rememberService: RememberService,
   ) {}
 
   ngOnInit() {
+    this.initHeight();
+    this.auth();
     this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
     this.initRoleList();
-    this.initHeight();
   }
   private initHeight() {
     this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
   }
+  private auth() {
+    const user = this.rememberService.getUser();
+    if (user) {
+      const authArray = this.initAuth('user');
+      this.initComponentAuth(authArray);
+    }
+  }
+  private initAuth(functioncode) {
+    const resultArray = [];
+    const user = this.rememberService.getUser();
+    if (user && user.role && user.role.auth_authInRoles) {
+      const auths = user.role.auth_authInRoles;
+      console.log(auths);
+      for (const auth of auths) {
+        if (auth.auth_opInFunc
+          && auth.auth_opInFunc.auth_function
+          && auth.auth_opInFunc.auth_function.code
+          && auth.auth_opInFunc.auth_function.code === functioncode
+        ) {
+          resultArray.push(auth);
+        }
+      }
+    }
+    return resultArray;
+  }
+  // 根据auth数组，判断页面一些可操作组件的可用/不可用状态
+  private initComponentAuth(authArray) {
+    for (const auth of authArray) {
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'add') {
+        this.showAddBtn = true;
+      }
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'edit') {
+        this.showEditBtn = true;
+      }
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'delete') {
+        this.showDelBtn = true;
+      }
+    }
+  }
+
   private initRoleList() {
+    this.isLoadingRoleList = true;
     this.roleService.getRoleList(0, 0, '')
       .subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
+          this.isLoadingRoleList = false;
+          this.toolService.apiResult(data, true).then((result: ResponseData) => {
             this.roles = [...result.data.rows];
             for (const trole of this.roles) {
               trole.checked = true;
             }
-          }
+          }).catch((error) => {
+            if (error) {
+              this.roleList = false;
+              this.roleListError = error;
+            }
+          });
         },
         error => {
-
+          this.isLoadingRoleList = false;
         }
       );
   }
@@ -93,11 +159,10 @@ export class UserListComponent implements OnInit {
       .subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
-          const result = this.toolService.apiResult(data);
-          if (result) {
+          this.toolService.apiResult(data, false).then((result: ResponseData) => {
             this.users = [...result.data.rows];
             this.total = result.data.count;
-          }
+          }).catch((error) => {});
         },
         error => {
           this.isLoading = false;
@@ -105,8 +170,6 @@ export class UserListComponent implements OnInit {
       );
   }
   private refresh() {
-    console.log(this.searchkey);
-    console.log(this.roleArray);
     this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
   }
   private add() {
@@ -116,17 +179,17 @@ export class UserListComponent implements OnInit {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
   private delete(id) {
+    this.isLoadingDelete = true;
     this.userService.delete(id).subscribe(
       (data: ResponseData) => {
-        const result = this.toolService.apiResult(data);
-        if (result) {
+        this.isLoadingDelete = false;
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
           this.userDelete = {...result.data};
-          console.log(this.userDelete);
           this.deleteRoleInArray(this.userDelete);
-        }
+        }).catch(() => {});
       },
       error => {
-
+        this.isLoadingDelete = false;
       }
     );
   }
