@@ -78,9 +78,9 @@ export class ToolService {
       queryParams.redirectTo = rememberUrl;
     }
     if (queryParams.redirectTo !== '' && queryParams.redirectTo.indexOf('login') < 0) {
-      this.router.navigate(['/login'], {queryParams: queryParams});
+      this.router.navigate(['/admin/login'], {queryParams: queryParams});
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/admin/login']);
     }
   }
 }

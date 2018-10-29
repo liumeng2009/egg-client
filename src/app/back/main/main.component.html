@@ -38,7 +38,7 @@
     <nz-sider [nzCollapsed]="collapsed">
       <div style="height:100%;padding-top: .1px;margin-top: -.1px;">
         <div nz-menu nzTheme="dark" [nzInlineCollapsed]="collapsed" nzMode="inline">
-          <li nz-submenu *ngFor="let route of (router.config[2].children)" [nzOpen]="checkOpen(route.path)" (click)="clickSubMenuTitle(route.path)" >
+          <li nz-submenu *ngFor="let route of routesMenuUse" [nzOpen]="checkOpen(route.path)" (click)="clickSubMenuTitle(route.path)" >
             <span title class="{{route.children && route.children.length>0 ? '' : 'noarrow'}}">
               <i class="anticon anticon-{{route.data.icon}}"></i>
               <span>{{route.data.name ? route.data.name : 'home'}}</span>

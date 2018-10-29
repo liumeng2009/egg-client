@@ -40,7 +40,6 @@ export class TokenGuard implements CanActivate {
                 this.message.success((user.realname ? user.realname : user.mobile) + '，登录成功！');
               }
               this.rememberService.setUser(user);
-              console.log('验证token通过');
               resolve(true);
             }
           ).catch(() => {resolve(false); });

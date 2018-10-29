@@ -112,6 +112,7 @@ export class UserListComponent implements OnInit {
         (data: ResponseData) => {
           this.isLoadingRoleList = false;
           this.toolService.apiResult(data, true).then((result: ResponseData) => {
+            this.roleList = true;
             this.roles = [...result.data.rows];
             for (const trole of this.roles) {
               trole.checked = true;

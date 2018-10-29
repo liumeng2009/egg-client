@@ -52,11 +52,9 @@ export class AuthGuard implements CanActivate {
         (data: ResponseData) => {
           this.toolService.apiResult(data, false).then(
             (result: ResponseData) => {
-              console.log('验证权限' + func + op + '通过');
               resolve(true);
             }
           ).catch(() => {
-            console.log('验证权限' + func + op + '不通过');
             resolve(false);
           });
         },

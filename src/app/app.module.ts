@@ -38,21 +38,9 @@ registerLocaleData(zh);
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    MainComponent,
-    TotalComponent,
-    AuthComponent,
-    UserComponent,
-    UserListComponent,
-    UserAddComponent,
-    UserEditComponent,
-    RoleComponent,
-    RoleListComponent,
-    RoleAddComponent,
-    RoleEditComponent,
-    RoleAuthComponent,
     OtherComponent,
     NoAuthComponent,
+    RoleAuthComponent,
   ],
   entryComponents: [
     RoleAuthComponent,
