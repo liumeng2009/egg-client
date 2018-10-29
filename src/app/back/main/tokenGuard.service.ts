@@ -31,20 +31,19 @@ export class TokenGuard implements CanActivate {
     return new Promise<boolean>(async(resolve, reject) => {
       await this.authService.checkToken().subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            const user: User = {...result.data};
-            if (this.rememberService.getUser()) {
+          this.toolService.apiResult(data, false).then(
+            (result: ResponseData) => {
+              const user: User = {...result.data};
+              if (this.rememberService.getUser()) {
 
-            } else {
-              this.message.success((user.realname ? user.realname : user.mobile) + '，登录成功！');
+              } else {
+                this.message.success((user.realname ? user.realname : user.mobile) + '，登录成功！');
+              }
+              this.rememberService.setUser(user);
+              console.log('验证token通过');
+              resolve(true);
             }
-            this.rememberService.setUser(user);
-            console.log('验证token通过');
-            resolve(true);
-          } else {
-            resolve(false);
-          }
+          ).catch(() => {resolve(false); });
         },
         error => {
           resolve(false);

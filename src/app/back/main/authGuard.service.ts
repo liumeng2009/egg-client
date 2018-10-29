@@ -50,13 +50,15 @@ export class AuthGuard implements CanActivate {
     return new Promise<boolean>(async (resolve, reject) => {
       await this.authService.checkAuth(func, op).subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            console.log('验证权限' + func + op + '通过');
-            resolve(true);
-          } else {
+          this.toolService.apiResult(data, false).then(
+            (result: ResponseData) => {
+              console.log('验证权限' + func + op + '通过');
+              resolve(true);
+            }
+          ).catch(() => {
+            console.log('验证权限' + func + op + '不通过');
             resolve(false);
-          }
+          });
         },
         error => {
           resolve(false);

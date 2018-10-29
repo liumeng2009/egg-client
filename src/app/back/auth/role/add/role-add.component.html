@@ -19,7 +19,8 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-control class="ant-col-16 ant-col-offset-6">
-        <button nz-button [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
+        <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
+        <button nz-button type="button" (click)="returnToList($event)">返回</button>
       </nz-form-control>
     </nz-form-item>
   </form>

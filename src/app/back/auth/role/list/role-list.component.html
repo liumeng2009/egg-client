@@ -37,13 +37,16 @@
   <tr *ngFor="let data of roleListTable.data">
     <td width="80%">{{data.name}}</td>
     <td>
-      <button nz-button nzType="primary" (click)="edit(data.id)" [title]="'编辑'">
+      <button nz-button *ngIf="showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'编辑'">
         <i class="anticon anticon-edit"></i>
       </button>
-      <button nz-button nzType="primary" (click)="editAuth(data.id,data.name)" [title]="'权限'">
+      <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'查看'">
+        <i class="anticon anticon-file"></i>
+      </button>
+      <button nz-button *ngIf="showModalBtn" nzType="primary" (click)="editAuth(data.id,data.name)" [title]="'权限'">
         <i class="anticon anticon-safety"></i>
       </button>
-      <button nz-button nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
+      <button nz-button *ngIf="showDelBtn" nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
         <i class="anticon anticon-delete"></i>
       </button>
     </td>
@@ -51,7 +54,7 @@
   </tbody>
 </nz-table>
 <ng-template #headerTemplate>
-  <button nz-button (click)="add()" [nzType]="'primary'" [title]="'新增'">
+  <button nz-button *ngIf="showAddBtn" (click)="add()" [nzType]="'primary'" [title]="'新增'">
     <i class="anticon anticon-plus"></i>
   </button>
   <button nz-button (click)="refresh()" style="float:right;" [title]="'刷新'" >

@@ -7,6 +7,7 @@ import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
 import {RoleAuthComponent} from './role-auth.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {RememberService} from '../../../main/remember.service';
 
 @Component({
   selector: 'app-role-list-page',
@@ -27,23 +28,88 @@ export class RoleListComponent implements OnInit {
   private total = 0;
   private pageSize = new EduConfig().pageSize;
   private pageIndex = 1;
-
+  showAddBtn = false;
+  showEditBtn = false;
+  showDelBtn = false;
+  showModalBtn = false;
   constructor(
     private roleService: RoleService,
     private router: Router,
     private route: ActivatedRoute,
     private toolService: ToolService,
     private modalService: NzModalService,
+    private rememberService: RememberService,
   ) {}
 
   ngOnInit() {
-    this.getData(this.pageIndex, this.pageSize, undefined);
+    this.auth();
     this.initHeight();
+    this.getData(this.pageIndex, this.pageSize, undefined);
   }
 
   private initHeight() {
     this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
   }
+  private auth() {
+    const user = this.rememberService.getUser();
+    if (user) {
+      const authArray = this.initAuth('role');
+      this.initComponentAuth(authArray);
+      const authArray2 = this.initAuth('authInRole');
+      this.initComponentAuth2(authArray2);
+    }
+  }
+  private initAuth(functioncode) {
+    const resultArray = [];
+    const user = this.rememberService.getUser();
+    if (user && user.role && user.role.auth_authInRoles) {
+      const auths = user.role.auth_authInRoles;
+      for (const auth of auths) {
+        if (auth.auth_opInFunc
+          && auth.auth_opInFunc.auth_function
+          && auth.auth_opInFunc.auth_function.code
+          && auth.auth_opInFunc.auth_function.code === functioncode
+        ) {
+          resultArray.push(auth);
+        }
+      }
+    }
+    return resultArray;
+  }
+  // 根据auth数组，判断页面一些可操作组件的可用/不可用状态
+  private initComponentAuth(authArray) {
+    for (const auth of authArray) {
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'add') {
+        this.showAddBtn = true;
+      }
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'edit') {
+        this.showEditBtn = true;
+      }
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'delete') {
+        this.showDelBtn = true;
+      }
+    }
+  }
+  private initComponentAuth2(authArray) {
+    for (const auth of authArray) {
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'list') {
+        this.showModalBtn = true;
+      }
+    }
+  }
+
 
   private getData(page, pagesize, searchkey) {
     this.isLoading = true;
@@ -51,11 +117,12 @@ export class RoleListComponent implements OnInit {
       .subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            this.roles = [...result.data.rows];
-            this.total = result.data.count;
-          }
+          this.toolService.apiResult(data, false).then(
+            (result: ResponseData) => {
+              this.roles = [...result.data.rows];
+              this.total = result.data.count;
+            }
+          ).catch(() => {});
         },
         error => {
           this.isLoading = false;
@@ -80,12 +147,13 @@ export class RoleListComponent implements OnInit {
   private delete(id) {
     this.roleService.delete(id).subscribe(
       (data: ResponseData) => {
-        const result = this.toolService.apiResult(data);
-        if (result) {
-          this.roleDelete = {...result.data};
-          console.log(this.roleDelete);
-          this.deleteRoleInArray(this.roleDelete);
-        }
+        this.toolService.apiResult(data, false).then(
+          (result: ResponseData) => {
+            this.roleDelete = {...result.data};
+            console.log(this.roleDelete);
+            this.deleteRoleInArray(this.roleDelete);
+          }
+        ).then(() => {});
       },
       error => {
 

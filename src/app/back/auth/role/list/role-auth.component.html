@@ -4,7 +4,7 @@
   </div>
   <div class="ant-col-offset-2 ant-col-16">
     <div>
-      <label nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked" (ngModelChange)="authChanged($event,op.value,op)">{{op.label}}</label>
+      <label [nzDisabled]="!canAdd||!canDel" nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked" (ngModelChange)="authChanged($event,op.value,op)">{{op.label}}</label>
     </div>
   </div>
   <div *ngFor="let child of auth.children">
@@ -15,7 +15,7 @@
       <div class="ant-col-offset-2 ant-col-16">
 
         <div>
-          <label nz-checkbox *ngFor="let op of child.ops" [(ngModel)]="op.checked" (ngModelChange)="authChanged($event,op.value,op)">{{op.label}}</label>
+          <label [nzDisabled]="!canAdd||!canDel" nz-checkbox *ngFor="let op of child.ops" [(ngModel)]="op.checked" (ngModelChange)="authChanged($event,op.value,op)">{{op.label}}</label>
         </div>
       </div>
     </div>

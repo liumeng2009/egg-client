@@ -56,18 +56,19 @@ export class LoginComponent implements OnInit {
       const rememberUrl = queryParams.redirectTo;
       this.loginService.login(user).subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            const expires = moment().add(30, 'day').toDate();
-            this.cookieService.put('eduToken', result.data.user.token, {expires: expires});
-            const userResult: User = {...result.data.user};
-            this.rememberService.setUser(userResult);
-            if (rememberUrl && rememberUrl !== '') {
-              this.router.navigate([rememberUrl]);
-            } else {
-              this.router.navigate(['/admin']);
+          this.toolService.apiResult(data, false).then(
+            (result: ResponseData) => {
+              const expires = moment().add(30, 'day').toDate();
+              this.cookieService.put('eduToken', result.data.user.token, {expires: expires});
+              const userResult: User = {...result.data.user};
+              this.rememberService.setUser(userResult);
+              if (rememberUrl && rememberUrl !== '') {
+                this.router.navigate([rememberUrl]);
+              } else {
+                this.router.navigate(['/admin']);
+              }
             }
-          }
+          ).then(() => {});
         },
         error => {
 

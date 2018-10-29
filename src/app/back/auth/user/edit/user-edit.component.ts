@@ -27,6 +27,9 @@ export class UserEditComponent implements OnInit {
   isLoading = false;
   showEditBtn = false;
   roles: Role[] = [];
+  roleList = true;
+  roleListError = '';
+  isLoadingRoleList = false;
   avatars: Avatar[] = [];
   formHeight = {
     height : '0px'
@@ -101,20 +104,25 @@ export class UserEditComponent implements OnInit {
     }
   }
   private initRoleList() {
+    this.isLoadingRoleList = true;
     this.roleService.getRoleList(0, 0, '')
       .subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data, false);
-          if (result) {
-            this.roles = [...result.data.rows];
-            if (this.roles.length > 0) {
-              this.validateForm.patchValue({roleId: this.roles[0].id});
+          this.isLoadingRoleList = false;
+          this.toolService.apiResult(data, true).then(
+            (result: ResponseData) => {
+              this.roles = [...result.data.rows];
+              if (this.roles.length > 0) {
+                this.validateForm.patchValue({roleId: this.roles[0].id});
+              }
             }
-
-          }
+          ).catch((error) => {
+            this.roleList = false;
+            this.roleListError = error;
+          });
         },
         error => {
-
+          this.isLoadingRoleList = false;
         }
       );
   }
@@ -122,14 +130,16 @@ export class UserEditComponent implements OnInit {
     this.userService.getAvatarList()
       .subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            this.avatars = [...result.data];
-            this.avaTabSelectedIndex = 1;
-          }
+          console.log(data);
+          this.toolService.apiResult(data, true).then(
+            (result: ResponseData) => {
+
+              this.avatars = [...result.data];
+              this.avaTabSelectedIndex = 1;
+          }).catch(() => {});
         },
         error => {
-
+          console.log(error);
         }
       );
   }
@@ -138,20 +148,20 @@ export class UserEditComponent implements OnInit {
     this.userService.show(id).subscribe(
       (data: ResponseData) => {
         this.isLoading = false;
-        const result = this.toolService.apiResult(data);
-        if (result) {
-          this.user = {...result.data};
-          this.validateForm.setValue({
-            mobile: this.user.mobile,
-            realname: this.user.realname,
-            password: this.user.password,
-            age: this.user.age,
-            roleId: this.user.roleId,
-          });
-          if (this.user.avatarUseSys === 0) {
-            this.avaTabSelectedIndex = 0;
-          }
-        }
+        this.toolService.apiResult(data, false).then(
+          (result: ResponseData) => {
+            this.user = {...result.data};
+            this.validateForm.setValue({
+              mobile: this.user.mobile,
+              realname: this.user.realname,
+              password: this.user.password,
+              age: this.user.age,
+              roleId: this.user.roleId,
+            });
+            if (this.user.avatarUseSys === 0) {
+              this.avaTabSelectedIndex = 0;
+            }
+        }).catch(() => {});
       },
       error => {
         this.isLoading = false;
@@ -209,10 +219,11 @@ export class UserEditComponent implements OnInit {
       this.userService.update(this.user).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            this.router.navigate(['list'], {relativeTo: this.route.parent});
-          }
+          this.toolService.apiResult(data, false).then(
+            (result: ResponseData) => {
+              this.router.navigate(['list'], {relativeTo: this.route.parent});
+            }
+          ).catch(() => {});
         },
         error => {
           this.isLoading = false;

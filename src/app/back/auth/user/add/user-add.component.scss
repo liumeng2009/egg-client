@@ -1,9 +1,17 @@
 nz-card{
-  border-bottom: none;
-}
+   border-bottom: none;
+ }
 ::ng-deep .ant-card-head{
   background-color: #fafafa;
 }
 .ant-card{
   overflow-y: scroll;
 }
+nz-form-control.haserror .ant-select{
+  width:80%;
+  margin-right: 8px;
+}
+button{
+  margin-right: 8px;
+}
+

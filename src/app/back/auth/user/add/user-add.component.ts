@@ -13,6 +13,7 @@ import {NzMessageService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
 import {ConstomValidators} from '../../../../util/validators';
 import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import {CookieService} from 'angular2-cookie/core';
+import {RememberService} from '../../../main/remember.service';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class UserAddComponent implements OnInit {
   user: User = new User(null, null, null, null, null, null, null, null, null);
   isLoading = false;
   roles: Role[] = [];
+  roleList = true;
+  roleListError = '';
+  isLoadingRoleList = false;
   avatars: Avatar[] = [];
   formHeight = {
     height : '0px'
@@ -33,6 +37,7 @@ export class UserAddComponent implements OnInit {
   serverPath = new EduConfig().serverPath;
   uploadPath = this.serverPath + '/api/upload';
   avaTabSelectedIndex = 0;
+  saveBtn = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -43,6 +48,7 @@ export class UserAddComponent implements OnInit {
     private message: NzMessageService,
     private cookieService: CookieService,
     private http: HttpClient,
+    private rememberService: RememberService,
   ) {}
 
 
@@ -54,6 +60,7 @@ export class UserAddComponent implements OnInit {
       age: [1],
       roleId: ['', [ Validators.required ] ]
     });
+    this.auth();
     this.initHeight();
     this.initRoleList();
     this.initAvatarList();
@@ -61,21 +68,64 @@ export class UserAddComponent implements OnInit {
   private initHeight() {
     this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69 )) + 'px';
   }
+  private auth() {
+    const user = this.rememberService.getUser();
+    if (user) {
+      const authArray = this.initAuth('user');
+      this.initComponentAuth(authArray);
+    }
+  }
+  private initAuth(functioncode) {
+    const resultArray = [];
+    const user = this.rememberService.getUser();
+    if (user && user.role && user.role.auth_authInRoles) {
+      const auths = user.role.auth_authInRoles;
+      console.log(auths);
+      for (const auth of auths) {
+        if (auth.auth_opInFunc
+          && auth.auth_opInFunc.auth_function
+          && auth.auth_opInFunc.auth_function.code
+          && auth.auth_opInFunc.auth_function.code === functioncode
+        ) {
+          resultArray.push(auth);
+        }
+      }
+    }
+    return resultArray;
+  }
+  // 根据auth数组，判断页面一些可操作组件的可用/不可用状态
+  private initComponentAuth(authArray) {
+    for (const auth of authArray) {
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'add') {
+        this.saveBtn = true;
+      }
+    }
+  }
+
   private initRoleList() {
+    this.isLoadingRoleList = true ;
     this.roleService.getRoleList(0, 0, '')
       .subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            this.roles = [...result.data.rows];
-            if (this.roles.length > 0) {
-              this.validateForm.patchValue({roleId: this.roles[0].id});
+          this.isLoadingRoleList = false ;
+          this.toolService.apiResult(data, true).then(
+            (result: ResponseData) => {
+              this.roles = [...result.data.rows];
+              if (this.roles.length > 0) {
+                this.validateForm.patchValue({roleId: this.roles[0].id});
+              }
             }
-
-          }
+          ).catch((error) => {
+            this.roleList = false;
+            this.roleListError = error;
+          });
         },
         error => {
-
+          this.isLoadingRoleList = false ;
+          this.roleListError = new EduConfig().ajaxError;
         }
       );
   }
@@ -83,11 +133,12 @@ export class UserAddComponent implements OnInit {
     this.userService.getAvatarList()
       .subscribe(
         (data: ResponseData) => {
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            this.avatars = [...result.data];
-            this.avaTabSelectedIndex = 1;
-          }
+          this.toolService.apiResult(data, true).then(
+            (result: ResponseData) => {
+              this.avatars = [...result.data];
+              this.avaTabSelectedIndex = 1;
+            }
+          ).catch(() => {});
         },
         error => {
 
@@ -164,15 +215,20 @@ export class UserAddComponent implements OnInit {
       this.userService.create(this.user).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
-          const result = this.toolService.apiResult(data);
-          if (result) {
-            this.router.navigate(['list'], {relativeTo: this.route.parent});
-          }
+          this.toolService.apiResult(data, false).then(
+            (result: ResponseData) => {
+              this.router.navigate(['list'], {relativeTo: this.route.parent});
+            }
+          ).then(() => {});
         },
         error => {
           this.isLoading = false;
         }
       );
     }
+  }
+  private returnToList(e) {
+    e.stopPropagation();
+    this.router.navigate(['list'], {relativeTo: this.route.parent});
   }
 }

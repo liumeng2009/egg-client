@@ -69,7 +69,6 @@ export class UserListComponent implements OnInit {
     const user = this.rememberService.getUser();
     if (user && user.role && user.role.auth_authInRoles) {
       const auths = user.role.auth_authInRoles;
-      console.log(auths);
       for (const auth of auths) {
         if (auth.auth_opInFunc
           && auth.auth_opInFunc.auth_function
