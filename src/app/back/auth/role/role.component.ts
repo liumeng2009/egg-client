@@ -13,6 +13,7 @@ export class RoleComponent implements OnInit {
     private router: Router,
   ) {}
   ngOnInit() {
+    console.log('in');
     this.router.navigateByUrl('/admin/auth/role/list');
   }
 }

@@ -10,6 +10,7 @@ import {CookieService} from 'angular2-cookie/core';
 import {NzMessageService} from 'ng-zorro-antd';
 import {EduConfig} from '../../config/config';
 import {RouteList} from '../../app-routes';
+import {MissionService} from './mission.service';
 
 @Component({
   selector: 'app-main-page',
@@ -49,9 +50,11 @@ export class MainComponent implements OnInit {
     // this.routesMenuUse = JSON.parse(JSON.stringify(this.router.config));
     this.routesMenuUse = new RouteList().rl;
     this.initHeight();
-    this.createBreadCrumb();
+    // this.createBreadCrumb();
+    this.pathAutoToList();
     this.initLoginUser();
     this.router.navigateByUrl('/admin/total');
+
   }
   initHeight() {
     const screenHeight = document.documentElement.clientHeight;
@@ -88,7 +91,6 @@ export class MainComponent implements OnInit {
       }));
 
       this.route.firstChild.url.subscribe((url => {
-        console.log(url);
         this.breadcrumb[1].path = this.breadcrumb[0].path + '/' + url[0].path;
       }));
     }
@@ -107,7 +109,6 @@ export class MainComponent implements OnInit {
       }));
 
       this.route.firstChild.firstChild.firstChild.url.subscribe((url => {
-        console.log(url);
         this.breadcrumb[2].path = this.breadcrumb[1].path + '/' + url[0].path;
       }));
     }
@@ -128,7 +129,6 @@ export class MainComponent implements OnInit {
       }));
 
       this.route.firstChild.firstChild.firstChild.firstChild.firstChild.url.subscribe((url => {
-        console.log(url);
         this.breadcrumb[3].path = this.breadcrumb[2].path + '/' + url[0].path;
       }));
     }
@@ -162,6 +162,34 @@ export class MainComponent implements OnInit {
         }
       }
     }
+  }
+
+  private pathAutoToList() {
+    const url = this.location.path();
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd) { // 当导航成功结束时执行
+          let urlNow = event.url;
+          urlNow = urlNow.substring(1, urlNow.length);
+          console.log('导航完成');
+          if (event.url === '/admin') {
+            this.router.navigateByUrl('/admin/total').then(() => {
+              this.createBreadCrumb();
+            });
+          }
+          if (event.url === '/admin/auth/user') {
+            this.router.navigateByUrl('/admin/auth/user/list').then(() => {
+              this.createBreadCrumb();
+            });
+          }
+          if (event.url === '/admin/auth/role') {
+            this.router.navigateByUrl('/admin/auth/role/list').then(() => {
+              this.createBreadCrumb();
+            });
+          }
+          this.createBreadCrumb();
+        }
+      });
   }
 
   private isExistInRouteConfig(pathObj, auths) {
