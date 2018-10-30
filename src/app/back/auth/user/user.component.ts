@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-user-page',
@@ -7,13 +6,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./user.component.scss']
 })
 
-export class UserComponent implements OnInit {
+export class UserComponent {
 
   constructor(
-    private router: Router,
-  ) {}
 
-  ngOnInit() {
-    this.router.navigateByUrl('/admin/auth/user/list');
-  }
+  ) {}
 }
