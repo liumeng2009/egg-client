@@ -52,3 +52,9 @@
   }
 }
 
+::ng-deep .fixed-footer{
+  position: fixed;
+  padding:16px;
+  background-color: transparent;
+  bottom:0px;
+}

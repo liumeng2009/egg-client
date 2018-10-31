@@ -60,13 +60,7 @@
     <button nz-button *ngIf="showAddBtn" (click)="add()">
       <i class="anticon anticon-plus"></i>新增
     </button>
-    <button nz-button *ngIf="!isAllChecked()" (click)="allCheck()">
-      <i class="anticon anticon-check-square"></i>全选
-    </button>
-    <button nz-button *ngIf="isAllChecked()" (click)="allNotCheck()">
-      <i class="anticon anticon-check-square"></i>取消
-    </button>
-    <button nz-button *ngIf="showAddBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
+    <button nz-button [nzType]="'danger'" *ngIf="showAddBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
       <i class="anticon anticon-delete"></i>删除
     </button>
     <button nz-button (click)="refresh()" [title]="'刷新'" >

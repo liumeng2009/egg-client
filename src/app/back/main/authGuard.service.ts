@@ -26,24 +26,24 @@ export class AuthGuard implements CanActivate {
     let func = '';
     let op = '';
     // 处理，得到路径对应的func和op
-    const path = route.routeConfig.path;
-
+    const path = route.routeConfig.path === '' ? route.parent.routeConfig.path : route.routeConfig.path;
+    console.log(path);
     switch (path) {
       case 'add':
-        func = route.parent.routeConfig.path;
+        func = route.parent.parent.routeConfig.path;
         op = 'add';
         break;
       case 'list':
-        func = route.parent.routeConfig.path;
+        func = route.parent.parent.routeConfig.path;
         op = 'list';
         break;
       case ':id':
         // 编辑
-        func = route.parent.routeConfig.path;
+        func = route.parent.parent.routeConfig.path;
         op = 'list';
         break;
       default:
-        func = route.routeConfig.path;
+        func = route.parent.routeConfig.path;
         op = 'menu';
         break;
     }

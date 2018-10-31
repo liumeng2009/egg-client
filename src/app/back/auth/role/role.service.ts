@@ -85,10 +85,12 @@ export class RoleService {
       );
   }
 
-  delete(id): Observable<ResponseData> {
+  delete(ids): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.delete(this.role_url + '/' + id, {headers: headers})
+    return this.http.post(this.role_url + '/delete', {ids: ids}, {
+      headers: headers,
+    })
       .pipe(
         tap((data: ResponseData) => {
 

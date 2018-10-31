@@ -1,50 +1,57 @@
-<nz-card>
-  <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
-    <nz-form-item>
-      <nz-form-label [nzRequired]="true" class="ant-col-6">
-        角色名
-      </nz-form-label>
-      <nz-form-control class="ant-col-16">
-        <input type="text" nz-input formControlName="name">
-        <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入角色名！</nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label class="ant-col-6">
-        备注
-      </nz-form-label>
-      <nz-form-control class="ant-col-16">
-        <textarea formControlName="remark" nz-input rows="2"></textarea>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label class="ant-col-6">
-        备注
-      </nz-form-label>
-      <nz-form-control class="ant-col-16">
-        <nz-table
-          [nzData]="auths">
-          <thead>
-            <th>功能名称</th>
-            <th>权限分配</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let auth of auths">
-              <td>{{auth.name}}{{auth.level}}</td>
-              <td>
-                <label nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked">{{op.label}}</label>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-control class="ant-col-16 ant-col-offset-6">
-        <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
-        <button nz-button type="button" (click)="returnToList($event)">返回</button>
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-</nz-card>
+<nz-layout>
+  <nz-content>
+    <nz-card>
+      <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label [nzRequired]="true" class="ant-col-6">
+            角色名
+          </nz-form-label>
+          <nz-form-control class="ant-col-16">
+            <input type="text" nz-input formControlName="name">
+            <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入角色名！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label class="ant-col-6">
+            管理权限
+          </nz-form-label>
+          <nz-form-control class="ant-col-16">
+            <nz-table
+              [nzData]="auths"
+              [nzSize]="'small'"
+              [nzShowPagination]="false"
+              [nzBordered]="true"
+            >
+              <thead>
+              <tr>
+                <th width="35%">功能名称</th>
+                <th>权限分配</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let auth of auths">
+                <td width="35%">
+                  <i nz-icon class="anticon anticon-folder-open" *ngIf="auth.level===0"></i>
+                  <i nz-icon class="anticon anticon-minus" *ngIf="auth.level!==0"></i>
+                  <i nz-icon class="anticon anticon-file" *ngIf="auth.level!==0"></i>
+                  {{auth.name}}
+                </td>
+                <td>
+                  <label nz-checkbox *ngFor="let op of auth.ops" [nzChecked]="op.checked">{{op.label}}</label>
+                  <!--                <label nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked">{{op.label}}</label>-->
+                </td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-card>
+  </nz-content>
+  <nz-footer class="fixed-footer">
+    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">提交保存</button>
+    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+  </nz-footer>
+</nz-layout>
+
 

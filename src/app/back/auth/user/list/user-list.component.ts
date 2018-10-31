@@ -147,7 +147,7 @@ export class UserListComponent implements OnInit {
     this.roleArray.splice(0, this.roleArray.length);
     for (const trole of this.roles) {
       if (trole.checked === true) {
-        this.roleArray.push( parseInt(trole.id, 10) );
+        this.roleArray.push( trole.id );
       }
     }
     console.log(this.roleArray);

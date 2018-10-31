@@ -2,22 +2,23 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthComponent } from './auth.component';
+import {TokenGuard} from '../main/tokenGuard.service';
 
 
 const routes: Routes = [
   {
     path: '',
     component: AuthComponent,
+    canActivate: [TokenGuard],
+    data: {name: '用户权限管理'},
     children: [
       {
         path: 'user',
         loadChildren: './user/user.module#UserModule',
-        data: {name: '用户管理'},
       },
       {
         path: 'role',
         loadChildren: './role/role.module#RoleModule',
-        data: {name: '角色管理'},
       },
     ]
   }

@@ -21,7 +21,7 @@ export class RoleListComponent implements OnInit {
   private searchkey = '';
   private isLoading = false;
   private roles: Role[] = [];
-  private roleDelete: Role;
+  private roleDelete: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   private tableHeight = {
     y : '0px'
@@ -149,16 +149,19 @@ export class RoleListComponent implements OnInit {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
 
-  private delete(id) {
-    this.roleService.delete(id).subscribe(
+  private delete() {
+    for (const role of this.roles) {
+      if (role.checked) {
+        this.roleDelete.push(role.id);
+      }
+    }
+    this.roleService.delete(this.roleDelete).subscribe(
       (data: ResponseData) => {
         this.toolService.apiResult(data, false).then(
           (result: ResponseData) => {
-            this.roleDelete = {...result.data};
-            console.log(this.roleDelete);
             this.deleteRoleInArray(this.roleDelete);
           }
-        ).then(() => {});
+        ).catch(() => {});
       },
       error => {
 
@@ -166,13 +169,15 @@ export class RoleListComponent implements OnInit {
     );
   }
 
-  private deleteRoleInArray(role: Role) {
+  private deleteRoleInArray(ids: number[]) {
     let index = 0;
     for (const per of this.roles) {
-      if (per.id === role.id) {
-        this.roles.splice(index, 1);
-        this.total--;
-        break;
+      for (const id of ids) {
+        if (per.id === id) {
+          this.roles.splice(index, 1);
+          this.total--;
+          break;
+        }
       }
       index++;
     }
@@ -204,7 +209,6 @@ export class RoleListComponent implements OnInit {
   }
 
   private isAllChecked() {
-    console.log(this.roles);
     for (const role of this.roles) {
       if (!role.checked) {
         return false;

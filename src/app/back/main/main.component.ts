@@ -50,15 +50,15 @@ export class MainComponent implements OnInit {
     // this.routesMenuUse = JSON.parse(JSON.stringify(this.router.config));
     this.routesMenuUse = new RouteList().rl;
     this.initHeight();
-    // this.createBreadCrumb();
+    this.createBreadCrumb();
     this.pathAutoToList();
     this.initLoginUser();
-    this.router.navigateByUrl('/admin/total');
+    // this.router.navigateByUrl('/admin/total');
 
   }
   initHeight() {
     const screenHeight = document.documentElement.clientHeight;
-    this.contentStyle.minHeight = screenHeight - (32 + 64 + 69 + 21 + 16) + 'px';
+    this.contentStyle.minHeight = screenHeight - (32 + 64 + 21 + 8) + 'px';
     this.contentStyle.marginTop = ( 21 + 32) + 'px';
   }
   toggleCollapse() {
@@ -165,11 +165,26 @@ export class MainComponent implements OnInit {
 
   private pathAutoToList() {
     const url = this.location.path();
+    if (url === '/admin') {
+      this.router.navigateByUrl('/admin/total').then(() => {
+        this.createBreadCrumb();
+      });
+    }
+    if (url === '/admin/auth/user') {
+      this.router.navigateByUrl('/admin/auth/user/list').then(() => {
+        this.createBreadCrumb();
+      });
+    }
+    if (url === '/admin/auth/role') {
+      this.router.navigateByUrl('/admin/auth/role/list').then(() => {
+        this.createBreadCrumb();
+      });
+    }
     this.router.events
       .subscribe((event) => {
         if (event instanceof NavigationEnd) { // 当导航成功结束时执行
-          let urlNow = event.url;
-          urlNow = urlNow.substring(1, urlNow.length);
+          // let urlNow = event.url;
+          // urlNow = urlNow.substring(1, urlNow.length);
           if (event.url === '/admin') {
             this.router.navigateByUrl('/admin/total').then(() => {
               this.createBreadCrumb();
