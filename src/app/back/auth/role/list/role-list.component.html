@@ -1,10 +1,10 @@
+
 <nz-table #roleListTable
           [nzData]="roles"
+          [nzSize]="'middle'"
           [nzTitle]="headerTemplate"
           [nzLoading]="isLoading"
-          [nzSize]="'small'"
-          [nzBordered]="true"
-          [nzScroll]="tableHeight"
+          [nzScroll]="false"
           [nzFrontPagination]="'false'"
           [nzTotal]="total"
           [nzPageIndex]="pageIndex"
@@ -13,6 +13,7 @@
 >
   <thead>
   <tr>
+    <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
     <th width="80%">
       名称
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
@@ -35,30 +36,43 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of roleListTable.data">
+    <td width="10%" [nzShowCheckbox]="'true'" [(nzChecked)]="data.checked"></td>
     <td width="80%">{{data.name}}</td>
     <td>
-      <button nz-button *ngIf="showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'编辑'">
-        <i class="anticon anticon-edit"></i>
-      </button>
+      <a *ngIf="showEditBtn" (click)="edit(data.id)">
+        编辑
+      </a>
       <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'查看'">
-        <i class="anticon anticon-file"></i>
+        查看
       </button>
-      <button nz-button *ngIf="showModalBtn" nzType="primary" (click)="editAuth(data.id,data.name)" [title]="'权限'">
+<!--      <button nz-button *ngIf="showModalBtn" nzType="primary" (click)="editAuth(data.id,data.name)" [title]="'权限'">
         <i class="anticon anticon-safety"></i>
-      </button>
-      <button nz-button *ngIf="showDelBtn" nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
+      </button>-->
+<!--      <button nz-button *ngIf="showDelBtn" nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
         <i class="anticon anticon-delete"></i>
-      </button>
+      </button>-->
     </td>
   </tr>
   </tbody>
 </nz-table>
 <ng-template #headerTemplate>
-  <button nz-button *ngIf="showAddBtn" (click)="add()" [nzType]="'primary'" [title]="'新增'">
-    <i class="anticon anticon-plus"></i>
-  </button>
-  <button nz-button (click)="refresh()" [title]="'刷新'" >
-    <i class="anticon anticon-reload"></i>
-  </button>
+  <nz-button-group>
+    <button nz-button *ngIf="showAddBtn" (click)="add()">
+      <i class="anticon anticon-plus"></i>新增
+    </button>
+    <button nz-button *ngIf="!isAllChecked()" (click)="allCheck()">
+      <i class="anticon anticon-check-square"></i>全选
+    </button>
+    <button nz-button *ngIf="isAllChecked()" (click)="allNotCheck()">
+      <i class="anticon anticon-check-square"></i>取消
+    </button>
+    <button nz-button *ngIf="showAddBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
+      <i class="anticon anticon-delete"></i>删除
+    </button>
+    <button nz-button (click)="refresh()" [title]="'刷新'" >
+      <i class="anticon anticon-reload"></i>刷新
+    </button>
+  </nz-button-group>
+
 </ng-template>
 

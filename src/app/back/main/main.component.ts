@@ -68,7 +68,6 @@ export class MainComponent implements OnInit {
   // 这个方法中怪异的一串firstChild应该是因为懒加载的原因，用懒加载的模块，他的上层parent是一个component = null 的东西
   // 希望有好的方案
   private createBreadCrumb() {
-    console.log('生成面包屑');
     this.breadcrumb.splice(0, this.breadcrumb.length);
 
     const firstBread: Bread = {
@@ -171,7 +170,6 @@ export class MainComponent implements OnInit {
         if (event instanceof NavigationEnd) { // 当导航成功结束时执行
           let urlNow = event.url;
           urlNow = urlNow.substring(1, urlNow.length);
-          console.log('导航完成');
           if (event.url === '/admin') {
             this.router.navigateByUrl('/admin/total').then(() => {
               this.createBreadCrumb();

@@ -18,6 +18,28 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+      <nz-form-label class="ant-col-6">
+        备注
+      </nz-form-label>
+      <nz-form-control class="ant-col-16">
+        <nz-table
+          [nzData]="auths">
+          <thead>
+            <th>功能名称</th>
+            <th>权限分配</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let auth of auths">
+              <td>{{auth.name}}{{auth.level}}</td>
+              <td>
+                <label nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked">{{op.label}}</label>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-control class="ant-col-16 ant-col-offset-6">
         <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading">保存</button>
         <button nz-button type="button" (click)="returnToList($event)">返回</button>

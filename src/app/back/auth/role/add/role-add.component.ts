@@ -6,7 +6,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ResponseData} from '../../../../bean/responseData';
 import {ToolService} from '../../../../util/tool.service';
 import {RememberService} from '../../../main/remember.service';
-import {MissionService} from '../../../main/mission.service';
+import {AuthService} from '../../auth.service';
+import {AuthList} from '../../../../bean/auth';
 
 @Component({
   selector: 'app-role-add-page',
@@ -18,6 +19,8 @@ export class RoleAddComponent implements OnInit {
   validateForm: FormGroup;
   role: Role;
   isLoading = false;
+  auths: AuthList[];
+  isLoadingAuthList = false;
   saveBtn = false;
   constructor(
     private fb: FormBuilder,
@@ -26,6 +29,7 @@ export class RoleAddComponent implements OnInit {
     private route: ActivatedRoute,
     private toolService: ToolService,
     private rememberService: RememberService,
+    private authService: AuthService,
   ) {}
 
 
@@ -35,6 +39,7 @@ export class RoleAddComponent implements OnInit {
       remark: [ '' ],
     });
     this.auth();
+    this.getData(0);
   }
   private auth() {
     const user = this.rememberService.getUser();
@@ -71,6 +76,25 @@ export class RoleAddComponent implements OnInit {
         this.saveBtn = true;
       }
     }
+  }
+
+  private getData(roleId) {
+    this.isLoadingAuthList = true;
+    this.authService.getAuthList(roleId).subscribe(
+      (data: ResponseData) => {
+        this.isLoadingAuthList = false;
+        this.toolService.apiResult(data, false).then(
+          (result: ResponseData) => {
+            this.auths = [...result.data];
+            console.log(result);
+            console.log(this.auths);
+          }
+        );
+      },
+      error => {
+        this.isLoadingAuthList = false;
+      }
+    );
   }
 
 

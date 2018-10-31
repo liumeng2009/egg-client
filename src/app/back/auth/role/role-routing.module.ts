@@ -18,14 +18,14 @@ const routes: Routes = [
         data: {name: '列表'},
       },
       {
-        path: 'edit',
-        component: RoleEditComponent,
-        data: {name: '编辑'},
-      },
-      {
         path: 'add',
         component: RoleAddComponent,
         data: {name: '新增'},
+      },
+      {
+        path: ':id',
+        component: RoleEditComponent,
+        data: {name: '编辑'},
       },
     ]
   }

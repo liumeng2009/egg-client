@@ -49,7 +49,8 @@ export class RoleListComponent implements OnInit {
   }
 
   private initHeight() {
-    this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
+    // this.tableHeight.y = false;
+    // (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();
@@ -121,6 +122,9 @@ export class RoleListComponent implements OnInit {
           this.toolService.apiResult(data, false).then(
             (result: ResponseData) => {
               this.roles = [...result.data.rows];
+              for (const r of this.roles) {
+                r.checked = false;
+              }
               this.total = result.data.count;
             }
           ).catch(() => {});
@@ -186,23 +190,26 @@ export class RoleListComponent implements OnInit {
     this.getData(_pageindex, this.pageSize, this.searchkey);
   }
 
-  private editAuth(id, name) {
-    const modal = this.modalService.create({
-      nzTitle: '编辑' + name + '的权限',
-      nzContent: RoleAuthComponent,
-      nzComponentParams: {
-        roleId: id,
-      },
-      nzFooter: [{
-        label: '刷新',
-        loading: (componentInstance) => {
-          return componentInstance.isLoading;
-        },
-        onClick: (componentInstance) => {
-          componentInstance.refresh();
-        }
-      }],
-      nzWidth: 820,
-    });
+  private allCheck(e) {
+    if (e) {
+      for (const role of this.roles) {
+        role.checked = true;
+      }
+    } else {
+      for (const role of this.roles) {
+        role.checked = false;
+      }
+    }
+
+  }
+
+  private isAllChecked() {
+    console.log(this.roles);
+    for (const role of this.roles) {
+      if (!role.checked) {
+        return false;
+      }
+    }
+    return true;
   }
 }
