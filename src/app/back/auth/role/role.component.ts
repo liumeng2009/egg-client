@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-role-page',
@@ -7,13 +6,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./role.component.scss']
 })
 
-export class RoleComponent implements OnInit {
+export class RoleComponent {
 
   constructor(
-    private router: Router,
+
   ) {}
-  ngOnInit() {
-    console.log('in');
-    this.router.navigateByUrl('/admin/auth/role/list');
-  }
 }
