@@ -57,8 +57,8 @@
 </nz-table>
 <ng-template #headerTemplate>
   <nz-button-group>
-    <button nz-button *ngIf="showAddBtn" (click)="add()">
-      <i class="anticon anticon-plus"></i>新增
+    <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add()">
+      <i class="anticon anticon-plus-circle"></i>新增
     </button>
     <button nz-button [nzType]="'danger'" *ngIf="showAddBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
       <i class="anticon anticon-delete"></i>删除

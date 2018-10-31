@@ -26,6 +26,7 @@
               <tr>
                 <th width="35%">功能名称</th>
                 <th>权限分配</th>
+                <th>全选</th>
               </tr>
               </thead>
               <tbody>
@@ -37,8 +38,10 @@
                   {{auth.name}}
                 </td>
                 <td>
-                  <label nz-checkbox *ngFor="let op of auth.ops" [nzChecked]="op.checked">{{op.label}}</label>
-                  <!--                <label nz-checkbox *ngFor="let op of auth.ops" [(ngModel)]="op.checked">{{op.label}}</label>-->
+                  <label nz-checkbox *ngFor="let op of auth.ops" [(nzChecked)]="op.checked">{{op.label}}</label>
+                </td>
+                <td>
+                  <label nz-checkbox [nzChecked]="isAllCheckRow(auth.ops)" (nzCheckedChange)="allCheckRow($event,auth.ops)"></label>
                 </td>
               </tr>
               </tbody>
@@ -49,7 +52,10 @@
     </nz-card>
   </nz-content>
   <nz-footer class="fixed-footer">
-    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">提交保存</button>
+    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
+      <i class="anticon anticon-save"></i>
+      提交保存
+    </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
   </nz-footer>
 </nz-layout>

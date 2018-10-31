@@ -9,6 +9,7 @@ import {CookieService} from 'angular2-cookie/core';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 import {Role} from '../../../bean/role';
+import {Auth} from '../../../bean/auth';
 
 
 @Injectable()
@@ -49,10 +50,10 @@ export class RoleService {
       );
   }
 
-  create(role: Role): Observable<ResponseData> {
+  create(role: Role, auths: number[]): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.role_url, role, {headers: headers})
+    return this.http.post(this.role_url, {role: role, auths: auths}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

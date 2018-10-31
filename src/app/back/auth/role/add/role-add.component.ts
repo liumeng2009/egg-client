@@ -7,7 +7,7 @@ import {ResponseData} from '../../../../bean/responseData';
 import {ToolService} from '../../../../util/tool.service';
 import {RememberService} from '../../../main/remember.service';
 import {AuthService} from '../../auth.service';
-import {AuthList} from '../../../../bean/auth';
+import {Auth, AuthList} from '../../../../bean/auth';
 
 @Component({
   selector: 'app-role-add-page',
@@ -20,6 +20,7 @@ export class RoleAddComponent implements OnInit {
   role: Role;
   isLoading = false;
   auths: AuthList[];
+  authsSubmit: number[] = [];
   isLoadingAuthList = false;
   saveBtn = false;
   constructor(
@@ -77,6 +78,26 @@ export class RoleAddComponent implements OnInit {
     }
   }
 
+  private isAllCheckRow(ops) {
+    for (const op of ops) {
+      if (!op.checked) {
+        return false;
+      }
+    }
+    return true;
+  }
+  private allCheckRow(e, ops) {
+    if (e) {
+      for (const op of ops) {
+        op.checked = true;
+      }
+    } else {
+      for (const op of ops) {
+        op.checked = false;
+      }
+    }
+  }
+
   private getData(roleId) {
     this.isLoadingAuthList = true;
     this.authService.getAuthList(roleId).subscribe(
@@ -107,7 +128,14 @@ export class RoleAddComponent implements OnInit {
       const name = this.validateForm.get('name').value;
       const remark = this.validateForm.get('remark').value;
       this.role = new Role(null, name, remark, null);
-      this.roleService.create(this.role).subscribe(
+      for (const auth of this.auths) {
+        for (const op of auth.ops) {
+          if (op.checked) {
+            this.authsSubmit.push(op.value);
+          }
+        }
+      }
+      this.roleService.create(this.role, this.authsSubmit).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
           this.toolService.apiResult(data, false).then(

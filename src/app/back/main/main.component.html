@@ -55,7 +55,12 @@
     <nz-layout>
       <nz-content style="margin:0 16px;">
         <nz-breadcrumb style="padding:16px 0px;position: fixed;background-color: #f0f2f5;width: 100%;z-index: 999;">
-          <nz-breadcrumb-item *ngFor="let bread of breadcrumb">
+          <button nz-button (click)="back()" style="margin-right: 16px" >
+            <i class="anticon anticon-rollback"></i>
+            返回
+          </button>
+          <nz-breadcrumb-item *ngFor="let bread of breadcrumb;index as i" letIndex>
+            <i class="anticon anticon-home" *ngIf="i===0"></i>
             <a routerLink="{{bread.path}}" routerLinkActive="active" >{{bread.name}}</a>
           </nz-breadcrumb-item>
         </nz-breadcrumb>

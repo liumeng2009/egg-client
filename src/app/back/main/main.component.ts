@@ -58,8 +58,8 @@ export class MainComponent implements OnInit {
   }
   initHeight() {
     const screenHeight = document.documentElement.clientHeight;
-    this.contentStyle.minHeight = screenHeight - (32 + 64 + 21 + 8) + 'px';
-    this.contentStyle.marginTop = ( 21 + 32) + 'px';
+    this.contentStyle.minHeight = screenHeight - (64 + 64 + 8) + 'px';
+    this.contentStyle.marginTop = '64px';
   }
   toggleCollapse() {
     this.collapsed = !this.collapsed;
@@ -267,5 +267,8 @@ export class MainComponent implements OnInit {
       setTimeout(() => {
         this.router.navigateByUrl('admin/login');
       }, 1000);
+  }
+  private back() {
+    window.history.go(-1);
   }
 }
