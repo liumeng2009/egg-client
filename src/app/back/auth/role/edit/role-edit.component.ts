@@ -202,12 +202,12 @@ export class RoleEditComponent implements OnInit {
     });
   }
 
-  private refresh() {
+  refresh() {
     this.route.params.subscribe((params: Params) => {
       this.getData(params.id);
     });
   }
-  private submitForm() {
+  submitForm() {
     console.log('submit');
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
@@ -232,7 +232,7 @@ export class RoleEditComponent implements OnInit {
       );
     }
   }
-  private returnToList(e) {
+  returnToList(e) {
     e.stopPropagation();
     this.router.navigate(['list'], {relativeTo: this.route.parent});
   }

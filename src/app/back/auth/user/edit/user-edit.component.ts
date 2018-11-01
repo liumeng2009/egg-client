@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-
-
 import {EduConfig} from '../../../../config/config';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../../bean/user';
@@ -14,7 +12,6 @@ import {UserService} from '../user.service';
 import {ToolService} from '../../../../util/tool.service';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
 import {RememberService} from '../../../main/remember.service';
-import {MissionService} from '../../../main/mission.service';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -24,17 +21,15 @@ import {MissionService} from '../../../main/mission.service';
 
 export class UserEditComponent implements OnInit {
   validateForm: FormGroup;
-  user: User = new User(null, null, null, null, null, null, null, null, null, false);
+  user: User = new User(null, null, null, null, null, null, null, null, null, null, false);
   isLoading = false;
+  isSubmitLoading = false;
   showEditBtn = false;
   roles: Role[] = [];
   roleList = true;
   roleListError = '';
   isLoadingRoleList = false;
   avatars: Avatar[] = [];
-  formHeight = {
-    height : '0px'
-  }
   serverPath = new EduConfig().serverPath;
   uploadPath = this.serverPath + '/api/upload';
   avaTabSelectedIndex = 0;
@@ -55,18 +50,16 @@ export class UserEditComponent implements OnInit {
       realname: [ '' ],
       password: [ '123456', [ Validators.required ] ],
       age: [1],
+      isAdmin: [false, [ Validators.required ] ],
       roleId: ['', [ Validators.required ] ]
     });
     this.validateForm.get('mobile').disable();
-    this.initHeight();
+    this.auth();
     this.initRoleList();
     this.initAvatarList();
     this.route.params.subscribe((params: Params) => {
       this.getData(params.id);
     });
-  }
-  private initHeight() {
-    this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69 )) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();
@@ -157,6 +150,7 @@ export class UserEditComponent implements OnInit {
               realname: this.user.realname,
               password: this.user.password,
               age: this.user.age,
+              isAdmin: this.user.isAdmin,
               roleId: this.user.roleId,
             });
             if (this.user.avatarUseSys === 0) {
@@ -200,13 +194,13 @@ export class UserEditComponent implements OnInit {
       this.user.avatar = info.file.response.data.path;
     }
   }
-  private submitForm() {
+  submitForm() {
+    this.isSubmitLoading = true
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
       this.validateForm.controls[ i ].updateValueAndValidity();
     }
     if (this.validateForm.valid) {
-      this.isLoading = true;
       const mobile = this.validateForm.get('mobile').value;
       const realname = this.validateForm.get('realname').value;
       const password = this.validateForm.get('password').value;
@@ -219,7 +213,7 @@ export class UserEditComponent implements OnInit {
       this.user.roleId = roleId;
       this.userService.update(this.user).subscribe(
         (data: ResponseData) => {
-          this.isLoading = false;
+          this.isSubmitLoading = false;
           this.toolService.apiResult(data, false).then(
             (result: ResponseData) => {
               this.router.navigate(['list'], {relativeTo: this.route.parent});
@@ -227,17 +221,17 @@ export class UserEditComponent implements OnInit {
           ).catch(() => {});
         },
         error => {
-          this.isLoading = false;
+          this.isSubmitLoading = false;
         }
       );
     }
   }
-  private refresh() {
+  refresh() {
     this.route.params.subscribe((params: Params) => {
       this.getData(params.id);
     });
   }
-  private returnToList(e) {
+  returnToList(e) {
     e.stopPropagation();
     this.router.navigate(['list'], {relativeTo: this.route.parent});
   }

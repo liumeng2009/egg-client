@@ -12,9 +12,8 @@ import {EduConfig} from '../../../../config/config';
 import {NzMessageService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
 import {ConstomValidators} from '../../../../util/validators';
 import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
 import {RememberService} from '../../../main/remember.service';
-import {MissionService} from '../../../main/mission.service';
 
 
 @Component({
@@ -25,7 +24,7 @@ import {MissionService} from '../../../main/mission.service';
 
 export class UserAddComponent implements OnInit {
   validateForm: FormGroup;
-  user: User = new User(null, null, null, null, null, null, null, null, null, false);
+  user: User = new User(null, null, null, null, null, null, null, null, null, null, false);
   isLoading = false;
   roles: Role[] = [];
   roleList = true;
@@ -194,7 +193,7 @@ export class UserAddComponent implements OnInit {
     });
   }
 
-  private submitForm() {
+  submitForm() {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
       this.validateForm.controls[ i ].updateValueAndValidity();
@@ -227,7 +226,7 @@ export class UserAddComponent implements OnInit {
       );
     }
   }
-  private returnToList(e) {
+  returnToList(e) {
     e.stopPropagation();
     this.router.navigate(['list'], {relativeTo: this.route.parent});
   }

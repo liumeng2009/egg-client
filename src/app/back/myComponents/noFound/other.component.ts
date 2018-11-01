@@ -17,7 +17,7 @@ export class OtherComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('页面未找到');
   }
-  private goBack() {
+  goBack() {
     this.lo.back();
   }
 }

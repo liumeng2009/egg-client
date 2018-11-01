@@ -4,6 +4,7 @@ export class User {
     public realname: string,
     public password: string,
     public age: number,
+    public isAdmin: boolean,
     public roleId: any,
     public role: any,
     public avatar: string,

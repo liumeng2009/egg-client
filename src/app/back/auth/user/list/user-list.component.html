@@ -13,6 +13,7 @@
 >
   <thead>
   <tr>
+    <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
     <th width="30%">
       手机号（登录用户名）
     </th>
@@ -28,6 +29,7 @@
           </ul>
           <div class="ant-table-filter-dropdown-btns">
             <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" ><span>确定</span></a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoSearchKey()" ><span>重置</span></a>
           </div>
         </div>
       </nz-dropdown>
@@ -55,15 +57,16 @@
         <i nz-icont ype="loading" theme="outline" *ngIf="isLoadingRoleList"></i>
       </span>
     </th>
-    <th width="20%">操作</th>
+    <th width="10%">操作</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of roleListTable.data">
+    <td width="10%" [nzShowCheckbox]="'true'" [(nzChecked)]="data.checked"></td>
     <td width="30%">{{data.mobile}}</td>
     <td width="20%">{{data.realname}}</td>
     <td width="30%">{{data.role?.name}}</td>
-    <td width="20%">
+    <td width="10%">
       <a *ngIf="showEditBtn" nzType="primary" (click)="edit(data.id)">
         编辑
       </a>

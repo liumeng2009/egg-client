@@ -5,11 +5,10 @@ import {catchError, tap} from 'rxjs/operators';
 
 import {EduConfig} from '../../../config/config';
 
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 import {Role} from '../../../bean/role';
-import {Auth} from '../../../bean/auth';
 
 
 @Injectable()

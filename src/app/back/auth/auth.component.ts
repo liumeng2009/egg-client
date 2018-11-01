@@ -9,12 +9,12 @@ import { Component } from '@angular/core';
 })
 
 export class AuthComponent {
-  private showInfo = true;
+  showInfo = true;
 
-  private onActivate() {
+  onActivate(e) {
     this.showInfo = false;
   }
-  private onDeactivate() {
+  onDeactivate(e) {
     this.showInfo = true;
   }
 }

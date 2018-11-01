@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
 import * as moment from 'moment';
 import {LoginService} from './login.service';
 import {User} from '../../bean/user';
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     if (this.validateForm.valid) {
       const mobile = this.validateForm.get('userName').value;
       const password = this.validateForm.get('password').value;
-      const user: User = new User(null, null, password, null,
+      const user: User = new User(null, null, password, null, null,
         null, null, null, null, mobile, false);
       const urlTree = this.router.parseUrl(this.router.url);
       const queryParams = urlTree.queryParams;

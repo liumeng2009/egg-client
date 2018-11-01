@@ -23,16 +23,16 @@ const routes: Routes = [
         data: {name: '列表'},
       },
       {
-        path: ':id',
-        component: UserEditComponent,
-        canActivate: [TokenGuard, AuthGuard],
-        data: {name: '编辑'},
-      },
-      {
         path: 'add',
         component: UserAddComponent,
         canActivate: [TokenGuard, AuthGuard],
         data: {name: '新增'},
+      },
+      {
+        path: ':id',
+        component: UserEditComponent,
+        canActivate: [TokenGuard, AuthGuard],
+        data: {name: '编辑'},
       },
     ]
   }

@@ -6,7 +6,7 @@ import {Bread} from '../../bean/bread';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {User} from '../../bean/user';
 import {RememberService} from './remember.service';
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
 import {NzMessageService} from 'ng-zorro-antd';
 import {EduConfig} from '../../config/config';
 import {RouteList} from '../../app-routes';
@@ -182,7 +182,6 @@ export class MainComponent implements OnInit {
     }
     this.router.events
       .subscribe((event) => {
-        console.log(event);
         if (event instanceof NavigationEnd) { // 当导航成功结束时执行
           // let urlNow = event.url;
           // urlNow = urlNow.substring(1, urlNow.length);
@@ -247,7 +246,7 @@ export class MainComponent implements OnInit {
     this.fixRouteConfig(this.user.role.auth_authInRoles);
   }
 
-  private getAvatarImageUrl(user) {
+  getAvatarImageUrl(user) {
     if (user) {
       if (user.avatar) {
         if (user.avatarUseSys === 0) {
@@ -262,14 +261,33 @@ export class MainComponent implements OnInit {
     }
   }
 
-  private confirmExit() {
+  confirmExit() {
       this.cookieService.remove('eduToken');
       this.message.warning(new EduConfig().closing);
       setTimeout(() => {
-        this.router.navigateByUrl('admin/login');
+        // this.router.navigateByUrl('admin/login');
+        this.gotoLoginPage();
       }, 1000);
   }
-  private back() {
+  private rememberUrl() {
+    return this.location.path();
+  }
+  private gotoLoginPage() {
+    const urlTree = this.router.parseUrl(this.router.url);
+    const queryParams = urlTree.queryParams;
+    const rememberUrl = this.rememberUrl();
+    if (queryParams.redirectTo) {
+
+    } else {
+      queryParams.redirectTo = rememberUrl;
+    }
+    if (queryParams.redirectTo !== '' && queryParams.redirectTo.indexOf('login') < 0) {
+      this.router.navigate(['/admin/login'], {queryParams: queryParams});
+    } else {
+      this.router.navigate(['/admin/login']);
+    }
+  }
+  back() {
     window.history.go(-1);
   }
 }

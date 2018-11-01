@@ -18,17 +18,17 @@ import {MissionService} from '../../../main/mission.service';
 
 export class RoleListComponent implements OnInit {
 
-  private searchkey = '';
-  private isLoading = false;
-  private roles: Role[] = [];
-  private roleDelete: number[] = [];
+  searchkey = '';
+  isLoading = false;
+  roles: Role[] = [];
+  roleDelete: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
-  private tableHeight = {
+  tableHeight = {
     y : '0px'
   }
-  private total = 0;
-  private pageSize = new EduConfig().pageSize;
-  private pageIndex = 1;
+  total = 0;
+  pageSize = new EduConfig().pageSize;
+  pageIndex = 1;
   showAddBtn = false;
   showEditBtn = false;
   showDelBtn = false;
@@ -134,10 +134,10 @@ export class RoleListComponent implements OnInit {
         }
       );
   }
-  private refresh() {
+  refresh() {
     this.getData(this.pageIndex, this.pageSize, this.searchkey);
   }
-  private refreshNoSearchKey() {
+  refreshNoSearchKey() {
     this.searchkey = '';
     this.getData(this.pageIndex, this.pageSize, this.searchkey);
   }
@@ -192,12 +192,12 @@ export class RoleListComponent implements OnInit {
     }
   }
 
-  private pageChanged(_pageindex) {
+  pageChanged(_pageindex) {
     this.pageIndex = _pageindex;
     this.getData(_pageindex, this.pageSize, this.searchkey);
   }
 
-  private allCheck(e) {
+  allCheck(e) {
     if (e) {
       for (const role of this.roles) {
         role.checked = true;
@@ -210,7 +210,7 @@ export class RoleListComponent implements OnInit {
 
   }
 
-  private isAllChecked() {
+  isAllChecked() {
     for (const role of this.roles) {
       if (!role.checked) {
         return false;

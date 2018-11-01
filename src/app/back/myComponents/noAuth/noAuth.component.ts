@@ -10,7 +10,7 @@ import {Title} from '@angular/platform-browser';
 
 export class NoAuthComponent implements OnInit {
 
-  private second = 5;
+  second = 5;
   constructor(
     private title: Title,
     private router: Router,
@@ -21,7 +21,7 @@ export class NoAuthComponent implements OnInit {
     this.goSecond();
   }
 
-  private goSecond() {
+  goSecond() {
     setInterval(() => {
       this.second--;
       if (this.second === 0) {
@@ -30,7 +30,7 @@ export class NoAuthComponent implements OnInit {
     }, 1000);
   }
 
-  private goMain() {
+  goMain() {
     this.router.navigate(['../admin/total'], {relativeTo: this.route});
   }
 }

@@ -6,10 +6,10 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 import {EduConfig} from '../../config/config';
 
-import {CookieService} from 'angular2-cookie/core';
 
 import {ResponseData} from '../../bean/responseData';
 import {Auth} from '../../bean/auth';
+import {CookieService} from 'ngx-cookie';
 
 @Injectable()
 export class AuthService {

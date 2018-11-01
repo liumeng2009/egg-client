@@ -167,7 +167,11 @@ export class UserListComponent implements OnInit {
         }
       );
   }
-  private refresh() {
+  refresh() {
+    this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
+  }
+  refreshNoSearchKey() {
+    this.searchkey = '';
     this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
   }
   private add() {
@@ -187,7 +191,7 @@ export class UserListComponent implements OnInit {
       (data: ResponseData) => {
         this.isLoadingDelete = false;
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
-          this.deleteRoleInArray(this.userDelete);
+          this.deleteUserInArray(this.userDelete);
         }).catch(() => {});
       },
       error => {
@@ -195,7 +199,7 @@ export class UserListComponent implements OnInit {
       }
     );
   }
-  private deleteRoleInArray(ids: number[]) {
+  private deleteUserInArray(ids: number[]) {
     for (const id of ids) {
       let index = 0;
       for (const per of this.users) {
@@ -215,8 +219,29 @@ export class UserListComponent implements OnInit {
       }
     }
   }
-  private pageChanged(_pageindex) {
+  pageChanged(_pageindex) {
     this.pageIndex = _pageindex;
     this.getData(_pageindex, this.pageSize, this.searchkey, this.roleArray);
+  }
+  allCheck(e) {
+    if (e) {
+      for (const user of this.users) {
+        user.checked = true;
+      }
+    } else {
+      for (const user of this.users) {
+        user.checked = false;
+      }
+    }
+
+  }
+
+  isAllChecked() {
+    for (const user of this.users) {
+      if (!user.checked) {
+        return false;
+      }
+    }
+    return true;
   }
 }

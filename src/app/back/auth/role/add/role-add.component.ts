@@ -7,7 +7,7 @@ import {ResponseData} from '../../../../bean/responseData';
 import {ToolService} from '../../../../util/tool.service';
 import {RememberService} from '../../../main/remember.service';
 import {AuthService} from '../../auth.service';
-import {Auth, AuthList} from '../../../../bean/auth';
+import {AuthList} from '../../../../bean/auth';
 
 @Component({
   selector: 'app-role-add-page',
@@ -118,7 +118,7 @@ export class RoleAddComponent implements OnInit {
   }
 
 
-  private submitForm() {
+  submitForm() {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
       this.validateForm.controls[ i ].updateValueAndValidity();
@@ -150,7 +150,7 @@ export class RoleAddComponent implements OnInit {
       );
     }
   }
-  private returnToList(e) {
+  returnToList(e) {
     e.stopPropagation();
     this.router.navigate(['list'], {relativeTo: this.route.parent});
   }
