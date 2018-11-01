@@ -85,10 +85,10 @@ export class UserService {
         catchError(this.handleError<any>())
       );
   }
-  delete(id): Observable<ResponseData> {
+  delete(ids): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.delete(this.user_url + '/' + id, {headers: headers})
+    return this.http.post(this.user_url + '/delete', {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

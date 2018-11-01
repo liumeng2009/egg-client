@@ -23,16 +23,13 @@ export class UserListComponent implements OnInit {
   isLoading = false;
   noResult = new EduConfig().noResult;
   users: User[] = [];
+  private userDelete: number[] = [];
   roles: Role[] = [];
   roleArray: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
-  tableHeight = {
-    y : '0px'
-  }
   total = 0;
   pageSize = new EduConfig().pageSize;
   pageIndex = 1;
-  userDelete: User;
   isLoadingDelete = false;
   showAddBtn = false;
   showEditBtn = false;
@@ -56,7 +53,7 @@ export class UserListComponent implements OnInit {
     this.initRoleList();
   }
   private initHeight() {
-    this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
+    // this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();
@@ -179,13 +176,17 @@ export class UserListComponent implements OnInit {
   private edit(id) {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
-  private delete(id) {
+  private delete() {
     this.isLoadingDelete = true;
-    this.userService.delete(id).subscribe(
+    for (const user of this.users) {
+      if (user.checked) {
+        this.userDelete.push(user.id);
+      }
+    }
+    this.userService.delete(this.userDelete).subscribe(
       (data: ResponseData) => {
         this.isLoadingDelete = false;
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
-          this.userDelete = {...result.data};
           this.deleteRoleInArray(this.userDelete);
         }).catch(() => {});
       },
@@ -194,15 +195,17 @@ export class UserListComponent implements OnInit {
       }
     );
   }
-  private deleteRoleInArray(user: User) {
-    let index = 0;
-    for (const per of this.users) {
-      if (per.id === user.id) {
-        this.users.splice(index, 1);
-        this.total--;
-        break;
+  private deleteRoleInArray(ids: number[]) {
+    for (const id of ids) {
+      let index = 0;
+      for (const per of this.users) {
+        if (per.id === id) {
+          this.users.splice(index, 1);
+          this.total--;
+          break;
+        }
+        index++;
       }
-      index++;
     }
     if (this.users.length === 0) {
       // 被删完了,往前页跳

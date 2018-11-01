@@ -24,7 +24,7 @@ import {MissionService} from '../../../main/mission.service';
 
 export class UserEditComponent implements OnInit {
   validateForm: FormGroup;
-  user: User = new User(null, null, null, null, null, null, null, null, null);
+  user: User = new User(null, null, null, null, null, null, null, null, null, false);
   isLoading = false;
   showEditBtn = false;
   roles: Role[] = [];

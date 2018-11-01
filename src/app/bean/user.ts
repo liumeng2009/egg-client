@@ -1,6 +1,6 @@
 export class User {
   constructor(
-    public id: string,
+    public id: number,
     public realname: string,
     public password: string,
     public age: number,
@@ -9,5 +9,6 @@ export class User {
     public avatar: string,
     public avatarUseSys: number,
     public mobile: string,
+    public checked: boolean,
   ) {  }
 }

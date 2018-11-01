@@ -182,6 +182,7 @@ export class MainComponent implements OnInit {
     }
     this.router.events
       .subscribe((event) => {
+        console.log(event);
         if (event instanceof NavigationEnd) { // 当导航成功结束时执行
           // let urlNow = event.url;
           // urlNow = urlNow.substring(1, urlNow.length);

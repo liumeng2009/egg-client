@@ -95,3 +95,16 @@
     </nz-form-item>
   </form>
 </nz-card>
+
+<nz-layout>
+  <nz-content>
+
+  </nz-content>
+  <nz-footer class="fixed-footer">
+    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
+      <i class="anticon anticon-save"></i>
+      提交保存
+    </button>
+    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+  </nz-footer>
+</nz-layout>

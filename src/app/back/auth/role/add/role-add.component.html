@@ -21,17 +21,18 @@
               [nzSize]="'small'"
               [nzShowPagination]="false"
               [nzBordered]="true"
+              [nzScroll]="{x:'700px'}"
             >
               <thead>
               <tr>
-                <th width="35%">功能名称</th>
+                <th nzWidth="150px" nzLeft="0px">功能名称</th>
                 <th>权限分配</th>
-                <th>全选</th>
+                <th nzWidth="100px" nzRight="0px">全选</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let auth of auths">
-                <td width="35%">
+                <td nzLeft="0px">
                   <i nz-icon class="anticon anticon-folder-open" *ngIf="auth.level===0"></i>
                   <i nz-icon class="anticon anticon-minus" *ngIf="auth.level!==0"></i>
                   <i nz-icon class="anticon anticon-file" *ngIf="auth.level!==0"></i>
@@ -40,7 +41,7 @@
                 <td>
                   <label nz-checkbox *ngFor="let op of auth.ops" [(nzChecked)]="op.checked">{{op.label}}</label>
                 </td>
-                <td>
+                <td nzRight="0px">
                   <label nz-checkbox [nzChecked]="isAllCheckRow(auth.ops)" (nzCheckedChange)="allCheckRow($event,auth.ops)"></label>
                 </td>
               </tr>

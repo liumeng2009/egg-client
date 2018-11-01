@@ -25,7 +25,7 @@ import {MissionService} from '../../../main/mission.service';
 
 export class UserAddComponent implements OnInit {
   validateForm: FormGroup;
-  user: User = new User(null, null, null, null, null, null, null, null, null);
+  user: User = new User(null, null, null, null, null, null, null, null, null, false);
   isLoading = false;
   roles: Role[] = [];
   roleList = true;
@@ -38,7 +38,7 @@ export class UserAddComponent implements OnInit {
   serverPath = new EduConfig().serverPath;
   uploadPath = this.serverPath + '/api/upload';
   avaTabSelectedIndex = 0;
-  saveBtn = false;
+  saveBtn = true;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -61,7 +61,7 @@ export class UserAddComponent implements OnInit {
       age: [1],
       roleId: ['', [ Validators.required ] ]
     });
-    this.auth();
+    // this.auth();
     this.initHeight();
     this.initRoleList();
     this.initAvatarList();
