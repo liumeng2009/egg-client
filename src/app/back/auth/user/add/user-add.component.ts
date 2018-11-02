@@ -58,7 +58,8 @@ export class UserAddComponent implements OnInit {
       realname: [ '' ],
       password: [ '123456', [ Validators.required ] ],
       age: [1],
-      roleId: ['', [ Validators.required ] ]
+      roleId: ['', [ Validators.required ] ],
+      isAdmin:[true],
     });
     // this.auth();
     this.initHeight();
@@ -210,7 +211,6 @@ export class UserAddComponent implements OnInit {
       this.user.password = password;
       this.user.age = age;
       this.user.roleId = roleId;
-      console.log(this.user);
       this.userService.create(this.user).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
