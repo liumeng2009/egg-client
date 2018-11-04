@@ -12,6 +12,20 @@ export class RouteList {
             {path: 'add', data: {name: '新增'}},
             {path: ':id', data: {name: '编辑'}},
           ]},
-      ]}
+      ]
+    },
+    {path: 'content', data: {name: '网站内容管理', icon: 'book'}, children: [
+        { path: 'article', data: {name: '内容管理'}, children: [
+            {path: 'list', data: {name: '列表'}},
+            {path: 'add', data: {name: '新增'}},
+            {path: ':id', data: {name: '编辑'}},
+          ]},
+        { path: 'category', data: {name: '栏目管理'}, children: [
+            {path: 'list', data: {name: '列表'}},
+            {path: 'add', data: {name: '新增'}},
+            {path: ':id', data: {name: '编辑'}},
+          ]},
+      ]
+    }
   ];
 }

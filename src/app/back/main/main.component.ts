@@ -72,14 +72,16 @@ export class MainComponent implements OnInit {
 
     const firstBread: Bread = {
       name: '首页',
-      path: '/admin'
+      path: '/admin',
+      disabled: false,
     };
     this.title.setTitle(firstBread.name);
     this.breadcrumb.push(firstBread);
     if (this.route.firstChild && this.route.firstChild.firstChild) {
       const secondBread: Bread = {
         name: '',
-        path: ''
+        path: '',
+        disabled: false,
       };
 
       this.breadcrumb.push(secondBread);
@@ -92,12 +94,15 @@ export class MainComponent implements OnInit {
       this.route.firstChild.url.subscribe((url => {
         this.breadcrumb[1].path = this.breadcrumb[0].path + '/' + url[0].path;
       }));
+    } else {
+      this.breadcrumb[0].disabled = true;
     }
     if (this.route.firstChild && this.route.firstChild.firstChild && this.route.firstChild.firstChild.firstChild
       && this.route.firstChild.firstChild.firstChild.firstChild) {
       const thirdBread: Bread = {
         name: '',
-        path: ''
+        path: '',
+        disabled: false,
       };
 
       this.breadcrumb.push(thirdBread);
@@ -110,6 +115,8 @@ export class MainComponent implements OnInit {
       this.route.firstChild.firstChild.firstChild.url.subscribe((url => {
         this.breadcrumb[2].path = this.breadcrumb[1].path + '/' + url[0].path;
       }));
+    } else {
+      this.breadcrumb[1].disabled = true;
     }
 
     if (this.route.firstChild && this.route.firstChild.firstChild && this.route.firstChild.firstChild.firstChild
@@ -117,7 +124,8 @@ export class MainComponent implements OnInit {
        && this.route.firstChild.firstChild.firstChild.firstChild.firstChild) {
       const fourBread: Bread = {
         name: '',
-        path: ''
+        path: '',
+        disabled: false,
       };
 
       this.breadcrumb.push(fourBread);
@@ -130,7 +138,13 @@ export class MainComponent implements OnInit {
       this.route.firstChild.firstChild.firstChild.firstChild.firstChild.url.subscribe((url => {
         this.breadcrumb[3].path = this.breadcrumb[2].path + '/' + url[0].path;
       }));
+    } else {
+      this.breadcrumb[2].disabled = true;
     }
+    if (this.breadcrumb.length > 3) {
+      this.breadcrumb[3].disabled = true;
+    }
+    console.log(this.breadcrumb);
 
   }
 
@@ -180,6 +194,16 @@ export class MainComponent implements OnInit {
         this.createBreadCrumb();
       });
     }
+    if (url === '/admin/content/category') {
+      this.router.navigateByUrl('/admin/content/category/list').then(() => {
+        this.createBreadCrumb();
+      });
+    }
+    if (url === '/admin/content/article') {
+      this.router.navigateByUrl('/admin/content/article/list').then(() => {
+        this.createBreadCrumb();
+      });
+    }
     this.router.events
       .subscribe((event) => {
         if (event instanceof NavigationEnd) { // 当导航成功结束时执行
@@ -197,6 +221,16 @@ export class MainComponent implements OnInit {
           }
           if (event.url === '/admin/auth/role') {
             this.router.navigateByUrl('/admin/auth/role/list').then(() => {
+              this.createBreadCrumb();
+            });
+          }
+          if (event.url === '/admin/content/category') {
+            this.router.navigateByUrl('/admin/content/category/list').then(() => {
+              this.createBreadCrumb();
+            });
+          }
+          if (event.url === '/admin/content/article') {
+            this.router.navigateByUrl('/admin/content/article/list').then(() => {
               this.createBreadCrumb();
             });
           }

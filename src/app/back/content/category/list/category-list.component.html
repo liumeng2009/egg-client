@@ -1,0 +1,62 @@
+<nz-table #roleListTable
+          [nzData]="categories"
+          [nzSize]="'middle'"
+          [nzTitle]="headerTemplate"
+          [nzLoading]="isLoading"
+          [nzScroll]="false"
+          [nzHideOnSinglePage]="true"
+>
+  <thead>
+  <tr>
+    <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
+    <th width="80%">
+      名称
+    </th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of roleListTable.data">
+    <td width="10%" [nzShowCheckbox]="'true'" [(nzChecked)]="data.checked"></td>
+    <td width="80%">
+      <span style="margin-right: 16px;" *ngFor="let space of data.level|numberArray"></span>
+      <i nz-icon type="folder-open" theme="outline" *ngIf="data.level === 0"></i>
+      <i nz-icon type="file" theme="outline" *ngIf="data.level !== 0"></i>
+      {{data.name}}
+    </td>
+    <td>
+      <a *ngIf="showEditBtn" (click)="edit(data.id)">
+        编辑
+      </a>
+      <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'查看'">
+        查看
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #headerTemplate>
+  <nz-button-group>
+    <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add(0)">
+      <i nz-icon type="plus-circle" theme="outline"></i>
+      新增
+    </button>
+    <button nz-button [nzType]="'danger'" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
+      <i nz-icon type="delete" theme="outline"></i>删除
+    </button>
+    <button nz-button (click)="refresh()" [title]="'刷新'" >
+      <i nz-icon type="reload" theme="outline"></i>刷新
+    </button>
+  </nz-button-group>
+
+  <label style="margin-left: 24px;">
+    当前频道：
+    <nz-select style="width: 120px;" [(ngModel)]="channelSelected" nzAllowClear="false" (ngModelChange)="channelSelectChanged($event)">
+      <nz-option *ngFor="let channel of channels" [nzValue]="channel.id" [nzLabel]="channel.name"></nz-option>
+    </nz-select>
+    <span nz-tooltip *ngIf="!channelList" style="color:red;cursor: pointer;" (click)="channelListRefresh()" nzTitle="{{channelListError}}点击重新加载" >
+        <i nz-icon type="question-circle" theme="outline" *ngIf="!isChannelLoading" class="anticon anticon-question-circle-o"></i>
+        <i nz-icon type="loading" theme="outline" *ngIf="isChannelLoading"></i>
+      </span>
+  </label>
+</ng-template>

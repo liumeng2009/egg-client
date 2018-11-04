@@ -2,7 +2,7 @@
           [nzData]="users"
           [nzTitle]="headerTemplate"
           [nzLoading]="isLoading"
-          [nzSize]="'small'"
+          [nzSize]="'middle'"
           [nzBordered]="true"
           [nzFrontPagination]="'false'"
           [nzTotal]="total"
@@ -17,10 +17,10 @@
     <th width="30%">
       手机号（登录用户名）
     </th>
-    <th width="20%">
+    <th width="20%" nzCustomFilter>
       昵称
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-        <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
+        <i nz-icon type="filter" class="ant-table-filter-icon" theme="outline" nz-dropdown></i>
         <div class="custom-filter-dropdown">
           <ul nz-menu>
             <li nz-menu-item>
@@ -34,10 +34,10 @@
         </div>
       </nz-dropdown>
     </th>
-    <th width="30%">
+    <th width="30%" nzCustomFilter>
       角色名
       <nz-dropdown *ngIf="roleList" nzTrigger="click" [nzClickHide]="false">
-        <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
+        <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
         <div class="custom-filter-dropdown">
           <ul nz-menu>
             <li nz-menu-item>
@@ -52,9 +52,9 @@
           </div>
         </div>
       </nz-dropdown>
-      <span nz-tooltip *ngIf="!roleList" style="color:red;cursor: pointer;" (click)="initRoleList()" nzTitle="{{roleListError}}点击重新加载" >
-        <i nz-icon type="question-circle" theme="outline" *ngIf="!isLoadingRoleList" class="anticon anticon-question-circle-o"></i>
-        <i nz-icont ype="loading" theme="outline" *ngIf="isLoadingRoleList"></i>
+      <span nz-tooltip *ngIf="!roleList" style="cursor: pointer;" (click)="initRoleList()" nzTitle="{{roleListError}}点击重新加载" >
+        <i nz-icon type="question-circle" theme="outline" style="color:red;" *ngIf="!isLoadingRoleList" class="anticon anticon-question-circle-o"></i>
+        <i nz-icon type="loading" theme="outline" style="#1890ff" *ngIf="isLoadingRoleList"></i>
       </span>
     </th>
     <th width="10%">操作</th>
@@ -80,13 +80,13 @@
 <ng-template #headerTemplate>
   <nz-button-group>
     <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add()">
-      <i class="anticon anticon-plus-circle"></i>新增
+      <i nz-icon type="plus-circle" theme="outline"></i>新增
     </button>
     <button nz-button [nzType]="'danger'" *ngIf="showAddBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
-      <i class="anticon anticon-delete"></i>删除
+      <i nz-icon type="delete" theme="outline"></i>删除
     </button>
     <button nz-button (click)="refresh()" [title]="'刷新'" >
-      <i class="anticon anticon-reload"></i>刷新
+      <i nz-icon type="reload" theme="outline"></i>刷新
     </button>
   </nz-button-group>
 </ng-template>

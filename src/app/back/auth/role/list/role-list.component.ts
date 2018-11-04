@@ -5,10 +5,8 @@ import {RoleService} from '../role.service';
 import {ToolService} from '../../../../util/tool.service';
 import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
-import {RoleAuthComponent} from './role-auth.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {RememberService} from '../../../main/remember.service';
-import {MissionService} from '../../../main/mission.service';
 
 @Component({
   selector: 'app-role-list-page',
@@ -23,9 +21,6 @@ export class RoleListComponent implements OnInit {
   roles: Role[] = [];
   roleDelete: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
-  tableHeight = {
-    y : '0px'
-  }
   total = 0;
   pageSize = new EduConfig().pageSize;
   pageIndex = 1;
@@ -57,8 +52,6 @@ export class RoleListComponent implements OnInit {
     if (user) {
       const authArray = this.initAuth('role');
       this.initComponentAuth(authArray);
-      const authArray2 = this.initAuth('authInRole');
-      this.initComponentAuth2(authArray2);
     }
   }
   private initAuth(functioncode) {
@@ -98,16 +91,6 @@ export class RoleListComponent implements OnInit {
         && auth.auth_opInFunc.auth_operate.code
         && auth.auth_opInFunc.auth_operate.code === 'delete') {
         this.showDelBtn = true;
-      }
-    }
-  }
-  private initComponentAuth2(authArray) {
-    for (const auth of authArray) {
-      if (auth.auth_opInFunc
-        && auth.auth_opInFunc.auth_operate
-        && auth.auth_opInFunc.auth_operate.code
-        && auth.auth_opInFunc.auth_operate.code === 'list') {
-        this.showModalBtn = true;
       }
     }
   }

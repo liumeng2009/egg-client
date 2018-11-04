@@ -8,36 +8,50 @@ import {EduConfig} from '../../../config/config';
 import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
-import {Role} from '../../../bean/role';
+import {ArticleCategory} from '../../../bean/ArticleCategory';
 
 
 @Injectable()
-export class RoleService {
-  private role_url = new EduConfig().serverPath + '/api/role';
+export class CategoryService {
+  private channel_url = new EduConfig().serverPath + '/api/content/channel';
+  private category_url = new EduConfig().serverPath + '/api/content/category';
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
   ) {}
 
-  getRoleList(page, pagesize, searchkey): Observable<ResponseData> {
+  getChannelList(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    let pageParams = '',
-      pageSizeParams = '',
-      searchKeyParams = '';
-    if (page) {
-      pageParams = page;
-    }
-    if (pagesize) {
-      pageSizeParams = pagesize;
-    }
-    if (searchkey) {
-      searchKeyParams = searchkey;
-    }
-    const params = new HttpParams().set('page', pageParams)
-      .set('pagesize', pageSizeParams)
-      .set('searchkey', searchKeyParams);
-    return this.http.get(this.role_url, {
+    return this.http.get(this.channel_url, {
+      headers: headers,
+    })
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  showChannel(channelId): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.get(this.channel_url + '/' + channelId, {
+      headers: headers,
+    })
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  getCategoryList(channelId): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const params = new HttpParams().set('channelId', channelId);
+    return this.http.get(this.category_url, {
       headers: headers,
       params: params,
     })
@@ -48,49 +62,10 @@ export class RoleService {
         catchError(this.handleError<any>())
       );
   }
-
-  create(role: Role, auths: number[]): Observable<ResponseData> {
+  create(category: ArticleCategory): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.role_url, {role: role, auths: auths}, {headers: headers})
-      .pipe(
-        tap((data: ResponseData) => {
-
-        }),
-        catchError(this.handleError<any>())
-      );
-  }
-
-  show(id): Observable<ResponseData> {
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.get(this.role_url + '/' + id, {headers: headers})
-      .pipe(
-        tap((data: ResponseData) => {
-
-        }),
-        catchError(this.handleError<any>())
-      );
-  }
-
-  update(role: Role): Observable<ResponseData> {
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.put(this.role_url, role, {headers: headers})
-      .pipe(
-        tap((data: ResponseData) => {
-
-        }),
-        catchError(this.handleError<any>())
-      );
-  }
-
-  delete(ids): Observable<ResponseData> {
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.role_url + '/delete', {ids: ids}, {
-      headers: headers,
-    })
+    return this.http.post(this.category_url, category, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

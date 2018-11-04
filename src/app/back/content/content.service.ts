@@ -1,46 +1,32 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd';
 
-import {EduConfig} from '../../../config/config';
+import {EduConfig} from '../../config/config';
 
+
+import {ResponseData} from '../../bean/responseData';
+import {Auth} from '../../bean/auth';
 import {CookieService} from 'ngx-cookie';
-import {ResponseData} from '../../../bean/responseData';
-import {NzMessageService} from 'ng-zorro-antd';
-import {Role} from '../../../bean/role';
-
 
 @Injectable()
-export class RoleService {
-  private role_url = new EduConfig().serverPath + '/api/role';
-  constructor(private http: HttpClient,
-              private cookieService: CookieService,
-              private message: NzMessageService,
+export class ContentService {
+
+  private checktokenurl = new EduConfig().serverPath + '/api/user/checktoken';
+  private auth_url = new EduConfig().serverPath + '/api/auth';
+  private auth_check_url = new EduConfig().serverPath + '/api/checkauth';
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private message: NzMessageService,
   ) {}
 
-  getRoleList(page, pagesize, searchkey): Observable<ResponseData> {
+  checkToken(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    let pageParams = '',
-      pageSizeParams = '',
-      searchKeyParams = '';
-    if (page) {
-      pageParams = page;
-    }
-    if (pagesize) {
-      pageSizeParams = pagesize;
-    }
-    if (searchkey) {
-      searchKeyParams = searchkey;
-    }
-    const params = new HttpParams().set('page', pageParams)
-      .set('pagesize', pageSizeParams)
-      .set('searchkey', searchKeyParams);
-    return this.http.get(this.role_url, {
-      headers: headers,
-      params: params,
-    })
+    return this.http.get(this.checktokenurl, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 
@@ -49,10 +35,10 @@ export class RoleService {
       );
   }
 
-  create(role: Role, auths: number[]): Observable<ResponseData> {
+  getAuthList(roleId): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.role_url, {role: role, auths: auths}, {headers: headers})
+    return this.http.get(this.auth_url + '/' + roleId, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 
@@ -61,10 +47,22 @@ export class RoleService {
       );
   }
 
-  show(id): Observable<ResponseData> {
+  create(auth: Auth): Observable<ResponseData> {
+    console.log(auth);
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.get(this.role_url + '/' + id, {headers: headers})
+    return this.http.post(this.auth_url, auth, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  destroy(auth: Auth): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.delete(this.auth_url + '/' + auth.roleId + '/' + auth.authId, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 
@@ -73,24 +71,10 @@ export class RoleService {
       );
   }
 
-  update(role: Role): Observable<ResponseData> {
+  checkAuth(func, op): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.put(this.role_url, role, {headers: headers})
-      .pipe(
-        tap((data: ResponseData) => {
-
-        }),
-        catchError(this.handleError<any>())
-      );
-  }
-
-  delete(ids): Observable<ResponseData> {
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.role_url + '/delete', {ids: ids}, {
-      headers: headers,
-    })
+    return this.http.post(this.auth_check_url, {func: func, op: op}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 
@@ -101,6 +85,7 @@ export class RoleService {
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
+      console.log(error);
       if (error.name === 'HttpErrorResponse') {
         if (error.status === 404) {
           this.message.error('服务器错误：未找到请求路径！');
@@ -118,3 +103,4 @@ export class RoleService {
     };
   }
 }
+

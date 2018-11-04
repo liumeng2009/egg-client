@@ -58,3 +58,15 @@
   width:100%;
   bottom:0px;
 }
+
+:host ::ng-deep .ant-avatar .anticon-user {
+  font-size:18px !important;
+}
+
+::ng-deep .ant-breadcrumb nz-breadcrumb-item{
+  a[disabled]{
+    color: rgba(0,0,0,.45);
+    transition: color .3s;
+    font-weight: bolder;
+  }
+}

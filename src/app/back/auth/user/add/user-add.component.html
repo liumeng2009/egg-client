@@ -54,8 +54,8 @@
               <nz-option [nzValue]="role.id" [nzLabel]="role.name" *ngFor="let role of roles"></nz-option>
             </nz-select>
             <span *ngIf="!roleList" nz-tooltip style="color:red;cursor: pointer;" (click)="initRoleList()" nzTitle="{{roleListError}}点击重新加载" >
-          <i nz-icon type="question-circle" theme="outline" *ngIf="!isLoadingRoleList" class="anticon anticon-question-circle-o"></i>
-          <i nz-icont ype="loading" theme="outline" *ngIf="isLoadingRoleList"></i>
+          <i nz-icon type="question-circle" theme="outline" *ngIf="!isLoadingRoleList"></i>
+          <i nz-icon type="loading" theme="outline" *ngIf="isLoadingRoleList"></i>
         </span>
             <nz-form-explain *ngIf="validateForm.get('roleId').dirty && validateForm.get('roleId').errors">请选择一个角色！</nz-form-explain>
           </nz-form-control>
@@ -66,7 +66,7 @@
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <div nz-row>
-              <nz-avatar [nzSrc]="user.avatar ? (serverPath + user.avatar) : ''" style="width: 108px;height:108px;font-size: 72px;line-height: 108px;" [nzIcon]="'anticon anticon-user'">
+              <nz-avatar [nzSrc]="user.avatar ? (serverPath + user.avatar) : ''" style="width: 64px;height:64px;font-size: 48px;line-height: 48px;" [nzIcon]="'user'">
 
               </nz-avatar>
               <nz-tabset [nzSelectedIndex]="avaTabSelectedIndex">
@@ -80,7 +80,7 @@
                       [nzCustomRequest]="customReq"
                     >
                       <button nz-button>
-                        <i nz-icon type="upload"></i><span>点击上传</span>
+                        <i nz-icon type="upload" theme="outline"></i><span>点击上传</span>
                       </button>
                     </nz-upload>
                   </div>
@@ -103,7 +103,7 @@
   </nz-content>
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
-      <i class="anticon anticon-save"></i>
+      <i nz-icon type="save" theme="outline"></i>
       提交保存
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>

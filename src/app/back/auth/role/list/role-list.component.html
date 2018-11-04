@@ -5,6 +5,7 @@
           [nzTitle]="headerTemplate"
           [nzLoading]="isLoading"
           [nzScroll]="false"
+          [nzBordered]="true"
           [nzFrontPagination]="'false'"
           [nzTotal]="total"
           [nzPageIndex]="pageIndex"
@@ -14,10 +15,10 @@
   <thead>
   <tr>
     <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
-    <th width="80%">
+    <th width="80%" nzCustomFilter>
       名称
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-        <i class="anticon anticon-filter ant-table-filter-icon" nz-dropdown></i>
+        <i nz-icon type="filter" theme="outline" nz-dropdown></i>
         <div class="custom-filter-dropdown">
           <ul nz-menu>
             <li nz-menu-item>
@@ -45,12 +46,6 @@
       <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'查看'">
         查看
       </button>
-<!--      <button nz-button *ngIf="showModalBtn" nzType="primary" (click)="editAuth(data.id,data.name)" [title]="'权限'">
-        <i class="anticon anticon-safety"></i>
-      </button>-->
-<!--      <button nz-button *ngIf="showDelBtn" nzType="danger"  [title]="'删除'" nz-popconfirm nzTitle="确定要删除该角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete(data.id)">
-        <i class="anticon anticon-delete"></i>
-      </button>-->
     </td>
   </tr>
   </tbody>
@@ -58,13 +53,13 @@
 <ng-template #headerTemplate>
   <nz-button-group>
     <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add()">
-      <i class="anticon anticon-plus-circle"></i>新增
+      <i nz-icon type="plus-circle" theme="outline"></i>新增
     </button>
-    <button nz-button [nzType]="'danger'" *ngIf="showAddBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
-      <i class="anticon anticon-delete"></i>删除
+    <button nz-button [nzType]="'danger'" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
+      <i nz-icon type="delete" theme="outline"></i>删除
     </button>
     <button nz-button (click)="refresh()" [title]="'刷新'" >
-      <i class="anticon anticon-reload"></i>刷新
+      <i nz-icon type="reload" theme="outline"></i>刷新
     </button>
   </nz-button-group>
 

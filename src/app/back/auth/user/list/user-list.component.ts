@@ -8,7 +8,6 @@ import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
 import {RoleService} from '../../role/role.service';
 import {RememberService} from '../../../main/remember.service';
-import {MissionService} from '../../../main/mission.service';
 
 
 @Component({
@@ -108,7 +107,7 @@ export class UserListComponent implements OnInit {
     this.roleService.getRoleList(0, 0, '')
       .subscribe(
         (data: ResponseData) => {
-          this.isLoadingRoleList = false;
+          //this.isLoadingRoleList = false;
           this.toolService.apiResult(data, true).then((result: ResponseData) => {
             this.roleList = true;
             this.roles = [...result.data.rows];
@@ -123,7 +122,7 @@ export class UserListComponent implements OnInit {
           });
         },
         error => {
-          this.isLoadingRoleList = false;
+          //this.isLoadingRoleList = false;
         }
       );
   }

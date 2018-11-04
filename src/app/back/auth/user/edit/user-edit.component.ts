@@ -21,6 +21,9 @@ import {RememberService} from '../../../main/remember.service';
 
 export class UserEditComponent implements OnInit {
   validateForm: FormGroup;
+  formHeight = {
+    height : '0px'
+  }
   user: User = new User(null, null, null, null, null, null, null, null, null, null, false);
   isLoading = false;
   isSubmitLoading = false;
@@ -54,12 +57,16 @@ export class UserEditComponent implements OnInit {
       roleId: ['', [ Validators.required ] ]
     });
     this.validateForm.get('mobile').disable();
+    this.initHeight();
     this.auth();
     this.initRoleList();
     this.initAvatarList();
     this.route.params.subscribe((params: Params) => {
       this.getData(params.id);
     });
+  }
+  private initHeight() {
+    this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69 )) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();

@@ -59,9 +59,9 @@ export class UserAddComponent implements OnInit {
       password: [ '123456', [ Validators.required ] ],
       age: [1],
       roleId: ['', [ Validators.required ] ],
-      isAdmin:[true],
+      isAdmin: [true],
     });
-    // this.auth();
+    this.auth();
     this.initHeight();
     this.initRoleList();
     this.initAvatarList();

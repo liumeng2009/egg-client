@@ -3,30 +3,30 @@
     <div class="logo">
 
     </div>
-    <i class="anticon trigger anticon-menu-unfold" *ngIf="collapsed" (click)="toggleCollapse()"></i>
-    <i class="anticon trigger anticon-menu-fold" *ngIf="!collapsed" (click)="toggleCollapse()"></i>
+    <i nz-icon type="menu-unfold" theme="outline" class="trigger" *ngIf="collapsed" (click)="toggleCollapse()"></i>
+    <i nz-icon type="menu-fold" theme="outline" class="trigger" *ngIf="!collapsed" (click)="toggleCollapse()"></i>
     <div class="avatar-area">
       <nz-dropdown>
         <a nz-dropdown nz-row nzType="flex" nzAlign="middle">
-          <nz-avatar nz-col nzIcon="anticon anticon-user"
-            [nzSrc]="getAvatarImageUrl(user)"
+          <nz-avatar nz-col nzIcon="user"
+                     [nzSrc]="getAvatarImageUrl(user)"
           ></nz-avatar>
           <span nz-col class="username">
             {{(user?.role?.name) ? (user?.role?.name + '：') : ''}}
             {{user?.realname ? user?.realname : user?.mobile }}
           </span>
-          <i nz-col class="anticon anticon-down"></i>
+          <i nz-col nz-icon type="down" theme="outline"></i>
         </a>
         <ul nz-menu nzSelectable>
           <li nz-menu-item>
             <a>
-              <i class="anticon anticon-setting"></i>
+              <i nz-icon type="setting" theme="outline"></i>
               设置
             </a>
           </li>
           <li nz-menu-item>
             <a nz-popconfirm nzTitle="确定要退出当前用户吗?" nzPlacement="bottomRight" (nzOnConfirm)="confirmExit()">
-              <i class="anticon anticon-logout"></i>
+              <i nz-icon type="logout" theme="outline"></i>
               切换用户
             </a>
           </li>
@@ -40,7 +40,7 @@
         <div nz-menu nzTheme="dark" [nzInlineCollapsed]="collapsed" nzMode="inline">
           <li nz-submenu *ngFor="let route of routesMenuUse" [nzOpen]="checkOpen(route.path)" (click)="clickSubMenuTitle(route.path)" >
             <span title class="{{route.children && route.children.length>0 ? '' : 'noarrow'}}">
-              <i class="anticon anticon-{{route.data.icon}}"></i>
+              <i nz-icon type="{{route.data.icon}}" theme="outline"></i>
               <span>{{route.data.name ? route.data.name : 'home'}}</span>
             </span>
             <ul>
@@ -56,12 +56,13 @@
       <nz-content style="margin:0 16px;">
         <nz-breadcrumb style="padding:16px 0px;position: fixed;background-color: #f0f2f5;width: 100%;z-index: 999;">
           <button nz-button (click)="back()" style="margin-right: 16px" >
-            <i class="anticon anticon-rollback"></i>
+            <i nz-icon type="rollback" theme="outline"></i>
             返回
           </button>
           <nz-breadcrumb-item *ngFor="let bread of breadcrumb;index as i" letIndex>
-            <i class="anticon anticon-home" *ngIf="i===0"></i>
-            <a routerLink="{{bread.path}}" routerLinkActive="active" >{{bread.name}}</a>
+            <i nz-icon type="home" theme="outline" style="margin-right: 4px;" *ngIf="i===0"></i>
+            <a routerLink="{{bread.path}}" *ngIf="!bread.disabled" >{{bread.name}}</a>
+            <a routerLink="{{bread.path}}" disabled  *ngIf="bread.disabled">{{bread.name}}</a>
           </nz-breadcrumb-item>
         </nz-breadcrumb>
         <div [ngStyle]="contentStyle">

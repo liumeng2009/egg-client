@@ -33,9 +33,8 @@
               <tbody>
               <tr *ngFor="let auth of auths">
                 <td nzLeft="0px">
-                  <i nz-icon class="anticon anticon-folder-open" *ngIf="auth.level===0"></i>
-                  <i nz-icon class="anticon anticon-minus" *ngIf="auth.level!==0"></i>
-                  <i nz-icon class="anticon anticon-file" *ngIf="auth.level!==0"></i>
+                  <i nz-icon type="folder-open" theme="outline" *ngIf="auth.level===0"></i>
+                  <i nz-icon type="file" theme="outline" style="margin-left: 8px;" *ngIf="auth.level!==0"></i>
                   {{auth.name}}
                 </td>
                 <td>
@@ -54,7 +53,7 @@
   </nz-content>
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
-      <i class="anticon anticon-save"></i>
+      <i nz-icon type="save" theme="outline"></i>
       提交保存
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
