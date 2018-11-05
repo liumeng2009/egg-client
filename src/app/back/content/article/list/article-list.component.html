@@ -15,23 +15,6 @@
     </th>
     <th nzCustomFilter>
       类别
-      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-        <i nz-icon type="filter" class="ant-table-filter-icon" theme="outline" nz-dropdown></i>
-        <div class="custom-filter-dropdown">
-          <nz-select>
-            <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
-              <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
-              <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
-              <i nz-icon type="file" *ngIf="category.level > 0" theme="outline"></i>
-              {{category.name}}
-            </nz-option>
-          </nz-select>
-          <div class="ant-table-filter-dropdown-btns">
-            <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" ><span>确定</span></a>
-            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoCategory()" ><span>重置</span></a>
-          </div>
-        </div>
-      </nz-dropdown>
     </th>
     <th>发布时间</th>
     <th>排序</th>

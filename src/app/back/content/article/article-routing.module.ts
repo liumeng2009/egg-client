@@ -14,7 +14,7 @@ const routes: Routes = [
     path: '',
     component: ArticleComponent,
     canActivate: [TokenGuard, AuthGuard],
-    data: {name: '栏目管理'},
+    data: {name: '内容管理'},
     children: [
       {
         path: 'list',

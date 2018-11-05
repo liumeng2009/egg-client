@@ -9,34 +9,21 @@ import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 import {ArticleCategory} from '../../../bean/ArticleCategory';
+import {Article} from '../../../bean/Article';
 
 
 @Injectable()
 export class ArticleService {
-  private channel_url = new EduConfig().serverPath + '/api/content/channel';
-  private category_url = new EduConfig().serverPath + '/api/content/category';
+  private article_url = new EduConfig().serverPath + '/api/content/article';
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
   ) {}
 
-  getChannelList(): Observable<ResponseData> {
+  getArticleList(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.get(this.channel_url, {
-      headers: headers,
-    })
-      .pipe(
-        tap((data: ResponseData) => {
-
-        }),
-        catchError(this.handleError<any>())
-      );
-  }
-  showChannel(channelId): Observable<ResponseData> {
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.get(this.channel_url + '/' + channelId, {
+    return this.http.get(this.article_url, {
       headers: headers,
     })
       .pipe(
@@ -47,25 +34,10 @@ export class ArticleService {
       );
   }
 
-  getCategoryList(channelId): Observable<ResponseData> {
+  create(article: Article): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    const params = new HttpParams().set('channelId', channelId);
-    return this.http.get(this.category_url, {
-      headers: headers,
-      params: params,
-    })
-      .pipe(
-        tap((data: ResponseData) => {
-
-        }),
-        catchError(this.handleError<any>())
-      );
-  }
-  create(category: ArticleCategory): Observable<ResponseData> {
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.category_url, category, {headers: headers})
+    return this.http.post(this.article_url, article, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

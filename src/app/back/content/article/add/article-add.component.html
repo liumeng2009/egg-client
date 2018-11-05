@@ -1,9 +1,10 @@
 <nz-layout>
   <nz-content>
     <nz-card [ngStyle]="formHeight">
+      <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
       <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
         <nz-tab [nzTitle]="'基本信息'">
-          <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+
             <nz-form-item>
               <nz-form-label class="ant-col-6">
                 所属频道
@@ -34,6 +35,26 @@
               <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingCategoryList"></i>
               <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingCategoryList"></i>
             </span>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                是否发布
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <nz-switch formControlName="status" [nzDisabled]="!canAuditing"></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                设置类型
+              </nz-form-label>
+              <nz-form-control>
+                <label nz-checkbox formControlName="isComment">允许评论</label>
+                <label nz-checkbox formControlName="isTop">置顶</label>
+                <label nz-checkbox formControlName="isRed">推荐</label>
+                <label nz-checkbox formControlName="isHot">热门</label>
+                <label nz-checkbox formControlName="isSlide">幻灯片</label>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
@@ -85,12 +106,28 @@
                 ></nz-date-picker>
               </nz-form-control>
             </nz-form-item>
-          </form>
+
         </nz-tab>
         <nz-tab [nzTitle]="'扩展信息'">
-          <h1>扩展信息</h1>
+          <nz-form-item>
+            <nz-form-label class="ant-col-4">
+              摘要
+            </nz-form-label>
+            <nz-form-control class="ant-col-18">
+              <textarea nz-input formControlName="zhaiyao" nzAutosize rows="3"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label class="ant-col-4">
+              详细内容
+            </nz-form-label>
+            <nz-form-control class="ant-col-18">
+              <editor apiKey="6u1lqxxqszbzk1855eap1reotfrefpqs606xt3mjp5h7y6vk" [init]="{plugins: 'link'}" formControlName="content"></editor>
+            </nz-form-control>
+          </nz-form-item>
         </nz-tab>
       </nz-tabset>
+      </form>
     </nz-card>
   </nz-content>
   <nz-footer class="fixed-footer">

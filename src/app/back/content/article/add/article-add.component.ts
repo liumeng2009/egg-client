@@ -12,6 +12,7 @@ import {CookieService} from 'ngx-cookie';
 import {HttpClient} from '@angular/common/http';
 import {RememberService} from '../../../main/remember.service';
 import {CategoryService} from '../../category/category.service';
+import {Article} from '../../../../bean/Article';
 
 @Component({
   selector: 'app-article-add-page',
@@ -34,7 +35,12 @@ export class ArticleAddComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
-  saveBtn = true;
+  article: Article = new Article(null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null,
+    null, null, null, null,
+    );
+  canAuditing = false;
+  saveBtn = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -49,17 +55,27 @@ export class ArticleAddComponent implements OnInit {
     private categoryService: CategoryService,
   ) {}
   ngOnInit() {
+    this.initHeight();
+    this.auth();
     this.validateForm = this.fb.group({
       categoryId: [ null , [ Validators.required ] ],
       title: [ '', [ Validators.required ]],
       imgUrl: [ '' ],
+      zhaiyao: [''],
+      content: [''],
+      status: [ this.canAuditing ? 1 : 0 ],
       sort: [ 100 ],
       click: [ 0 ],
+      isComment: [true],
+      isTop:  [false],
+      isRed:  [false],
+      isHot:  [false],
+      isSlide:  [false],
+      author: [null],
+      auditing: [null],
       publishAt: [ null ],
     });
     this.initCategoryList();
-    this.initHeight();
-    this.auth();
     this.initChannel();
   }
   private initHeight() {
@@ -68,7 +84,7 @@ export class ArticleAddComponent implements OnInit {
   private auth() {
     const user = this.rememberService.getUser();
     if (user) {
-      const authArray = this.initAuth('user');
+      const authArray = this.initAuth('article');
       this.initComponentAuth(authArray);
     }
   }
@@ -97,6 +113,12 @@ export class ArticleAddComponent implements OnInit {
         && auth.auth_opInFunc.auth_operate.code
         && auth.auth_opInFunc.auth_operate.code === 'add') {
         this.saveBtn = true;
+      }
+      if (auth.auth_opInFunc
+        && auth.auth_opInFunc.auth_operate
+        && auth.auth_opInFunc.auth_operate.code
+        && auth.auth_opInFunc.auth_operate.code === 'auditing') {
+        this.canAuditing = true;
       }
     }
   }
@@ -158,6 +180,22 @@ export class ArticleAddComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.isLoading = true;
+      this.article.channelId = this.channel.id;
+      this.article.categoryId = this.validateForm.get('categoryId').value;
+      // 控件值是0 status赋值为2，代表未审核 控件值是1 status赋值为1，代表正常状态
+      this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
+      this.article.title = this.validateForm.get('title').value;
+      this.article.sort = this.validateForm.get('sort').value;
+      this.article.imgUrl = this.validateForm.get('imgUrl').value;
+      this.article.click = this.validateForm.get('click').value;
+      this.article.zhaiyao = this.validateForm.get('zhaiyao').value;
+      this.article.content = this.validateForm.get('content').value;
+      this.article.isComment = this.validateForm.get('isComment').value;
+      this.article.isTop = this.validateForm.get('isTop').value;
+      this.article.isRed = this.validateForm.get('isRed').value;
+      this.article.isHot = this.validateForm.get('isHot').value;
+      this.article.isSlide = this.validateForm.get('isSlide').value;
+      console.log(this.article);
     }
   }
   returnToList(e) {

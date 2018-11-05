@@ -13,6 +13,8 @@ import {
 } from '@ant-design/icons-angular/icons';
 import {CategoryService} from '../category/category.service';
 import {MyPipeModule} from '../../../util/myPipe.module';
+import {EditorModule} from '@tinymce/tinymce-angular';
+import {ArticleService} from './article.service';
 
 const icons: IconDefinition[] = [
   AuditOutline,
@@ -33,10 +35,12 @@ const icons: IconDefinition[] = [
     NgZorroAntdModule,
     ArticleRoutingModule,
     MyPipeModule,
+    EditorModule
   ],
   providers: [
     { provide: NZ_ICONS, useValue: icons },
     CategoryService,
+    ArticleService,
   ],
   bootstrap: [ArticleComponent],
 })

@@ -3,7 +3,7 @@ export class Article {
     public channelId: number,
     public categoryId: number,
     public title: string,
-    public img_url: string,
+    public imgUrl: string,
     public zhaiyao: string,
     public content: string,
     public sort: number,
