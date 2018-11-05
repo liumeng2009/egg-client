@@ -1,4 +1,4 @@
-<nz-table #roleListTable
+<nz-table #categoryListTable
           [nzData]="categories"
           [nzSize]="'middle'"
           [nzTitle]="headerTemplate"
@@ -16,7 +16,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let data of roleListTable.data">
+  <tr *ngFor="let data of categoryListTable.data">
     <td width="10%" [nzShowCheckbox]="'true'" [(nzChecked)]="data.checked"></td>
     <td width="80%">
       <span style="margin-right: 16px;" *ngFor="let space of data.level|numberArray"></span>

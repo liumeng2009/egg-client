@@ -17,7 +17,6 @@ import {RememberService} from '../../../main/remember.service';
 })
 
 export class UserListComponent implements OnInit {
-
   searchkey = '';
   isLoading = false;
   noResult = new EduConfig().noResult;

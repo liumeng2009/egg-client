@@ -8,8 +8,7 @@ import {CategoryAddComponent} from './add/category-add.component';
 import {CategoryEditComponent} from './edit/category-edit.component';
 import {CategoryListComponent} from './list/category-list.component';
 import {CategoryService} from './category.service';
-import {NumberArrayPipe} from '../../../util/numberArray.pipe';
-
+import {MyPipeModule} from '../../../util/myPipe.module';
 
 /* The @NgModule decorator lets Angular know that this is an NgModule. */
 @NgModule({
@@ -18,7 +17,6 @@ import {NumberArrayPipe} from '../../../util/numberArray.pipe';
     CategoryListComponent,
     CategoryAddComponent,
     CategoryEditComponent,
-    NumberArrayPipe,
   ],
   imports: [     /* These are NgModule imports. */
     CommonModule,
@@ -26,6 +24,7 @@ import {NumberArrayPipe} from '../../../util/numberArray.pipe';
     ReactiveFormsModule,
     NgZorroAntdModule,
     CategoryRoutingModule,
+    MyPipeModule,
   ],
   providers: [
     CategoryService,

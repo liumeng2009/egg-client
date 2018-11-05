@@ -142,7 +142,7 @@ export class CategoryListComponent implements OnInit {
     );
   }
   refresh() {
-    this.getData();
+    this.getData(this.channelSelected);
   }
   private add(parentId) {
     this.router.navigate(['add', {channelId: this.channelSelected, parentId: parentId}], {relativeTo: this.route.parent});

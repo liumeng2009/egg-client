@@ -41,6 +41,7 @@ import { PlusCircleOutline,
   MinusOutline,
   FileOutline,
   RadiusBottomleftOutline,
+  AuditOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutline, UserOutline, SettingOutline,
@@ -60,6 +61,7 @@ const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutlin
   MinusOutline,
   FileOutline,
   RadiusBottomleftOutline,
+  AuditOutline,
 ];
 
 registerLocaleData(zh);

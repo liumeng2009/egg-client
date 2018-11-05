@@ -96,6 +96,7 @@ export class MainComponent implements OnInit {
       }));
     } else {
       this.breadcrumb[0].disabled = true;
+      return ;
     }
     if (this.route.firstChild && this.route.firstChild.firstChild && this.route.firstChild.firstChild.firstChild
       && this.route.firstChild.firstChild.firstChild.firstChild) {
@@ -117,6 +118,7 @@ export class MainComponent implements OnInit {
       }));
     } else {
       this.breadcrumb[1].disabled = true;
+      return ;
     }
 
     if (this.route.firstChild && this.route.firstChild.firstChild && this.route.firstChild.firstChild.firstChild
@@ -143,9 +145,8 @@ export class MainComponent implements OnInit {
     }
     if (this.breadcrumb.length > 3) {
       this.breadcrumb[3].disabled = true;
+      return ;
     }
-    console.log(this.breadcrumb);
-
   }
 
   // 根据角色，来改变angular的路由配置

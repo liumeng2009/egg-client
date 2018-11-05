@@ -1,1 +1,114 @@
-<h1>list</h1>
+<nz-table #articleListTable
+          [nzData]="articles"
+          [nzSize]="'middle'"
+          [nzTitle]="headerTemplate"
+          [nzBordered]="true"
+          [nzLoading]="isLoading"
+          [nzScroll]="false"
+          [nzHideOnSinglePage]="true"
+>
+  <thead>
+  <tr>
+    <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
+    <th>
+      标题
+    </th>
+    <th nzCustomFilter>
+      类别
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <i nz-icon type="filter" class="ant-table-filter-icon" theme="outline" nz-dropdown></i>
+        <div class="custom-filter-dropdown">
+          <nz-select>
+            <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
+              <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
+              <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
+              <i nz-icon type="file" *ngIf="category.level > 0" theme="outline"></i>
+              {{category.name}}
+            </nz-option>
+          </nz-select>
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" ><span>确定</span></a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoCategory()" ><span>重置</span></a>
+          </div>
+        </div>
+      </nz-dropdown>
+    </th>
+    <th>发布时间</th>
+    <th>排序</th>
+    <th>属性</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let article of articleListTable.data">
+    <td width="10%" [nzShowCheckbox]="'true'" [(nzChecked)]="article.checked"></td>
+    <td>
+      {{article.title}}
+    </td>
+    <td>
+      {{article.categoryId}}
+    </td>
+    <td>
+      {{article.publishAt}}
+    </td>
+    <td>
+      {{article.sort}}
+    </td>
+    <td>
+      {{article.isComment}}
+    </td>
+    <td>
+      <a *ngIf="showEditBtn" (click)="edit(article.id)">
+        编辑
+      </a>
+      <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(article.id)" [title]="'查看'">
+        查看
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #headerTemplate>
+  <nz-button-group>
+    <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add(0)">
+      <i nz-icon type="plus-circle" theme="outline"></i>
+      新增
+    </button>
+    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" (click)="auditing()">
+      <i nz-icon type="audit" theme="outline"></i>
+      审核
+    </button>
+    <button nz-button [nzType]="'danger'" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
+      <i nz-icon type="delete" theme="outline"></i>删除
+    </button>
+    <button nz-button (click)="refresh()" [title]="'刷新'" >
+      <i nz-icon type="reload" theme="outline"></i>刷新
+    </button>
+  </nz-button-group>
+
+  <label style="margin-left: 24px;">
+    当前频道：
+    <nz-select style="width: 120px;" [(ngModel)]="channelSelected" nzAllowClear="false" (ngModelChange)="channelSelectChanged($event)">
+      <nz-option *ngFor="let channel of channels" [nzValue]="channel.id" [nzLabel]="channel.name"></nz-option>
+    </nz-select>
+    <span nz-tooltip *ngIf="!channelList" style="color:red;cursor: pointer;" (click)="channelListRefresh()" nzTitle="{{channelListError}}点击重新加载" >
+        <i nz-icon type="question-circle" theme="outline" *ngIf="!isChannelLoading" class="anticon anticon-question-circle-o"></i>
+        <i nz-icon type="loading" theme="outline" *ngIf="isChannelLoading"></i>
+      </span>
+  </label>
+
+  <label style="margin-left: 24px;">
+    <nz-select style="width:120px;" [(ngModel)]="categorySelected" nzAllowClear="false" (ngModelChange)="categorySelectChanged($event)">
+      <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
+        <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
+        <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
+        <i nz-icon type="file" *ngIf="category.level > 0" theme="outline"></i>
+        {{category.name}}
+      </nz-option>
+    </nz-select>
+    <span nz-tooltip *ngIf="!categoryList" style="color:red;cursor: pointer;" (click)="initCategoryList(channelSelected)" nzTitle="{{categoryListError}}点击重新加载" >
+        <i nz-icon type="question-circle" theme="outline" *ngIf="!isCategoryLoading" class="anticon anticon-question-circle-o"></i>
+        <i nz-icon type="loading" theme="outline" *ngIf="isCategoryLoading"></i>
+      </span>
+  </label>
+</ng-template>
