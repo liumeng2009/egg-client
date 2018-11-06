@@ -4,6 +4,7 @@ import {ResponseData} from '../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 
 import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie';
 
 @Injectable()
 export class ToolService {
@@ -12,35 +13,16 @@ export class ToolService {
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
+    private cookieService: CookieService,
   ) {
 
   }
-
   // infoHidden 比如某个页面的下拉框的数据源出现异常，不希望也弹出错误提示。
   apiResult(data: ResponseData, infoHidden) {
-    // token不存在，跳转login页面
-/*    if (data.code === 53302) {
-      this.message.error(data.error + '，即将重新登录！');
-      setTimeout(() => {
-        this.gotoLoginPage();
-      }, 2000);
-    } else if (data.code === 0) {
-      if (data.message) {
-        this.message.success(data.message);
-      }
-      return data;
-    } else if (data.code === 422) {
-      // 服务器内部错误
-      this.message.error('传入的参数异常');
-    } else {
-      if (!infoHidden) {
-        this.message.error(data.error);
-      }
-    }*/
     return new Promise((resolve, reject) => {
       if (data.code === 53302) {
         this.message.error(data.error + '，即将重新登录！');
-        setTimeout(() => {this.gotoLoginPage(); }, 1000);
+        setTimeout(() => {this.gotoLoginPage(); }, 500);
         reject();
       } else if (data.code === 0) {
         if (data.message) {

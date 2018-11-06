@@ -9,7 +9,7 @@
       <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-user">
+            <nz-input-group  [nzPrefix]="prefixUser">
               <input type="text" nz-input formControlName="userName" placeholder="Username">
             </nz-input-group>
             <nz-form-explain *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors">请输入用户名!</nz-form-explain>
@@ -17,7 +17,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-lock">
+            <nz-input-group  [nzPrefix]="prefixLock">
               <input type="password" nz-input  formControlName="password" placeholder="Password">
             </nz-input-group>
             <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
@@ -38,5 +38,6 @@
     </div>
   </div>
   </div>
-
 </div>
+<ng-template #prefixUser><i nz-icon type="user" theme="outline"></i></ng-template>
+<ng-template #prefixLock><i nz-icon type="lock" theme="outline"></i></ng-template>

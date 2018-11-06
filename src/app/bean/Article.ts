@@ -14,8 +14,8 @@ export class Article {
     public isRed: boolean,
     public isHot: boolean,
     public isSlide: boolean,
-    public author: string,
-    public auditing: string,
+    public author: number,
+    public auditing: number,
     public publishAt: Date,
     public checked: boolean,
   ) {  }

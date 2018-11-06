@@ -13,6 +13,8 @@ import {HttpClient} from '@angular/common/http';
 import {RememberService} from '../../../main/remember.service';
 import {CategoryService} from '../../category/category.service';
 import {Article} from '../../../../bean/Article';
+import {User} from '../../../../bean/user';
+import {ArticleService} from '../article.service';
 
 @Component({
   selector: 'app-article-add-page',
@@ -41,6 +43,7 @@ export class ArticleAddComponent implements OnInit {
     );
   canAuditing = false;
   saveBtn = false;
+  user: User;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -53,6 +56,7 @@ export class ArticleAddComponent implements OnInit {
     private http: HttpClient,
     private rememberService: RememberService,
     private categoryService: CategoryService,
+    private articleService: ArticleService,
   ) {}
   ngOnInit() {
     this.initHeight();
@@ -195,7 +199,25 @@ export class ArticleAddComponent implements OnInit {
       this.article.isRed = this.validateForm.get('isRed').value;
       this.article.isHot = this.validateForm.get('isHot').value;
       this.article.isSlide = this.validateForm.get('isSlide').value;
+      this.user = this.rememberService.getUser();
+      this.article.author = this.user.id;
+      if (this.canAuditing && this.article.status === 1){
+        this.article.auditing = this.user.id;
+      }
       console.log(this.article);
+      this.articleService.create(this.article).subscribe(
+        (data: ResponseData) => {
+          this.isLoading = false;
+          this.toolService.apiResult(data, false).then(() => {
+            this.router.navigate(['list'], {relativeTo: this.route.parent});
+          }).catch(() => {
+
+          });
+        },
+        error => {
+          this.isLoading = false;
+        }
+      );
     }
   }
   returnToList(e) {

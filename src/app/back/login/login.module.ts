@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {CommonModule} from '@angular/common';
 import {LoginRoutingModule} from './login-routing.module';
-
 /* The @NgModule decorator lets Angular know that this is an NgModule. */
 @NgModule({
   declarations: [
