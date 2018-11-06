@@ -8,6 +8,7 @@ import {CategoryService} from '../../category/category.service';
 import {Channel} from '../../../../bean/Channel';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArticleCategory} from '../../../../bean/ArticleCategory';
+import {ArticleService} from '../article.service';
 
 @Component({
   selector: 'app-article-list-page',
@@ -46,12 +47,15 @@ export class ArticleListComponent implements OnInit {
     private categoryService: CategoryService,
     private router: Router,
     private route: ActivatedRoute,
+    private articleService: ArticleService,
   ) {}
   ngOnInit() {
     this.auth();
     this.initChannelList().then(
       () => {
-        this.initCategoryList(this.channelSelected);
+        this.initCategoryList(this.channelSelected).then(() => {
+          this.getData();
+        }).catch(() => {});
       }
     ).catch(() => {});
   }
@@ -146,41 +150,91 @@ export class ArticleListComponent implements OnInit {
     ).catch(() => {});
   }
   channelSelectChanged(e) {
-    this.initCategoryList(e);
+    this.initCategoryList(e).then(() => {
+      this.getData();
+    }).catch(() => {});
   }
   categorySelectChanged(e) {
-
+    this.categorySelected = e;
+    this.getData();
   }
   initCategoryList(channelId) {
-    this.categoryService.getCategoryList(channelId).subscribe(
-      (data: ResponseData) => {
-        this.toolService.apiResult(data, true).then(
-          (result: ResponseData) => {
-            this.categories = [...result.data];
-            const categoryTop = new ArticleCategory(0, '所有分类', '', channelId,
-              0, '', -1, 0, false);
-            this.categories.unshift(categoryTop);
-            this.categoryList = true;
-          }
-        ).catch((err) => {
+    return new Promise((resolve, reject) => {
+      this.categoryService.getCategoryList(channelId).subscribe(
+        (data: ResponseData) => {
+          this.toolService.apiResult(data, true).then(
+            (result: ResponseData) => {
+              this.categories = [...result.data];
+              const categoryTop = new ArticleCategory(0, '所有分类', '', channelId,
+                0, '', -1, 0, false);
+              this.categories.unshift(categoryTop);
+              this.categoryList = true;
+              this.categorySelected = 0;
+              resolve();
+            }
+          ).catch((err) => {
+            this.categoryList = false;
+            this.categoryListError = err;
+            reject();
+          });
+        },
+        error => {
           this.categoryList = false;
-          this.categoryListError = err;
+          this.categoryListError = error;
+          reject();
+        }
+      );
+    });
+  }
+  getAllCategory(categoryId) {
+    let index = 0;
+    let categoryString = '';
+    for (const cate of this.categories) {
+      if (cate.id === categoryId) {
+        // 从这个节点开始往上找，直到level===0，这就是所有参数所有的父亲节点了
+        for (let i = index; i > -1; i--) {
+          if (i === index) {
+            categoryString = this.categories[i].name
+          } else {
+            categoryString = this.categories[i].name + '-' + categoryString;
+          }
+          if (this.categories[i].level === 0) {
+            break;
+          }
+        }
+      break;
+      }
+      index++;
+    }
+    return categoryString;
+  }
+  private getData() {
+    this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
+      this.channelSelected, this.categorySelected).subscribe(
+      (data: ResponseData) => {
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+          console.log(result);
+          this.articles = [...result.data.rows];
+          this.total = result.data.count;
         });
       },
       error => {
-        this.categoryList = false;
-        this.categoryListError = error;
+
       }
     );
   }
   refresh() {
-
+    this.getData();
   }
   add() {
     this.router.navigate(['add', {channelId: this.channelSelected}], {relativeTo: this.route.parent});
   }
   edit(id) {
     this.router.navigate([id], {relativeTo: this.route.parent});
+  }
+  auditing(id) {}
+  tagChanged(e) {
+    console.log(e);
   }
   allCheck(e) {
     if (e) {
@@ -192,9 +246,6 @@ export class ArticleListComponent implements OnInit {
         user.checked = false;
       }
     }
-
-  }
-  refreshNoCategory() {
 
   }
 

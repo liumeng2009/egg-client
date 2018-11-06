@@ -4,49 +4,64 @@
           [nzTitle]="headerTemplate"
           [nzBordered]="true"
           [nzLoading]="isLoading"
-          [nzScroll]="false"
           [nzHideOnSinglePage]="true"
+          [nzScroll]="{x:'1200px'}"
 >
   <thead>
   <tr>
-    <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
-    <th>
+    <th nzWidth="50px" nzLeft="0px" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
+    <th nzWidth="200px">
       标题
     </th>
     <th nzCustomFilter>
       类别
     </th>
-    <th>发布时间</th>
-    <th>排序</th>
-    <th>属性</th>
-    <th>操作</th>
+    <th nzWidth="200px">发布时间</th>
+    <th nzWidth="50px">排序</th>
+    <th nzWidth="200px" nzRight="100px">属性</th>
+    <th nzWidth="100px" nzRight="0px">操作</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let article of articleListTable.data">
-    <td width="10%" [nzShowCheckbox]="'true'" [(nzChecked)]="article.checked"></td>
-    <td>
+    <td nzWidth="50px" nzLeft="0px" [nzShowCheckbox]="'true'" [(nzChecked)]="article.checked"></td>
+    <td nzWidth="200px">
       {{article.title}}
     </td>
     <td>
-      {{article.categoryId}}
+      {{getAllCategory(article.categoryId)}}
     </td>
-    <td>
-      {{article.publishAt}}
+    <td nzWidth="200px">
+      {{article.publishAt|date:'MM月dd日 HH:mm:ss'}}
     </td>
-    <td>
-      {{article.sort}}
+    <td nzWidth="100px">
+      <nz-input-number [nzStep]="1" [ngModel]="article.sort"></nz-input-number>
     </td>
-    <td>
-      {{article.isComment}}
+    <td nzWidth="200px" nzRight="100px">
+      <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event)" title="允许评论">
+        <i nz-icon type="message" theme="outline"></i>
+      </nz-tag>
+      <nz-tag nzMode="checkable" [nzChecked]="article.isTop" (nzCheckedChange)="tagChanged($event)">
+        <i nz-icon type="to-top" theme="outline"></i>
+      </nz-tag>
+      <nz-tag nzMode="checkable" [nzChecked]="article.isRed" (nzCheckedChange)="tagChanged($event)">
+        <i nz-icon type="like" theme="outline"></i>
+      </nz-tag>
+      <nz-tag nzMode="checkable" [nzChecked]="article.isHot" (nzCheckedChange)="tagChanged($event)">
+        <i nz-icon type="fire" theme="outline"></i>
+      </nz-tag>
+      <nz-tag nzMode="checkable" [nzChecked]="article.isSlide" (nzCheckedChange)="tagChanged($event)">
+        <i nz-icon type="picture" theme="outline"></i>
+      </nz-tag>
     </td>
-    <td>
+    <td nzWidth="100px" nzRight="0px">
       <a *ngIf="showEditBtn" (click)="edit(article.id)">
         编辑
       </a>
-      <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(article.id)" [title]="'查看'">
+      <a *ngIf="!showEditBtn" (click)="edit(article.id)">
         查看
-      </button>
+      </a>
+      <a>复制</a>
     </td>
   </tr>
   </tbody>
@@ -57,7 +72,7 @@
       <i nz-icon type="plus-circle" theme="outline"></i>
       新增
     </button>
-    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" (click)="auditing()">
+    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" (click)="auditing(article.id)">
       <i nz-icon type="audit" theme="outline"></i>
       审核
     </button>

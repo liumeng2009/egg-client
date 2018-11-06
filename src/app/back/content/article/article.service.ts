@@ -20,11 +20,17 @@ export class ArticleService {
               private message: NzMessageService,
   ) {}
 
-  getArticleList(): Observable<ResponseData> {
+  getArticleList(page, pagesize, searchkey, channelId, categoryId): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const params = new HttpParams().set('page', page)
+      .set('pagesize', pagesize)
+      .set('searchkey', searchkey)
+      .set('channelId', channelId)
+      .set('categoryId', categoryId);
     return this.http.get(this.article_url, {
       headers: headers,
+      params: params,
     })
       .pipe(
         tap((data: ResponseData) => {
