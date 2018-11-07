@@ -1,0 +1,21 @@
+nz-card{
+  border-bottom: none;
+}
+.ant-card{
+  overflow-y: scroll;
+}
+nz-form-control.haserror .ant-select{
+  width:80%;
+  margin-right: 8px;
+}
+button{
+  margin-right: 8px;
+}
+:host ::ng-deep i.upload-icon {
+  font-size: 32px;
+  color: #999;
+  .ant-upload-text {
+    margin-top: 8px;
+    color: #666;
+  }
+}

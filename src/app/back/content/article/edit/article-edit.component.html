@@ -1,1 +1,161 @@
-<h1>edit</h1>
+<nz-layout>
+  <nz-content>
+    <nz-card [ngStyle]="formHeight">
+      <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+        <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+          <nz-tab [nzTitle]="'基本信息'">
+
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                所属频道
+              </nz-form-label>
+              <nz-form-control class="{{channelList?'ant-col-16':'ant-col-16 haserror'}}">
+                {{channel?.name}}
+                <span nz-tooltip *ngIf="!channelList" style="cursor: pointer;" (click)="initChannel()" nzTitle="{{channelListError}}点击重新加载" >
+              <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingchannel"></i>
+              <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingchannel"></i>
+            </span>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" class="ant-col-6">
+                所属分类
+              </nz-form-label>
+              <nz-form-control class="{{categoryList?'ant-col-16':'ant-col-16 haserror'}}">
+                <nz-select  formControlName="categoryId" [nzPlaceHolder]="'请选择分类'">
+                  <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
+                    <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
+                    <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
+                    <i nz-icon type="file" *ngIf="category.level > 0" theme="outline"></i>
+                    {{category.name}}
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateForm.get('categoryId').dirty && validateForm.get('categoryId').errors?.required">请选择分类！</nz-form-explain>
+                <span nz-tooltip *ngIf="!categoryList" style="cursor: pointer;" (click)="initCategoryList()" nzTitle="{{categoryListError}}点击重新加载" >
+              <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingCategoryList"></i>
+              <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingCategoryList"></i>
+            </span>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                是否发布
+                <i nz-icon nz-tooltip *ngIf="!canAuditing" nzTitle="需要管理员进行审核" type="question-circle" theme="outline"></i>
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <nz-switch formControlName="status" [nzDisabled]="!canAuditing"></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                设置类型
+              </nz-form-label>
+              <nz-form-control>
+                <label nz-checkbox formControlName="isComment">允许评论</label>
+                <label nz-checkbox formControlName="isTop">置顶</label>
+                <label nz-checkbox formControlName="isRed">推荐</label>
+                <label nz-checkbox formControlName="isHot">热门</label>
+                <label nz-checkbox formControlName="isSlide">幻灯片</label>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" class="ant-col-6">
+                内容标题
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <input type="text" nz-input formControlName="title">
+                <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors?.required">请输入标题！</nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                封面图片
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <div>
+                  <nz-upload
+                    [nzAction]="uploadPath"
+                    [(nzFileList)]="fileListShow"
+                    [nzBeforeUpload]="beforeUpload"
+                    (nzChange)="handleChange($event)"
+                    [nzCustomRequest]="customReq"
+                    [nzListType]="'picture-card'"
+                    [nzPreview]="handlePreview"
+                  >
+                    <i nz-icon type="plus" class="upload-icon" theme="outline"></i>
+                    <div class="ant-upload-text">点击上传</div>
+                  </nz-upload>
+                  <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+                    <ng-template #modalContent>
+                      <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+                    </ng-template>
+                  </nz-modal>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                排序
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <nz-input-number  formControlName="sort" [nzStep]="1"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+                点击量
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <nz-input-number  formControlName="click" [nzStep]="1"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
+            <span>
+              发布时间
+              <i nz-icon nz-tooltip nzTitle="不填写则默认为当前时间" type="question-circle" theme="outline"></i>
+            </span>
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <nz-date-picker
+                  formControlName="publishAt"
+                  nzShowTime
+                  nzFormat="yyyy-MM-dd HH:mm:ss"
+                  nzPlaceHolder="选择时间"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+
+          </nz-tab>
+          <nz-tab [nzTitle]="'扩展信息'">
+            <nz-form-item>
+              <nz-form-label class="ant-col-4">
+                摘要
+              </nz-form-label>
+              <nz-form-control class="ant-col-18">
+                <textarea nz-input formControlName="zhaiyao" nzAutosize rows="3"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-4">
+                详细内容
+              </nz-form-label>
+              <nz-form-control class="ant-col-18">
+                <editor [init]="{plugins: 'link', language:'zh_CN'}" formControlName="content" language="zh_CN" ></editor>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-tab>
+        </nz-tabset>
+      </form>
+    </nz-card>
+  </nz-content>
+  <nz-footer class="fixed-footer">
+    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
+      <i nz-icon type="save" theme="outline"></i>
+      提交保存
+    </button>
+    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+  </nz-footer>
+</nz-layout>
+
+

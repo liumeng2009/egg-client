@@ -16,6 +16,7 @@ import {Article} from '../../../../bean/Article';
 import {User} from '../../../../bean/user';
 import {ArticleService} from '../article.service';
 import {EduConfig} from '../../../../config/config';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-article-add-page',
@@ -48,6 +49,8 @@ export class ArticleAddComponent implements OnInit {
   serverPath = new EduConfig().serverPath;
   uploadPath = this.serverPath + '/api/upload';
   fileList = [];
+  previewImage = '';
+  previewVisible = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -229,6 +232,10 @@ export class ArticleAddComponent implements OnInit {
       item.onError(err, item.file);
     });
   }
+  handlePreview = (file: UploadFile) => {
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
+  }
   submitForm() {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
@@ -242,7 +249,6 @@ export class ArticleAddComponent implements OnInit {
       this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
       this.article.title = this.validateForm.get('title').value;
       this.article.sort = this.validateForm.get('sort').value;
-      this.article.imgUrl = this.validateForm.get('imgUrl').value;
       this.article.click = this.validateForm.get('click').value;
       this.article.zhaiyao = this.validateForm.get('zhaiyao').value;
       this.article.content = this.validateForm.get('content').value;
@@ -251,9 +257,10 @@ export class ArticleAddComponent implements OnInit {
       this.article.isRed = this.validateForm.get('isRed').value;
       this.article.isHot = this.validateForm.get('isHot').value;
       this.article.isSlide = this.validateForm.get('isSlide').value;
+      this.article.publishAt = moment(this.validateForm.get('publishAt').value).format('YYYY-MM-DD HH:mm:ss');
       this.user = this.rememberService.getUser();
       this.article.author = this.user.id;
-      if (this.canAuditing && this.article.status === 1){
+      if (this.canAuditing && this.article.status === 1) {
         this.article.auditing = this.user.id;
       }
       console.log(this.article);

@@ -80,6 +80,7 @@
                     (nzChange)="handleChange($event)"
                     [nzCustomRequest]="customReq"
                     [nzListType]="'picture-card'"
+                    [nzPreview]="handlePreview"
                   >
                     <i nz-icon type="plus" class="upload-icon" theme="outline"></i>
                     <div class="ant-upload-text">点击上传</div>
@@ -87,6 +88,11 @@
                       <i nz-icon type="upload" theme="outline"></i><span>点击上传</span>
                     </button>-->
                   </nz-upload>
+                  <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+                    <ng-template #modalContent>
+                      <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+                    </ng-template>
+                  </nz-modal>
                 </div>
               </nz-form-control>
             </nz-form-item>
@@ -138,7 +144,7 @@
               详细内容
             </nz-form-label>
             <nz-form-control class="ant-col-18">
-              <editor [init]="{plugins: 'link'}" formControlName="content"></editor>
+              <editor [init]="{plugins: 'link', language:'zh_CN'}" formControlName="content" language="zh_CN" ></editor>
             </nz-form-control>
           </nz-form-item>
         </nz-tab>

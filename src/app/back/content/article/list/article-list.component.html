@@ -16,7 +16,7 @@
     <th nzCustomFilter>
       类别
     </th>
-    <th nzWidth="200px">发布时间</th>
+    <th nzWidth="250px">发布时间</th>
     <th nzWidth="50px">排序</th>
     <th nzWidth="200px" nzRight="100px">属性</th>
     <th nzWidth="100px" nzRight="0px">操作</th>
@@ -31,26 +31,26 @@
     <td>
       {{getAllCategory(article.categoryId)}}
     </td>
-    <td nzWidth="200px">
+    <td nzWidth="250px">
       {{article.publishAt|date:'MM月dd日 HH:mm:ss'}}
     </td>
     <td nzWidth="100px">
       <nz-input-number [nzStep]="1" [ngModel]="article.sort"></nz-input-number>
     </td>
     <td nzWidth="200px" nzRight="100px">
-      <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event)" title="允许评论">
+      <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event, article, 'isComment')" title="允许评论">
         <i nz-icon type="message" theme="outline"></i>
       </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isTop" (nzCheckedChange)="tagChanged($event)">
+      <nz-tag nzMode="checkable" [nzChecked]="article.isTop" (nzCheckedChange)="tagChanged($event, article, 'isTop')">
         <i nz-icon type="to-top" theme="outline"></i>
       </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isRed" (nzCheckedChange)="tagChanged($event)">
+      <nz-tag nzMode="checkable" [nzChecked]="article.isRed" (nzCheckedChange)="tagChanged($event, article, 'isRed')">
         <i nz-icon type="like" theme="outline"></i>
       </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isHot" (nzCheckedChange)="tagChanged($event)">
+      <nz-tag nzMode="checkable" [nzChecked]="article.isHot" (nzCheckedChange)="tagChanged($event, article, 'isHot')">
         <i nz-icon type="fire" theme="outline"></i>
       </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isSlide" (nzCheckedChange)="tagChanged($event)">
+      <nz-tag nzMode="checkable" [nzChecked]="article.isSlide" (nzCheckedChange)="tagChanged($event, article, 'isSlide')">
         <i nz-icon type="picture" theme="outline"></i>
       </nz-tag>
     </td>

@@ -16,7 +16,7 @@ export class Article {
     public isSlide: boolean,
     public author: number,
     public auditing: number,
-    public publishAt: Date,
+    public publishAt: string,
     public checked: boolean,
   ) {  }
 }

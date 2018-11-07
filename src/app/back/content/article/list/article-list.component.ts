@@ -9,6 +9,7 @@ import {Channel} from '../../../../bean/Channel';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArticleCategory} from '../../../../bean/ArticleCategory';
 import {ArticleService} from '../article.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-article-list-page',
@@ -233,8 +234,27 @@ export class ArticleListComponent implements OnInit {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
   auditing(id) {}
-  tagChanged(e) {
-    console.log(e);
+  tagChanged(e, article, propertyName) {
+    for (const p in article) {
+      if (p === propertyName) {
+        article[p] = e;
+        article.publishAt = moment(article.publishAt).format('YYYY-MM-DD HH:mm:ss');
+        console.log(article);
+        this.articleService.update(article).subscribe(
+          (data: ResponseData) => {
+            this.toolService.apiResult(data, false).then((result: ResponseData) => {
+
+            }).catch(() => {
+              article[p] = !e;
+            });
+          },
+          error => {
+            article[p] = !e;
+          }
+        );
+        break;
+      }
+    }
   }
   allCheck(e) {
     if (e) {
