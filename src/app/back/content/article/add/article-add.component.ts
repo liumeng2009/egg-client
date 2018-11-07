@@ -7,14 +7,15 @@ import {ResponseData} from '../../../../bean/responseData';
 import {RoleService} from '../../../auth/role/role.service';
 import {UserService} from '../../../auth/user/user.service';
 import {ToolService} from '../../../../util/tool.service';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
 import {CookieService} from 'ngx-cookie';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import {RememberService} from '../../../main/remember.service';
 import {CategoryService} from '../../category/category.service';
 import {Article} from '../../../../bean/Article';
 import {User} from '../../../../bean/user';
 import {ArticleService} from '../article.service';
+import {EduConfig} from '../../../../config/config';
 
 @Component({
   selector: 'app-article-add-page',
@@ -44,6 +45,9 @@ export class ArticleAddComponent implements OnInit {
   canAuditing = false;
   saveBtn = false;
   user: User;
+  serverPath = new EduConfig().serverPath;
+  uploadPath = this.serverPath + '/api/upload';
+  fileList = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -175,6 +179,54 @@ export class ArticleAddComponent implements OnInit {
           this.categoryListError = error;
         }
       );
+    });
+  }
+  beforeUpload = (file: File) => {
+    const isJPG = file.type === 'image/jpeg';
+    const isPNG = file.type === 'image/png';
+    if (!isPNG && !isJPG) {
+      this.message.error('请您上传一张格式为：JPG、PNG的图片!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this.message.error('文件大小需要小于 2MB!');
+    }
+    return (isJPG || isPNG) && isLt2M;
+  }
+  handleChange(info: { file: UploadFile }): void {
+    if (info.file.status === 'uploading') {
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      if (info.file.response.code === 0) {
+        // this.user.avatarUseSys = 0;
+        // this.user.avatar = info.file.response.data.path;
+        if (this.fileList.length > 1) {
+          this.fileList.splice(0, 1);
+        }
+        this.article.imgUrl = info.file.response.data.path;
+      } else {
+        this.message.error(info.file.response.error);
+      }
+
+    }
+  }
+  customReq = (item: UploadXHRArgs) => {
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    formData.append('file', item.file as any);
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'authorization': token ? token : ''});
+    const req = new HttpRequest('POST', item.action, formData, {headers: headers});
+    return this.http.request(req).subscribe((event: HttpEvent<{}>) => {
+      if (event instanceof HttpResponse) {
+        // 处理成功
+        item.onSuccess(event.body, item.file, event);
+      }
+    }, (err) => {
+      // 处理失败
+      item.onError(err, item.file);
     });
   }
   submitForm() {
