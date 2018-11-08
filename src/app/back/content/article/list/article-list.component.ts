@@ -20,7 +20,7 @@ import * as moment from 'moment';
 export class ArticleListComponent implements OnInit {
   searchkey = '';
   isLoading = false;
-  noResult = new EduConfig().noResult;
+  noResult = EduConfig.noResult;
   articles: Article[] = [];
   userDelete: number[] = [];
   channelSelected = 0;
@@ -35,7 +35,7 @@ export class ArticleListComponent implements OnInit {
   categorySelected = 0;
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   total = 0;
-  pageSize = new EduConfig().pageSize;
+  pageSize = EduConfig.pageSize;
   pageIndex = 1;
   isLoadingDelete = false;
   showAddBtn = false;

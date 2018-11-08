@@ -19,4 +19,7 @@ button{
     color: #666;
   }
 }
+::ng-deep host nz-form-control{
+  padding-left: 2px;
+}
 

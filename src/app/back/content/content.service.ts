@@ -14,9 +14,9 @@ import {CookieService} from 'ngx-cookie';
 @Injectable()
 export class ContentService {
 
-  private checktokenurl = new EduConfig().serverPath + '/api/user/checktoken';
-  private auth_url = new EduConfig().serverPath + '/api/auth';
-  private auth_check_url = new EduConfig().serverPath + '/api/checkauth';
+  private checktokenurl = EduConfig.serverPath + '/api/user/checktoken';
+  private auth_url = EduConfig.serverPath + '/api/auth';
+  private auth_check_url = EduConfig.serverPath + '/api/checkauth';
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,

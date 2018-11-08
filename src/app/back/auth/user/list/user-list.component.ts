@@ -19,14 +19,14 @@ import {RememberService} from '../../../main/remember.service';
 export class UserListComponent implements OnInit {
   searchkey = '';
   isLoading = false;
-  noResult = new EduConfig().noResult;
+  noResult = EduConfig.noResult;
   users: User[] = [];
   private userDelete: number[] = [];
   roles: Role[] = [];
   roleArray: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   total = 0;
-  pageSize = new EduConfig().pageSize;
+  pageSize = EduConfig.pageSize;
   pageIndex = 1;
   isLoadingDelete = false;
   showAddBtn = false;

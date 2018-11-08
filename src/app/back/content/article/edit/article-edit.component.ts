@@ -46,7 +46,7 @@ export class ArticleEditComponent implements OnInit {
   canAuditing = false;
   saveBtn = false;
   user: User;
-  serverPath = new EduConfig().serverPath;
+  serverPath = EduConfig.serverPath;
   uploadPath = this.serverPath + '/api/upload';
   fileList = [
 
@@ -54,6 +54,13 @@ export class ArticleEditComponent implements OnInit {
   fileListShow;
   previewImage = '';
   previewVisible = false;
+  tinyMceInitOption = {
+    plugins: 'image code',
+    language: 'zh_CN',
+    toolbar: 'undo redo | link image | code',
+    image_title: true,
+    images_upload_url: this.uploadPath,
+  };
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -316,7 +323,7 @@ export class ArticleEditComponent implements OnInit {
         this.article.auditing = this.user.id;
       }
       console.log(this.article);
-      this.articleService.create(this.article).subscribe(
+      this.articleService.update(this.article).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
           this.toolService.apiResult(data, false).then(() => {

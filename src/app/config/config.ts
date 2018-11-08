@@ -1,9 +1,20 @@
-export class EduConfig {
-  serverPath = 'http://127.0.0.1:7001';
-  unknownError = '服务器内部错误！';
-  ajaxError = '网络连接错误,也可能是服务器停止服务，您可以重新尝试刚才的操作！';
-  closing = '正在退出登录...';
-  pageSize = 15;
-  noResult = '还没有记录！';
-  noResultBecauseOfAuth = '您没有权限查看这些记录！';
+export const EduConfig = {
+  serverPath : 'http://127.0.0.1:7001',
+  unknownError : '服务器内部错误！',
+  ajaxError : '网络连接错误,也可能是服务器停止服务，您可以重新尝试刚才的操作！',
+  closing : '正在退出登录...',
+  pageSize : 15,
+  noResult : '还没有记录！',
+  noResultBecauseOfAuth : '您没有权限查看这些记录！',
+  tinyMceOptions: {
+    branding: false,
+    menu: {},
+    plugins: 'link image code fullscreen textcolor print preview directionality',
+    language: 'zh_CN',
+    toolbar1: 'undo redo | italic bold underline strikethrough superscript subscript removeformat forecolor backcolor numlist bullist selectall | fullscreen',
+    toolbar2: 'formatselect fontselect fontsizeselect | ltr rtl indent outdent alignleft aligncenter alignright alignjustify | link unlink image',
+    toolbar3: 'code | print | preview',
+    images_upload_url: 'http://127.0.0.1:7001/api/upload',
+    images_upload_base_path: 'http://127.0.0.1:7001',
+  },
 }

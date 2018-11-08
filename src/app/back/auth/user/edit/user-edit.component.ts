@@ -33,7 +33,7 @@ export class UserEditComponent implements OnInit {
   roleListError = '';
   isLoadingRoleList = false;
   avatars: Avatar[] = [];
-  serverPath = new EduConfig().serverPath;
+  serverPath = EduConfig.serverPath;
   uploadPath = this.serverPath + '/api/upload';
   avaTabSelectedIndex = 0;
   constructor(

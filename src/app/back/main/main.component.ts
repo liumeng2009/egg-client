@@ -10,7 +10,6 @@ import {CookieService} from 'ngx-cookie';
 import {NzMessageService} from 'ng-zorro-antd';
 import {EduConfig} from '../../config/config';
 import {RouteList} from '../../app-routes';
-import {MissionService} from './mission.service';
 
 @Component({
   selector: 'app-main-page',
@@ -42,7 +41,7 @@ export class MainComponent implements OnInit {
   }
   breadcrumb: Bread[] = [];
   user: User;
-  baseImageUrl: string = new EduConfig().serverPath;
+  baseImageUrl: string = EduConfig.serverPath;
   avatarImagePath = '';
   routesMenuUse: any[] = [];
   ngOnInit(): void {
@@ -298,7 +297,7 @@ export class MainComponent implements OnInit {
 
   confirmExit() {
       this.cookieService.remove('eduToken');
-      this.message.warning(new EduConfig().closing);
+      this.message.warning(EduConfig.closing);
       setTimeout(() => {
         // this.router.navigateByUrl('admin/login');
         this.gotoLoginPage();

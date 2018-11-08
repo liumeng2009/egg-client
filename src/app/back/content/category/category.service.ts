@@ -13,8 +13,8 @@ import {ArticleCategory} from '../../../bean/ArticleCategory';
 
 @Injectable()
 export class CategoryService {
-  private channel_url = new EduConfig().serverPath + '/api/content/channel';
-  private category_url = new EduConfig().serverPath + '/api/content/category';
+  private channel_url = EduConfig.serverPath + '/api/content/channel';
+  private category_url = EduConfig.serverPath + '/api/content/category';
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,

@@ -132,20 +132,14 @@
         </nz-tab>
         <nz-tab [nzTitle]="'扩展信息'">
           <nz-form-item>
-            <nz-form-label class="ant-col-4">
-              摘要
-            </nz-form-label>
-            <nz-form-control class="ant-col-18">
-              <textarea nz-input formControlName="zhaiyao" nzAutosize rows="3"></textarea>
+            <nz-form-control>
+              <textarea nz-input formControlName="zhaiyao" placeHolder="摘要" nzAutosize rows="3"></textarea>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label class="ant-col-4">
-              详细内容
-            </nz-form-label>
-            <nz-form-control class="ant-col-18">
-              <editor [init]="{plugins: 'link', language:'zh_CN'}" formControlName="content" language="zh_CN" ></editor>
-            </nz-form-control>
+            <div nz-form-control style="padding-right: 2px">
+              <editor placeholder="内容" [init]="tinyMceInitOption" formControlName="content" language="zh_CN" ></editor>
+            </div>
           </nz-form-item>
         </nz-tab>
       </nz-tabset>

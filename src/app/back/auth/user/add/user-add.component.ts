@@ -34,7 +34,7 @@ export class UserAddComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
-  serverPath = new EduConfig().serverPath;
+  serverPath = EduConfig.serverPath;
   uploadPath = this.serverPath + '/api/upload';
   avaTabSelectedIndex = 0;
   saveBtn = true;
@@ -125,7 +125,7 @@ export class UserAddComponent implements OnInit {
         },
         error => {
           this.isLoadingRoleList = false ;
-          this.roleListError = new EduConfig().ajaxError;
+          this.roleListError = EduConfig.ajaxError;
         }
       );
   }

@@ -13,8 +13,8 @@ import {User} from '../../../bean/user';
 
 @Injectable()
 export class UserService {
-  private user_url = new EduConfig().serverPath + '/api/user';
-  private avatar_url = new EduConfig().serverPath + '/api/avatar';
+  private user_url = EduConfig.serverPath + '/api/user';
+  private avatar_url = EduConfig.serverPath + '/api/avatar';
 
   constructor(private http: HttpClient,
               private cookieService: CookieService,

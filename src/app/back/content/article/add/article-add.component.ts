@@ -46,11 +46,12 @@ export class ArticleAddComponent implements OnInit {
   canAuditing = false;
   saveBtn = false;
   user: User;
-  serverPath = new EduConfig().serverPath;
+  serverPath = EduConfig.serverPath;
   uploadPath = this.serverPath + '/api/upload';
   fileList = [];
   previewImage = '';
   previewVisible = false;
+  tinyMceInitOption = EduConfig.tinyMceOptions;
   constructor(
     private fb: FormBuilder,
     private router: Router,

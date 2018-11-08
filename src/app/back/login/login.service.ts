@@ -17,7 +17,7 @@ export class LoginService {
     private message: NzMessageService
   ) {}
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
-  private loginurl = new EduConfig().serverPath + '/api/login';
+  private loginurl = EduConfig.serverPath + '/api/login';
 
   login(user: User): Observable<ResponseData> {
     return this.http.post(this.loginurl, user , {headers: this.headers})

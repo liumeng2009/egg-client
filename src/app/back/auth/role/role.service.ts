@@ -13,7 +13,7 @@ import {Role} from '../../../bean/role';
 
 @Injectable()
 export class RoleService {
-  private role_url = new EduConfig().serverPath + '/api/role';
+  private role_url = EduConfig.serverPath + '/api/role';
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
