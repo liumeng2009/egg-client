@@ -69,6 +69,7 @@ export class ArticleAddComponent implements OnInit {
   ngOnInit() {
     this.initHeight();
     this.auth();
+    this.tinyMceInitOption.images_upload_handler = this.tinyImageUploadHander;
     this.validateForm = this.fb.group({
       categoryId: [ null , [ Validators.required ] ],
       title: [ '', [ Validators.required ]],
@@ -203,15 +204,15 @@ export class ArticleAddComponent implements OnInit {
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      if (info.file.response.code === 0) {
+      if (info.file.response.location) {
         // this.user.avatarUseSys = 0;
         // this.user.avatar = info.file.response.data.path;
         if (this.fileList.length > 1) {
           this.fileList.splice(0, 1);
         }
-        this.article.imgUrl = info.file.response.data.path;
+        this.article.imgUrl = info.file.response.location;
       } else {
-        this.message.error(info.file.response.error);
+        this.message.error('上传出现错误');
       }
 
     }
@@ -232,6 +233,30 @@ export class ArticleAddComponent implements OnInit {
       // 处理失败
       item.onError(err, item.file);
     });
+  }
+  tinyImageUploadHander = (blobInfo, success, failure) => {
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    formData.append('file', blobInfo.blob());
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'responseType' : 'text', 'authorization': token ? token : ''});
+    const req = new HttpRequest('POST', EduConfig.tinyMceOptions.images_upload_url, formData, {headers: headers});
+    return this.http.request(req).subscribe((event: HttpEvent<{}>) => {
+      if (event instanceof HttpResponse) {
+        // 处理成功
+        // success(EduConfig.serverPath + event.body);
+        // success('http://127.0.0.1:7001/123.jpg');
+        // 没办法了，拼字符串, 由于不知道怎么处理typescript，所以取不出body中的location字段
+        const str = JSON.stringify(event.body);
+        let resultUrl = str.substring(0, str.length - 2);
+        resultUrl = resultUrl.replace('{"location":"', '');
+        success(EduConfig.serverPath + resultUrl);
+      }
+    }, (err) => {
+      // 处理失败
+      failure(err);
+    });
+
   }
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
@@ -258,7 +283,9 @@ export class ArticleAddComponent implements OnInit {
       this.article.isRed = this.validateForm.get('isRed').value;
       this.article.isHot = this.validateForm.get('isHot').value;
       this.article.isSlide = this.validateForm.get('isSlide').value;
-      this.article.publishAt = moment(this.validateForm.get('publishAt').value).format('YYYY-MM-DD HH:mm:ss');
+      this.article.publishAt = moment(this.validateForm.get('publishAt').value).isValid()
+        ? moment(this.validateForm.get('publishAt').value).format('YYYY-MM-DD HH:mm:ss')
+        : null;
       this.user = this.rememberService.getUser();
       this.article.author = this.user.id;
       if (this.canAuditing && this.article.status === 1) {

@@ -23,3 +23,10 @@ button{
   padding-left: 2px;
 }
 
+::ng-deep .mce-container .mce-toolbar{
+  border-bottom: 1px solid #ccc;
+}
+::ng-deep .mce-container .mce-last{
+  border-bottom: none;
+}
+
