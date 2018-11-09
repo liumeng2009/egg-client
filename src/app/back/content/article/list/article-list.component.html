@@ -5,11 +5,11 @@
           [nzBordered]="true"
           [nzLoading]="isLoading"
           [nzHideOnSinglePage]="true"
-          [nzScroll]="{x:'1200px'}"
+          [nzNoResult]="noResult"
 >
   <thead>
   <tr>
-    <th nzWidth="50px" nzLeft="0px" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
+    <th nzWidth="50px" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
     <th nzWidth="200px">
       标题
     </th>
@@ -18,14 +18,30 @@
     </th>
     <th nzWidth="250px">发布时间</th>
     <th nzWidth="50px">排序</th>
-    <th nzWidth="200px" nzRight="100px">属性</th>
-    <th nzWidth="100px" nzRight="0px">操作</th>
+    <th nzWidth="200px" nzCustomFilter>
+      属性
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+        <div class="custom-filter-dropdown">
+          <ul nz-menu>
+            <li nz-menu-item *ngFor="let ap of articleProperties">
+              <label nz-checkbox [(ngModel)]="ap.checked">{{ap.name}}</label>
+            </li>
+          </ul>
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="filterByProp()" ><span>确定</span></a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoProp()" ><span>重置</span></a>
+          </div>
+        </div>
+      </nz-dropdown></th>
+    <th nzWidth="100px">操作</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let article of articleListTable.data">
-    <td nzWidth="50px" nzLeft="0px" [nzShowCheckbox]="'true'" [(nzChecked)]="article.checked"></td>
+    <td nzWidth="50px" [nzShowCheckbox]="'true'" [(nzChecked)]="article.checked"></td>
     <td nzWidth="200px">
+      <i nz-icon nz-tooltip style="color:#F50" *ngIf="article.status === 2" nzTitle="未经过审核" type="warning" theme="outline"></i>
       {{article.title}}
     </td>
     <td>
@@ -37,7 +53,7 @@
     <td nzWidth="100px">
       <nz-input-number [nzStep]="1" [ngModel]="article.sort"></nz-input-number>
     </td>
-    <td nzWidth="200px" nzRight="100px">
+    <td nzWidth="200px">
       <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event, article, 'isComment')" title="允许评论">
         <i nz-icon type="message" theme="outline"></i>
       </nz-tag>
@@ -54,7 +70,7 @@
         <i nz-icon type="picture" theme="outline"></i>
       </nz-tag>
     </td>
-    <td nzWidth="100px" nzRight="0px">
+    <td nzWidth="100px">
       <a *ngIf="showEditBtn" (click)="edit(article.id)">
         编辑
       </a>
@@ -72,11 +88,11 @@
       <i nz-icon type="plus-circle" theme="outline"></i>
       新增
     </button>
-    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" (click)="auditing(article.id)">
+    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" [nzLoading]="isLoadingAuditing" (click)="auditing(article.id)">
       <i nz-icon type="audit" theme="outline"></i>
       审核
     </button>
-    <button nz-button [nzType]="'danger'" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
+    <button nz-button [nzType]="'danger'" [nzLoading]="isLoadingDelete" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
       <i nz-icon type="delete" theme="outline"></i>删除
     </button>
     <button nz-button (click)="refresh()" [title]="'刷新'" >

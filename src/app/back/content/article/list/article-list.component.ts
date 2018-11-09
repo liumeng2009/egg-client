@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {EduConfig} from '../../../../config/config';
-import {Article} from '../../../../bean/Article';
+import {Article, ArticleProperty} from '../../../../bean/Article';
 import {ResponseData} from '../../../../bean/responseData';
 import {RememberService} from '../../../main/remember.service';
 import {ToolService} from '../../../../util/tool.service';
@@ -22,7 +22,7 @@ export class ArticleListComponent implements OnInit {
   isLoading = false;
   noResult = EduConfig.noResult;
   articles: Article[] = [];
-  userDelete: number[] = [];
+  articleDelete: number[] = [];
   channelSelected = 0;
   channels: Channel[] = [];
   isChannelLoading = false;
@@ -38,10 +38,13 @@ export class ArticleListComponent implements OnInit {
   pageSize = EduConfig.pageSize;
   pageIndex = 1;
   isLoadingDelete = false;
+  articleAuditing: number[] = [];
+  isLoadingAuditing = false;
   showAddBtn = false;
   showEditBtn = false;
   showDelBtn = false;
   showAuditingBtn = false;
+  articleProperties: ArticleProperty[] = [];
   constructor(
     private rememberService: RememberService,
     private toolService: ToolService,
@@ -52,6 +55,7 @@ export class ArticleListComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.auth();
+    this.initArticleProperties();
     this.initChannelList().then(
       () => {
         this.initCategoryList(this.channelSelected).then(() => {
@@ -195,7 +199,7 @@ export class ArticleListComponent implements OnInit {
         // 从这个节点开始往上找，直到level===0，这就是所有参数所有的父亲节点了
         for (let i = index; i > -1; i--) {
           if (i === index) {
-            categoryString = this.categories[i].name
+            categoryString = this.categories[i].name;
           } else {
             categoryString = this.categories[i].name + '-' + categoryString;
           }
@@ -208,6 +212,64 @@ export class ArticleListComponent implements OnInit {
       index++;
     }
     return categoryString;
+  }
+  initArticleProperties() {
+    const prop_status_1 = new ArticleProperty('已审核', 'status', true);
+    const prop_status_2 = new ArticleProperty('待审核', 'status', true);
+    const prop_isComment = new ArticleProperty('允许评论', 'isComment', false);
+    const prop_isTop = new ArticleProperty('置顶', 'isTop', false);
+    const prop_isHot = new ArticleProperty('热门', 'isHot', false);
+    const prop_isRed = new ArticleProperty('推荐', 'isRed', false);
+    const prop_isSlide = new ArticleProperty('幻灯片', 'isSlide', false);
+    this.articleProperties.push(prop_status_1);
+    this.articleProperties.push(prop_status_2);
+    this.articleProperties.push(prop_isComment);
+    this.articleProperties.push(prop_isTop);
+    this.articleProperties.push(prop_isHot);
+    this.articleProperties.push(prop_isRed);
+    this.articleProperties.push(prop_isSlide);
+  }
+  filterByProp() {
+    let status = 999;
+    if (this.articleProperties[0].checked) {
+      status = 1;
+    }
+    if (this.articleProperties[1].checked) {
+      status = 2;
+    }
+    // 3代表status === 1 or status === 2
+    if (this.articleProperties[1].checked && this.articleProperties[0].checked) {
+      status = 3;
+    }
+    this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
+      this.channelSelected, this.categorySelected, status,
+      this.articleProperties[2].checked ? this.articleProperties[2].checked : undefined,
+      this.articleProperties[3].checked ? this.articleProperties[3].checked : undefined,
+      this.articleProperties[4].checked ? this.articleProperties[4].checked : undefined,
+      this.articleProperties[5].checked ? this.articleProperties[5].checked : undefined,
+      this.articleProperties[6].checked ? this.articleProperties[6].checked : undefined,
+      ).subscribe(
+      (data: ResponseData) => {
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+          console.log(result);
+          this.articles = [...result.data.rows];
+          this.total = result.data.count;
+        });
+      },
+      error => {
+
+      }
+    );
+  }
+  refreshNoProp() {
+    this.articleProperties[0].checked = true,
+    this.articleProperties[1].checked = true,
+    this.articleProperties[2].checked = false,
+    this.articleProperties[3].checked = false,
+    this.articleProperties[4].checked = false,
+    this.articleProperties[5].checked = false,
+    this.articleProperties[6].checked = false,
+    this.getData();
   }
   private getData() {
     this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
@@ -233,7 +295,74 @@ export class ArticleListComponent implements OnInit {
   edit(id) {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
-  auditing(id) {}
+  auditing(id) {
+    this.isLoadingAuditing = true;
+    for (const article of this.articles) {
+      if (article.checked) {
+        this.articleAuditing.push(article.id);
+      }
+    }
+    this.articleService.auditing(this.articleAuditing).subscribe(
+      (data: ResponseData) => {
+        this.isLoadingAuditing = false;
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+          this.auditingArticleInArray(this.articleAuditing);
+        }).catch(() => {});
+      },
+      error => {
+        this.isLoadingAuditing = false;
+      }
+    );
+  }
+  private auditingArticleInArray(ids: number[]) {
+    for (const id of ids) {
+      for (const per of this.articles) {
+        if (per.id === id) {
+          per.status = 1;
+          break;
+        }
+      }
+    }
+  }
+  delete() {
+    this.isLoadingDelete = true;
+    for (const article of this.articles) {
+      if (article.checked) {
+        this.articleDelete.push(article.id);
+      }
+    }
+    this.articleService.delete(this.articleDelete).subscribe(
+      (data: ResponseData) => {
+        this.isLoadingDelete = false;
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+          this.deleteArticleInArray(this.articleDelete);
+        }).catch(() => {});
+      },
+      error => {
+        this.isLoadingDelete = false;
+      }
+    );
+  }
+  private deleteArticleInArray(ids: number[]) {
+    for (const id of ids) {
+      let index = 0;
+      for (const per of this.articles) {
+        if (per.id === id) {
+          this.articles.splice(index, 1);
+          this.total--;
+          break;
+        }
+        index++;
+      }
+    }
+    if (this.articles.length === 0) {
+      // 被删完了,往前页跳
+      if (this.pageIndex > 1) {
+        this.pageIndex--;
+        this.getData();
+      }
+    }
+  }
   tagChanged(e, article, propertyName) {
     for (const p in article) {
       if (p === propertyName) {

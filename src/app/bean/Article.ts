@@ -1,5 +1,6 @@
 export class Article {
   constructor(
+    public id: number,
     public channelId: number,
     public categoryId: number,
     public title: string,
@@ -19,4 +20,12 @@ export class Article {
     public publishAt: string,
     public checked: boolean,
   ) {  }
+}
+
+export class ArticleProperty {
+  constructor (
+    public name: string,
+    public value: any,
+    public checked: boolean,
+  ) {}
 }

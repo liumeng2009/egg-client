@@ -19,14 +19,22 @@ export class ArticleService {
               private message: NzMessageService,
   ) {}
 
-  getArticleList(page, pagesize, searchkey, channelId, categoryId): Observable<ResponseData> {
+  getArticleList(page, pagesize, searchkey, channelId, categoryId,
+    status?, isComment?, isTop?, isRed?, isHot?, isSlide?
+  ): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
     const params = new HttpParams().set('page', page)
       .set('pagesize', pagesize)
       .set('searchkey', searchkey)
       .set('channelId', channelId)
-      .set('categoryId', categoryId);
+      .set('categoryId', categoryId)
+      .set('status', status)
+      .set('isComment', isComment)
+      .set('isTop', isTop)
+      .set('isRed', isRed)
+      .set('isHot', isHot)
+      .set('isSlide', isSlide);
     return this.http.get(this.article_url, {
       headers: headers,
       params: params,
@@ -72,7 +80,28 @@ export class ArticleService {
         catchError(this.handleError<any>())
       );
   }
+  delete(ids): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.post(this.article_url + '/delete', {ids: ids}, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
 
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  auditing(ids): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.post(this.article_url + '/auditing', {ids: ids}, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
       if (error.name === 'HttpErrorResponse') {

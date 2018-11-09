@@ -39,7 +39,7 @@ export class ArticleAddComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
-  article: Article = new Article(null, null, null, null, null, null, null,
+  article: Article = new Article(null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
     null, null, null, null,
     );
