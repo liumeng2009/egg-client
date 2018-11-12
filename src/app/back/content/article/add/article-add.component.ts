@@ -32,6 +32,7 @@ export class ArticleAddComponent implements OnInit {
   categoryList = false;
   categoryListError = '';
   isLoadingCategoryList = false;
+  channelId = 0;
   channel: Channel;
   channelList = false;
   channelListError = '';
@@ -39,7 +40,7 @@ export class ArticleAddComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
-  article: Article = new Article(null, null, null, null, null, null, null, null,
+  article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
     null, null, null, null,
     );
@@ -48,9 +49,13 @@ export class ArticleAddComponent implements OnInit {
   user: User;
   serverPath = EduConfig.serverPath;
   uploadPath = this.serverPath + '/api/upload';
+  uploadMultiplePath = this.serverPath + '/api/upload/multiple';
   fileList = [];
+  multipleFileList = [];
   previewImage = '';
+  previewMultiImage = '';
   previewVisible = false;
+  previewMultiVisible = false;
   tinyMceInitOption = EduConfig.tinyMceOptions;
   constructor(
     private fb: FormBuilder,
@@ -73,6 +78,7 @@ export class ArticleAddComponent implements OnInit {
     this.validateForm = this.fb.group({
       categoryId: [ null , [ Validators.required ] ],
       title: [ '', [ Validators.required ]],
+      code: [''],
       imgUrl: [ '' ],
       zhaiyao: [''],
       content: [''],
@@ -139,8 +145,8 @@ export class ArticleAddComponent implements OnInit {
   private initChannel() {
     this.isLoadingchannel = true;
     this.route.params.subscribe((params: Params) => {
-      const channelId = params.channelId;
-      this.categoryService.showChannel(channelId).subscribe(
+      this.channelId = params.channelId;
+      this.categoryService.showChannel(this.channelId).subscribe(
         (data: ResponseData) => {
           this.isLoadingchannel = false;
           this.toolService.apiResult(data, true).then(
@@ -163,9 +169,9 @@ export class ArticleAddComponent implements OnInit {
   initCategoryList() {
     this.isLoadingCategoryList = true;
     this.route.params.subscribe((params: Params) => {
-      const channelId = params.channelId;
+      this.channelId = params.channelId;
       console.log(params);
-      this.categoryService.getCategoryList(channelId).subscribe(
+      this.categoryService.getCategoryList(this.channelId).subscribe(
         (data: ResponseData) => {
           this.isLoadingCategoryList = false;
           this.toolService.apiResult(data, true).then(
@@ -211,6 +217,23 @@ export class ArticleAddComponent implements OnInit {
           this.fileList.splice(0, 1);
         }
         this.article.imgUrl = info.file.response.location;
+        console.log(info.file.response.location);
+      } else {
+        this.message.error('上传出现错误');
+      }
+
+    }
+  }
+  handleMultiChange(info: { file: UploadFile }): void {
+    if (info.file.status === 'uploading') {
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      if (info.file.response.locations) {
+        // this.user.avatarUseSys = 0;
+        // this.user.avatar = info.file.response.data.path;
+        console.log(info.file.response.locations);
       } else {
         this.message.error('上传出现错误');
       }
@@ -218,6 +241,23 @@ export class ArticleAddComponent implements OnInit {
     }
   }
   customReq = (item: UploadXHRArgs) => {
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    formData.append('file', item.file as any);
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'authorization': token ? token : ''});
+    const req = new HttpRequest('POST', item.action, formData, {headers: headers});
+    return this.http.request(req).subscribe((event: HttpEvent<{}>) => {
+      if (event instanceof HttpResponse) {
+        // 处理成功
+        item.onSuccess(event.body, item.file, event);
+      }
+    }, (err) => {
+      // 处理失败
+      item.onError(err, item.file);
+    });
+  }
+  multiCustomReq = (item: UploadXHRArgs) => {
     const formData = new FormData();
     // tslint:disable-next-line:no-any
     formData.append('file', item.file as any);
@@ -262,6 +302,10 @@ export class ArticleAddComponent implements OnInit {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
   }
+  handleMultiPreview =  (file: UploadFile) => {
+    this.previewMultiImage = file.url || file.thumbUrl;
+    this.previewMultiVisible = true;
+  }
   submitForm() {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
@@ -274,6 +318,7 @@ export class ArticleAddComponent implements OnInit {
       // 控件值是0 status赋值为2，代表未审核 控件值是1 status赋值为1，代表正常状态
       this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
       this.article.title = this.validateForm.get('title').value;
+      this.article.code = this.validateForm.get('code').value;
       this.article.sort = this.validateForm.get('sort').value;
       this.article.click = this.validateForm.get('click').value;
       this.article.zhaiyao = this.validateForm.get('zhaiyao').value;

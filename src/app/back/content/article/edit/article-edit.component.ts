@@ -39,7 +39,7 @@ export class ArticleEditComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
-  article: Article = new Article(null, null, null, null, null, null, null, null,
+  article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
     null, null, null, null,
   );
@@ -82,6 +82,7 @@ export class ArticleEditComponent implements OnInit {
       channelId: [ null , [ Validators.required ] ],
       categoryId: [ null , [ Validators.required ] ],
       title: [ '', [ Validators.required ]],
+      code: [ ''],
       imgUrl: [ '' ],
       zhaiyao: [''],
       content: [''],
@@ -219,6 +220,7 @@ export class ArticleEditComponent implements OnInit {
               channelId: this.article.channelId,
               categoryId: this.article.categoryId,
               title:  this.article.title,
+              code: this.article.code,
               imgUrl:  this.article.imgUrl,
               zhaiyao:  this.article.zhaiyao,
               content:  this.article.content,
@@ -307,6 +309,7 @@ export class ArticleEditComponent implements OnInit {
       // 控件值是0 status赋值为2，代表未审核 控件值是1 status赋值为1，代表正常状态
       this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
       this.article.title = this.validateForm.get('title').value;
+      this.article.code = this.validateForm.get('code').value;
       this.article.sort = this.validateForm.get('sort').value;
       this.article.click = this.validateForm.get('click').value;
       this.article.zhaiyao = this.validateForm.get('zhaiyao').value;

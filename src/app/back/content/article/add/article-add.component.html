@@ -69,6 +69,14 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
+                调用别名
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <input type="text" nz-input formControlName="code">
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
                 封面图片
               </nz-form-label>
               <nz-form-control class="ant-col-16">
@@ -130,6 +138,31 @@
             </nz-form-item>
 
         </nz-tab>
+        <nz-tab [nzTitle]="'图片相册'" *ngIf="channel?.id === 3">
+          <nz-upload
+            [nzAction]="uploadPath"
+            nzListType="picture-card"
+            nzMultiple="true"
+            [(nzFileList)]="multipleFileList"
+            [nzBeforeUpload]="beforeUpload"
+            [nzPreview]="handleMultiPreview"
+            (nzChange)="handleChange($event)"
+            [nzCustomRequest]="customReq">
+            <i nz-icon type="plus"></i>
+            <div class="ant-upload-text">点击上传</div>
+          </nz-upload>
+          <nz-modal [nzVisible]="previewMultiVisible" [nzContent]="modalMultiContent" [nzFooter]="null" (nzOnCancel)="previewMultiVisible=false">
+            <ng-template #modalMultiContent>
+              <img [src]="previewMultiImage" [ngStyle]="{ 'width': '100%' }" />
+            </ng-template>
+          </nz-modal>
+        </nz-tab>
+        <nz-tab [nzTitle]="'附件信息'" *ngIf="channel?.id === 4">
+
+        </nz-tab>
+        <nz-tab [nzTitle]="'视频信息'" *ngIf="channel?.id === 2">
+
+        </nz-tab>
         <nz-tab [nzTitle]="'扩展信息'">
           <nz-form-item>
             <nz-form-control>
@@ -149,7 +182,7 @@
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存
+      提交保存{{channelId}}
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
   </nz-footer>
