@@ -56,6 +56,7 @@ export class ArticleListComponent implements OnInit {
   ngOnInit() {
     this.auth();
     this.initArticleProperties();
+    this.channelSelected = this.rememberService.getChannel();
     this.initChannelList().then(
       () => {
         this.initCategoryList(this.channelSelected).then(() => {
@@ -128,9 +129,9 @@ export class ArticleListComponent implements OnInit {
             (result: ResponseData) => {
               this.channels = [...result.data];
               this.channelList = true;
-              if (this.channels.length > 0) {
+/*              if (this.channels.length > 0) {
                 this.channelSelected = this.channels[0].id;
-              }
+              }*/
               resolve();
             }
           ).catch((error) => {
@@ -155,6 +156,7 @@ export class ArticleListComponent implements OnInit {
     ).catch(() => {});
   }
   channelSelectChanged(e) {
+    this.rememberService.setChannel(e);
     this.initCategoryList(e).then(() => {
       this.getData();
     }).catch(() => {});
@@ -295,7 +297,8 @@ export class ArticleListComponent implements OnInit {
   edit(id) {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
-  auditing(id) {
+  auditing() {
+    this.articleAuditing.splice(0, this.articleAuditing.length);
     this.isLoadingAuditing = true;
     for (const article of this.articles) {
       if (article.checked) {

@@ -1,3 +1,5 @@
+import {ArticleAlbum} from './ArticleAlbum';
+
 export class Article {
   constructor(
     public id: number,
@@ -20,6 +22,7 @@ export class Article {
     public auditing: number,
     public publishAt: string,
     public checked: boolean,
+    public article_albums: ArticleAlbum[],
   ) {  }
 }
 

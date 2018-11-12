@@ -34,6 +34,7 @@ export class CategoryListComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.auth();
+    this.channelSelected = this.rememberService.getChannel();
     this.initChannelList().then(
       () => {
         this.getData(this.channelSelected);
@@ -98,9 +99,9 @@ export class CategoryListComponent implements OnInit {
             (result: ResponseData) => {
               this.channels = [...result.data];
               this.channelList = true;
-              if (this.channels.length > 0) {
+/*              if (this.channels.length > 0) {
                 this.channelSelected = this.channels[0].id;
-              }
+              }*/
               resolve();
             }
           ).catch((error) => {

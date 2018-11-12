@@ -17,6 +17,7 @@ import {User} from '../../../../bean/user';
 import {ArticleService} from '../article.service';
 import {EduConfig} from '../../../../config/config';
 import * as moment from 'moment';
+import {ArticleAlbum} from '../../../../bean/ArticleAlbum';
 
 @Component({
   selector: 'app-article-add-page',
@@ -42,14 +43,13 @@ export class ArticleAddComponent implements OnInit {
   }
   article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
-    null, null, null, null,
+    null, null, null, null, [],
     );
   canAuditing = false;
   saveBtn = false;
   user: User;
   serverPath = EduConfig.serverPath;
   uploadPath = this.serverPath + '/api/upload';
-  uploadMultiplePath = this.serverPath + '/api/upload/multiple';
   fileList = [];
   multipleFileList = [];
   previewImage = '';
@@ -78,7 +78,7 @@ export class ArticleAddComponent implements OnInit {
     this.validateForm = this.fb.group({
       categoryId: [ null , [ Validators.required ] ],
       title: [ '', [ Validators.required ]],
-      code: [''],
+      code: [null],
       imgUrl: [ '' ],
       zhaiyao: [''],
       content: [''],
@@ -145,6 +145,7 @@ export class ArticleAddComponent implements OnInit {
   private initChannel() {
     this.isLoadingchannel = true;
     this.route.params.subscribe((params: Params) => {
+      this.rememberService.setChannel(params.channelId);
       this.channelId = params.channelId;
       this.categoryService.showChannel(this.channelId).subscribe(
         (data: ResponseData) => {
@@ -230,10 +231,13 @@ export class ArticleAddComponent implements OnInit {
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      if (info.file.response.locations) {
+      if (info.file.response.location) {
         // this.user.avatarUseSys = 0;
         // this.user.avatar = info.file.response.data.path;
-        console.log(info.file.response.locations);
+        console.log(info.file.response.location);
+        // 将返回的图片路径，存入article的album属性中
+        const album = new ArticleAlbum(null, null, info.file.response.location, null, null);
+        this.article.article_albums.push(album);
       } else {
         this.message.error('上传出现错误');
       }
@@ -257,23 +261,7 @@ export class ArticleAddComponent implements OnInit {
       item.onError(err, item.file);
     });
   }
-  multiCustomReq = (item: UploadXHRArgs) => {
-    const formData = new FormData();
-    // tslint:disable-next-line:no-any
-    formData.append('file', item.file as any);
-    const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'authorization': token ? token : ''});
-    const req = new HttpRequest('POST', item.action, formData, {headers: headers});
-    return this.http.request(req).subscribe((event: HttpEvent<{}>) => {
-      if (event instanceof HttpResponse) {
-        // 处理成功
-        item.onSuccess(event.body, item.file, event);
-      }
-    }, (err) => {
-      // 处理失败
-      item.onError(err, item.file);
-    });
-  }
+
   tinyImageUploadHander = (blobInfo, success, failure) => {
     const formData = new FormData();
     // tslint:disable-next-line:no-any
@@ -318,7 +306,7 @@ export class ArticleAddComponent implements OnInit {
       // 控件值是0 status赋值为2，代表未审核 控件值是1 status赋值为1，代表正常状态
       this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
       this.article.title = this.validateForm.get('title').value;
-      this.article.code = this.validateForm.get('code').value;
+      this.article.code = (this.validateForm.get('code').value === null || this.validateForm.get('code').value.trim() === '') ? null : this.validateForm.get('code').value;
       this.article.sort = this.validateForm.get('sort').value;
       this.article.click = this.validateForm.get('click').value;
       this.article.zhaiyao = this.validateForm.get('zhaiyao').value;

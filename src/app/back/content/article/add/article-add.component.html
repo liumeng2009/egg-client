@@ -146,7 +146,7 @@
             [(nzFileList)]="multipleFileList"
             [nzBeforeUpload]="beforeUpload"
             [nzPreview]="handleMultiPreview"
-            (nzChange)="handleChange($event)"
+            (nzChange)="handleMultiChange($event)"
             [nzCustomRequest]="customReq">
             <i nz-icon type="plus"></i>
             <div class="ant-upload-text">点击上传</div>
@@ -154,6 +154,7 @@
           <nz-modal [nzVisible]="previewMultiVisible" [nzContent]="modalMultiContent" [nzFooter]="null" (nzOnCancel)="previewMultiVisible=false">
             <ng-template #modalMultiContent>
               <img [src]="previewMultiImage" [ngStyle]="{ 'width': '100%' }" />
+              <input type="text">
             </ng-template>
           </nz-modal>
         </nz-tab>
@@ -182,7 +183,7 @@
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存{{channelId}}
+      提交保存
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
   </nz-footer>

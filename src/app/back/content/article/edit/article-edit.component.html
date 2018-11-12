@@ -1,7 +1,7 @@
 <nz-layout>
   <nz-content>
     <nz-card [ngStyle]="formHeight">
-      <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+      <form nz-form [formGroup]="validateForm" class="role-add-form">
         <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
           <nz-tab [nzTitle]="'基本信息'">
 
@@ -127,6 +127,26 @@
             </nz-form-item>
 
           </nz-tab>
+          <nz-tab [nzTitle]="'图片相册'" *ngIf="channel?.id === 3">
+            <nz-upload
+              [nzAction]="uploadPath"
+              nzListType="picture-card"
+              nzMultiple="true"
+              [(nzFileList)]="multipleFileListShow"
+              [nzBeforeUpload]="beforeUpload"
+              [nzPreview]="handleMultiPreview"
+              (nzChange)="handleMultiChange($event)"
+              [nzCustomRequest]="customReq">
+              <i nz-icon type="plus"></i>
+              <div class="ant-upload-text">点击上传</div>
+            </nz-upload>
+            <nz-modal [nzVisible]="previewMultiVisible" [nzContent]="modalMultiContent" [nzFooter]="null" (nzOnCancel)="previewMultiVisible=false">
+              <ng-template #modalMultiContent>
+                <img [src]="previewMultiImage" [ngStyle]="{ 'width': '100%' }" />
+                <input type="text">
+              </ng-template>
+            </nz-modal>
+          </nz-tab>
           <nz-tab [nzTitle]="'扩展信息'">
             <nz-form-item>
               <nz-form-label class="ant-col-4">
@@ -150,7 +170,7 @@
     </nz-card>
   </nz-content>
   <nz-footer class="fixed-footer">
-    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
+    <button nz-button type="submit" *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm();">
       <i nz-icon type="save" theme="outline"></i>
       提交保存
     </button>

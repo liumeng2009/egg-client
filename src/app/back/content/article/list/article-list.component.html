@@ -88,7 +88,7 @@
       <i nz-icon type="plus-circle" theme="outline"></i>
       新增
     </button>
-    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" [nzLoading]="isLoadingAuditing" (click)="auditing(article.id)">
+    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" [nzLoading]="isLoadingAuditing" (click)="auditing()">
       <i nz-icon type="audit" theme="outline"></i>
       审核
     </button>

@@ -17,6 +17,7 @@ import {CategoryService} from '../../category/category.service';
 import {ArticleService} from '../article.service';
 import {ResponseData} from '../../../../bean/responseData';
 import * as moment from 'moment';
+import {ArticleAlbum} from '../../../../bean/ArticleAlbum';
 
 @Component({
   selector: 'app-article-edit-page',
@@ -41,7 +42,7 @@ export class ArticleEditComponent implements OnInit {
   }
   article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
-    null, null, null, null,
+    null, null, null, null, [],
   );
   canAuditing = false;
   saveBtn = false;
@@ -51,9 +52,13 @@ export class ArticleEditComponent implements OnInit {
   fileList = [
 
   ];
+  multipleFileList = [];
   fileListShow;
+  multipleFileListShow;
   previewImage = '';
+  previewMultiImage = '';
   previewVisible = false;
+  previewMultiVisible = false;
   tinyMceInitOption = {
     plugins: 'image code',
     language: 'zh_CN',
@@ -216,6 +221,22 @@ export class ArticleEditComponent implements OnInit {
               this.fileListShow = [...this.fileList];
               console.log(this.fileList);
             }
+            if (this.article.article_albums.length > 0) {
+              for (let al of this.article.article_albums) {
+                const fileAlbum =  {
+                  uid: '-1',
+                  name: al.origin_path.substring(al.origin_path.lastIndexOf('/') + 1, al.origin_path.length),
+                  status: status,
+                  url: this.serverPath + al.origin_path,
+                  size: 0,
+                  type: 'jpg',
+                };
+                const fAlbum: UploadFile = {...fileAlbum};
+                this.multipleFileList.push(fAlbum);
+                this.multipleFileListShow = [...this.multipleFileList];
+                console.log(this.multipleFileListShow);
+              }
+            }
             this.validateForm.setValue({
               channelId: this.article.channelId,
               categoryId: this.article.categoryId,
@@ -236,6 +257,7 @@ export class ArticleEditComponent implements OnInit {
               auditing:  this.article.auditing,
               publishAt:  this.article.publishAt,
             });
+            this.rememberService.setChannel(this.article.channelId);
             this.initChannel(this.article.channelId);
             this.initCategoryList(this.article.channelId);
           }).catch(() => {});
@@ -276,6 +298,25 @@ export class ArticleEditComponent implements OnInit {
 
     }
   }
+  handleMultiChange(info: { file: UploadFile }): void {
+    if (info.file.status === 'uploading') {
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      if (info.file.response.location) {
+        // this.user.avatarUseSys = 0;
+        // this.user.avatar = info.file.response.data.path;
+        console.log(info.file.response.location);
+        // 将返回的图片路径，存入article的album属性中
+        const album = new ArticleAlbum(null, null, info.file.response.location, null, null);
+        this.article.album.push(album);
+      } else {
+        this.message.error('上传出现错误');
+      }
+
+    }
+  }
   customReq = (item: UploadXHRArgs) => {
     const formData = new FormData();
     // tslint:disable-next-line:no-any
@@ -296,6 +337,10 @@ export class ArticleEditComponent implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
+  }
+  handleMultiPreview =  (file: UploadFile) => {
+    this.previewMultiImage = file.url || file.thumbUrl;
+    this.previewMultiVisible = true;
   }
   submitForm() {
     for (const i in this.validateForm.controls) {

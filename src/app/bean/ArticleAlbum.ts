@@ -5,6 +5,5 @@ export class ArticleAlbum {
     public origin_path: string,
     public thumb_path: string,
     public remark: string,
-    public status: number,
   ) {  }
 }
