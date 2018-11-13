@@ -324,4 +324,5 @@ export class MainComponent implements OnInit {
   back() {
     window.history.go(-1);
   }
+
 }

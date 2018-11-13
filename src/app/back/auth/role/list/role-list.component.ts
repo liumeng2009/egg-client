@@ -153,18 +153,9 @@ export class RoleListComponent implements OnInit {
   }
 
   private deleteRoleInArray(ids: number[]) {
-    console.log(ids);
-
     for (const id of ids) {
-      let index = 0;
-      for (const per of this.roles) {
-        if (per.id === id) {
-          this.roles.splice(index, 1);
-          this.total--;
-          break;
-        }
-        index++;
-      }
+      this.roles = this.roles.filter(d => d.id !== id);
+      this.total--;
     }
     if (this.roles.length === 0) {
       // 被删完了,往前页跳

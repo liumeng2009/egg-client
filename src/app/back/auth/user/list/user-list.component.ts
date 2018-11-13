@@ -199,15 +199,8 @@ export class UserListComponent implements OnInit {
   }
   private deleteUserInArray(ids: number[]) {
     for (const id of ids) {
-      let index = 0;
-      for (const per of this.users) {
-        if (per.id === id) {
-          this.users.splice(index, 1);
-          this.total--;
-          break;
-        }
-        index++;
-      }
+      this.users = this.users.filter(d => d.id !== id);
+      this.total--;
     }
     if (this.users.length === 0) {
       // 被删完了,往前页跳

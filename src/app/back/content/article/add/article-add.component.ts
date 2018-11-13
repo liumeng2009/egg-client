@@ -145,7 +145,7 @@ export class ArticleAddComponent implements OnInit {
   private initChannel() {
     this.isLoadingchannel = true;
     this.route.params.subscribe((params: Params) => {
-      this.rememberService.setChannel(params.channelId);
+      this.rememberService.setChannel(parseInt(params.channelId, 10));
       this.channelId = params.channelId;
       this.categoryService.showChannel(this.channelId).subscribe(
         (data: ResponseData) => {
@@ -306,7 +306,8 @@ export class ArticleAddComponent implements OnInit {
       // 控件值是0 status赋值为2，代表未审核 控件值是1 status赋值为1，代表正常状态
       this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
       this.article.title = this.validateForm.get('title').value;
-      this.article.code = (this.validateForm.get('code').value === null || this.validateForm.get('code').value.trim() === '') ? null : this.validateForm.get('code').value;
+      this.article.code = (this.validateForm.get('code').value === null || this.validateForm.get('code').value.trim() === '')
+        ? null : this.validateForm.get('code').value;
       this.article.sort = this.validateForm.get('sort').value;
       this.article.click = this.validateForm.get('click').value;
       this.article.zhaiyao = this.validateForm.get('zhaiyao').value;

@@ -69,6 +69,14 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
+                调用别名
+              </nz-form-label>
+              <nz-form-control class="ant-col-16">
+                <input type="text" nz-input formControlName="code">
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label class="ant-col-6">
                 封面图片
               </nz-form-label>
               <nz-form-control class="ant-col-16">
@@ -172,11 +180,14 @@
     </nz-card>
   </nz-content>
   <nz-footer class="fixed-footer">
-    <button nz-button type="submit" *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm();">
+    <button nz-button type="submit" *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isSubmitLoading" (click)="submitForm();">
       <i nz-icon type="save" theme="outline"></i>
       提交保存
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+    <button nz-button (click)="getData()" [nzLoading]="isLoading">
+      <i nz-icon type="reload" theme="outline"></i>
+    </button>
   </nz-footer>
 </nz-layout>
 

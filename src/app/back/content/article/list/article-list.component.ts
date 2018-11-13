@@ -348,15 +348,8 @@ export class ArticleListComponent implements OnInit {
   }
   private deleteArticleInArray(ids: number[]) {
     for (const id of ids) {
-      let index = 0;
-      for (const per of this.articles) {
-        if (per.id === id) {
-          this.articles.splice(index, 1);
-          this.total--;
-          break;
-        }
-        index++;
-      }
+      this.articles = this.articles.filter(d => d.id !== id);
+      this.total--;
     }
     if (this.articles.length === 0) {
       // 被删完了,往前页跳

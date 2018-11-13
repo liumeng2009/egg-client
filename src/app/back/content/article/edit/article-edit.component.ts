@@ -29,6 +29,7 @@ export class ArticleEditComponent implements OnInit {
   category: ArticleCategory[] = [];
   validateForm: FormGroup;
   isLoading = false;
+  isSubmitLoading = false;
   categories: ArticleCategory[] = [];
   categoryList = false;
   categoryListError = '';
@@ -40,6 +41,7 @@ export class ArticleEditComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
+  articleId = 0;
   article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
     null, null, null, null, [],
@@ -98,7 +100,8 @@ export class ArticleEditComponent implements OnInit {
       publishAt: [ null ],
     });
     this.route.params.subscribe((params) => {
-      this.getData(params.id);
+      this.articleId = params.id;
+      this.getData();
     });
   }
   private initHeight() {
@@ -148,6 +151,7 @@ export class ArticleEditComponent implements OnInit {
 
   private initChannel(channelId) {
     this.isLoadingchannel = true;
+    this.rememberService.setChannel(channelId);
     this.categoryService.showChannel(channelId).subscribe(
       (data: ResponseData) => {
         this.isLoadingchannel = false;
@@ -188,8 +192,8 @@ export class ArticleEditComponent implements OnInit {
       }
     );
   }
-  getData(id: number) {
-    this.articleService.getArticle(id).subscribe(
+  getData() {
+    this.articleService.getArticle(this.articleId).subscribe(
       (data: ResponseData) => {
         this.isLoading = false;
         this.toolService.apiResult(data, false).then(
@@ -201,6 +205,8 @@ export class ArticleEditComponent implements OnInit {
               this.article.status = 0;
             }
             const status: UploadFileStatus = 'done';
+            this.fileList.splice(0, this.fileList.length);
+            this.multipleFileList.splice(0, this.multipleFileList.length);
             if (this.article.imgUrl) {
               const file =  {
                 uid: '-1',
@@ -208,7 +214,7 @@ export class ArticleEditComponent implements OnInit {
                 status: status,
                 url: this.serverPath + this.article.imgUrl,
                 size: 0,
-                type: 'jpg',
+                type: '',
               };
               const f: UploadFile = {...file};
               this.fileList.push(f);
@@ -368,13 +374,14 @@ export class ArticleEditComponent implements OnInit {
       this.validateForm.controls[ i ].updateValueAndValidity();
     }
     if (this.validateForm.valid) {
-      this.isLoading = true;
+      this.isSubmitLoading = true;
       this.article.channelId = this.channel.id;
       this.article.categoryId = this.validateForm.get('categoryId').value;
       // 控件值是0 status赋值为2，代表未审核 控件值是1 status赋值为1，代表正常状态
       this.article.status = this.validateForm.get('status').value ? this.validateForm.get('status').value : 2;
       this.article.title = this.validateForm.get('title').value;
-      this.article.code = this.validateForm.get('code').value;
+      this.article.code = (this.validateForm.get('code').value === null || this.validateForm.get('code').value.trim() === '')
+        ? null : this.validateForm.get('code').value;
       this.article.sort = this.validateForm.get('sort').value;
       this.article.click = this.validateForm.get('click').value;
       this.article.zhaiyao = this.validateForm.get('zhaiyao').value;
@@ -390,18 +397,17 @@ export class ArticleEditComponent implements OnInit {
       if (this.canAuditing && this.article.status === 1) {
         this.article.auditing = this.user.id;
       }
-      console.log(this.article);
       this.articleService.update(this.article).subscribe(
         (data: ResponseData) => {
-          this.isLoading = false;
+          this.isSubmitLoading = false;
           this.toolService.apiResult(data, false).then(() => {
-            // this.router.navigate(['list'], {relativeTo: this.route.parent});
+            this.router.navigate(['list'], {relativeTo: this.route.parent});
           }).catch(() => {
 
           });
         },
         error => {
-          this.isLoading = false;
+          this.isSubmitLoading = false;
         }
       );
     }

@@ -4,7 +4,6 @@
           [nzTitle]="headerTemplate"
           [nzBordered]="true"
           [nzLoading]="isLoading"
-          [nzHideOnSinglePage]="true"
           [nzNoResult]="noResult"
 >
   <thead>
@@ -92,7 +91,7 @@
       <i nz-icon type="audit" theme="outline"></i>
       审核
     </button>
-    <button nz-button [nzType]="'danger'" [nzLoading]="isLoadingDelete" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的角色吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
+    <button nz-button [nzType]="'danger'" [nzLoading]="isLoadingDelete" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的文章吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
       <i nz-icon type="delete" theme="outline"></i>删除
     </button>
     <button nz-button (click)="refresh()" [title]="'刷新'" >
