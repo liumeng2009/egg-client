@@ -81,6 +81,7 @@
                     [nzCustomRequest]="customReq"
                     [nzListType]="'picture-card'"
                     [nzPreview]="handlePreview"
+                    [nzRemove]="handleRemove"
                   >
                     <i nz-icon type="plus" class="upload-icon" theme="outline"></i>
                     <div class="ant-upload-text">点击上传</div>
@@ -136,6 +137,7 @@
               [nzBeforeUpload]="beforeUpload"
               [nzPreview]="handleMultiPreview"
               (nzChange)="handleMultiChange($event)"
+              [nzRemove]="handleMultiRemove"
               [nzCustomRequest]="customReq">
               <i nz-icon type="plus"></i>
               <div class="ant-upload-text">点击上传</div>

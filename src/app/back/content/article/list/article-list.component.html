@@ -18,7 +18,7 @@
     </th>
     <th nzWidth="250px">发布时间</th>
     <th nzWidth="50px">排序</th>
-    <th nzWidth="200px" nzCustomFilter>
+    <th nzWidth="250px" nzCustomFilter>
       属性
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
         <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
@@ -53,7 +53,7 @@
     <td nzWidth="100px">
       <nz-input-number [nzStep]="1" [ngModel]="article.sort"></nz-input-number>
     </td>
-    <td nzWidth="200px">
+    <td nzWidth="250px">
       <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event, article, 'isComment')" title="允许评论">
         <i nz-icon type="message" theme="outline"></i>
       </nz-tag>

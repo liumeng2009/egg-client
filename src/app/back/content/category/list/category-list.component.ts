@@ -99,9 +99,6 @@ export class CategoryListComponent implements OnInit {
             (result: ResponseData) => {
               this.channels = [...result.data];
               this.channelList = true;
-/*              if (this.channels.length > 0) {
-                this.channelSelected = this.channels[0].id;
-              }*/
               resolve();
             }
           ).catch((error) => {
@@ -126,6 +123,7 @@ export class CategoryListComponent implements OnInit {
     ).catch(() => {});
   }
   channelSelectChanged(e) {
+    this.rememberService.setChannel(e);
     this.getData(e);
   }
   getData(channelId) {

@@ -5,7 +5,6 @@ import { ArticleComponent } from './article.component';
 import {ArticleListComponent} from './list/article-list.component';
 import {ArticleEditComponent} from './edit/article-edit.component';
 import {ArticleAddComponent} from './add/article-add.component';
-import {TokenGuard} from '../../main/tokenGuard.service';
 import {AuthGuard} from '../../main/authGuard.service';
 
 
@@ -13,25 +12,25 @@ const routes: Routes = [
   {
     path: '',
     component: ArticleComponent,
-    canActivate: [TokenGuard, AuthGuard],
+    canActivate: [AuthGuard],
     data: {name: '内容管理'},
     children: [
       {
         path: 'list',
         component: ArticleListComponent,
-        canActivate: [TokenGuard, AuthGuard],
+        canActivate: [AuthGuard],
         data: {name: '列表'},
       },
       {
         path: 'add',
         component: ArticleAddComponent,
-        canActivate: [TokenGuard, AuthGuard],
+        canActivate: [AuthGuard],
         data: {name: '新增'},
       },
       {
         path: ':id',
         component: ArticleEditComponent,
-        canActivate: [TokenGuard, AuthGuard],
+        canActivate: [AuthGuard],
         data: {name: '编辑'},
       },
     ]

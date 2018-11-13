@@ -59,13 +59,7 @@ export class ArticleEditComponent implements OnInit {
   previewMultiImage = '';
   previewVisible = false;
   previewMultiVisible = false;
-  tinyMceInitOption = {
-    plugins: 'image code',
-    language: 'zh_CN',
-    toolbar: 'undo redo | link image | code',
-    image_title: true,
-    images_upload_url: this.uploadPath,
-  };
+  tinyMceInitOption = EduConfig.tinyMceOptions;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -285,13 +279,13 @@ export class ArticleEditComponent implements OnInit {
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      if (info.file.response.code === 0) {
+      if (info.file.response) {
         // this.user.avatarUseSys = 0;
         // this.user.avatar = info.file.response.data.path;
         if (this.fileList.length > 1) {
           this.fileList.splice(0, 1);
         }
-        this.article.imgUrl = info.file.response.data.path;
+        this.article.imgUrl = info.file.response.location;
       } else {
         this.message.error(info.file.response.error);
       }
@@ -309,8 +303,8 @@ export class ArticleEditComponent implements OnInit {
         // this.user.avatar = info.file.response.data.path;
         console.log(info.file.response.location);
         // 将返回的图片路径，存入article的album属性中
-        const album = new ArticleAlbum(null, null, info.file.response.location, null, null);
-        this.article.album.push(album);
+        const album = new ArticleAlbum(null, this.article.id, info.file.response.location, null, null, 'add');
+        this.article.article_albums.push(album);
       } else {
         this.message.error('上传出现错误');
       }
@@ -338,9 +332,35 @@ export class ArticleEditComponent implements OnInit {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
   }
+  handleRemove =  (file: UploadFile) => {
+    this.article.imgUrl = null;
+    let index = 0;
+    for (const fileShow of this.fileListShow) {
+      if (file === fileShow) {
+        this.fileListShow.splice(index, 1);
+        break;
+      }
+      index++;
+    }
+  }
   handleMultiPreview =  (file: UploadFile) => {
     this.previewMultiImage = file.url || file.thumbUrl;
     this.previewMultiVisible = true;
+  }
+  handleMultiRemove =  (file: UploadFile) => {
+    for (const album of this.article.article_albums) {
+      if (EduConfig.serverPath + album.origin_path === file.url) {
+        album.action = 'delete';
+      }
+    }
+    let index = 0;
+    for (const multipleFile of this.multipleFileListShow) {
+      if (file === multipleFile) {
+        this.multipleFileListShow.splice(index, 1);
+        break;
+      }
+      index++;
+    }
   }
   submitForm() {
     for (const i in this.validateForm.controls) {
@@ -375,7 +395,7 @@ export class ArticleEditComponent implements OnInit {
         (data: ResponseData) => {
           this.isLoading = false;
           this.toolService.apiResult(data, false).then(() => {
-            this.router.navigate(['list'], {relativeTo: this.route.parent});
+            // this.router.navigate(['list'], {relativeTo: this.route.parent});
           }).catch(() => {
 
           });

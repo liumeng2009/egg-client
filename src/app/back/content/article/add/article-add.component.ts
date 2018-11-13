@@ -236,7 +236,7 @@ export class ArticleAddComponent implements OnInit {
         // this.user.avatar = info.file.response.data.path;
         console.log(info.file.response.location);
         // 将返回的图片路径，存入article的album属性中
-        const album = new ArticleAlbum(null, null, info.file.response.location, null, null);
+        const album = new ArticleAlbum(null, null, info.file.response.location, null, null, null);
         this.article.article_albums.push(album);
       } else {
         this.message.error('上传出现错误');

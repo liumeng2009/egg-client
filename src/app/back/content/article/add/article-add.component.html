@@ -166,12 +166,18 @@
         </nz-tab>
         <nz-tab [nzTitle]="'扩展信息'">
           <nz-form-item>
-            <nz-form-control>
+            <nz-form-label class="ant-col-4">
+              摘要
+            </nz-form-label>
+            <nz-form-control class="ant-col-18">
               <textarea nz-input formControlName="zhaiyao" placeHolder="摘要" nzAutosize rows="3"></textarea>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <div nz-form-control style="padding-right: 2px">
+            <nz-form-label class="ant-col-4">
+              详细内容
+            </nz-form-label>
+            <div nz-form-control  class="ant-col-18">
               <editor placeholder="内容" [init]="tinyMceInitOption" formControlName="content" language="zh_CN" ></editor>
             </div>
           </nz-form-item>

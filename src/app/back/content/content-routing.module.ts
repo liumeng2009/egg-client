@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ContentComponent } from './content.component';
-import {TokenGuard} from '../main/tokenGuard.service';
+import {AuthGuard} from '../main/authGuard.service';
 
 
 const routes: Routes = [
   {
     path: '',
     component: ContentComponent,
-    canActivate: [TokenGuard],
+    canActivate: [AuthGuard],
     data: {name: '网站内容管理'},
     children: [
       {
