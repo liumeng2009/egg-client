@@ -28,10 +28,8 @@ export class LoginService {
   }
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
-      console.log(error);
       this.message.error(error.statusText);
       return throwError(result as T);
-
     };
   }
 

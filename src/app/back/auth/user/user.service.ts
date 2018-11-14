@@ -107,6 +107,17 @@ export class UserService {
         catchError(this.handleError<any>())
       );
   }
+  changePassword(password: any): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.put(this.user_url + '/changepassword', password, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {

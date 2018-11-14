@@ -2,15 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ResponseData} from '../../../bean/responseData';
-import {RoleService} from '../role/role.service';
 import {ToolService} from '../../../util/tool.service';
-import {NzMessageService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
 import {ConstomValidators} from '../../../util/validators';
 import {User} from '../../../bean/user';
 import {UserService} from '../user/user.service';
 import {Avatar} from '../../../bean/avatar';
 import {EduConfig} from '../../../config/config';
-import {HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpEvent, HttpResponse} from '@angular/common/http';
+import {PasswordComponent} from './password.component';
 
 @Component({
   selector: 'app-setting-page',
@@ -33,12 +33,12 @@ export class SettingComponent implements OnInit {
   avaTabSelectedIndex = 0;
   constructor(
     private fb: FormBuilder,
-    private roleService: RoleService,
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
     private toolService: ToolService,
     private messageService: NzMessageService,
+    private modalService: NzModalService,
   ) {}
 
   ngOnInit() {
@@ -180,6 +180,24 @@ export class SettingComponent implements OnInit {
         }
       );
     }
+  }
+  showChangePasswordModal() {
+    const modal = this.modalService.create({
+      nzTitle: '修改密码',
+      nzContent: PasswordComponent,
+      nzFooter: [{
+        label: '修改',
+        type: 'primary',
+        show: true,
+        loading:  (contentComponentInstance) => {
+          return contentComponentInstance.isSubmitLoading;
+        },
+        onClick: (componentInstance) => {
+          // componentInstance.title = 'title in inner component is changed';
+          componentInstance.submitForm();
+        }
+      }]
+    });
   }
   refresh() {
     this.getData();

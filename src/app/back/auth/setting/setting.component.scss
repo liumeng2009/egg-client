@@ -10,3 +10,6 @@ button{
 .ant-card{
   overflow-y: scroll;
 }
+:host ::ng-deep .ant-avatar .anticon-user {
+  font-size:36px !important;
+}

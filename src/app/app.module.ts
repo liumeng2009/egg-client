@@ -50,6 +50,8 @@ import { PlusCircleOutline,
   PlusOutline,
   EyeOutline,
   WarningOutline,
+  OrderedListOutline,
+  TableOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutline, UserOutline, SettingOutline,
@@ -79,6 +81,8 @@ const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutlin
   PlusOutline,
   EyeOutline,
   WarningOutline,
+  OrderedListOutline,
+  TableOutline,
 ];
 
 registerLocaleData(zh);

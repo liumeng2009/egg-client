@@ -8,8 +8,8 @@
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="mobile">
-            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.required">请输入登录用户名！</nz-form-explain>
-            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.errorPhone">手机号格式不正确！</nz-form-explain>
+<!--            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.required">请输入登录用户名！</nz-form-explain>
+            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.errorPhone">手机号格式不正确！</nz-form-explain>-->
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -22,11 +22,12 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            密码（默认：123456）
+            密码
           </nz-form-label>
           <nz-form-control class="ant-col-16">
-            <input type="password" nz-input formControlName="password">
-            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码！</nz-form-explain>
+            <a (click)="showChangePasswordModal()">修改密码</a>
+<!--            <input type="password" nz-input formControlName="password">
+            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码！</nz-form-explain>-->
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>

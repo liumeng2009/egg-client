@@ -1,4 +1,4 @@
-import {AbstractControl, ValidatorFn} from '@angular/forms';
+import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 export class ConstomValidators {
   static phoneValidator(): ValidatorFn {
@@ -7,5 +7,12 @@ export class ConstomValidators {
       const forbidden = phoneReg.test(control.value);
       return !forbidden ? {'errorPhone': {value: control.value}} : null;
     };
+  }
+  static identityRevealedValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+    const new_password = control.get('new_password');
+    const new_password_compare = control.get('new_password_compare');
+    const result = (new_password && new_password_compare && new_password.value === new_password_compare.value)
+      ?  null : { 'identityRevealed': true };
+    return result;
   }
 }
