@@ -127,8 +127,10 @@ export class CategoryListComponent implements OnInit {
     this.getData(e);
   }
   getData(channelId) {
+    this.isLoading = true;
     this.categoryService.getCategoryList(channelId).subscribe(
       (data: ResponseData) => {
+        this.isLoading = false;
         this.toolService.apiResult(data, true).then(
           (result: ResponseData) => {
             this.categories = [...result.data];
@@ -136,7 +138,7 @@ export class CategoryListComponent implements OnInit {
         ).catch(() => {});
       },
       error => {
-
+        this.isLoading = false;
       }
     );
   }

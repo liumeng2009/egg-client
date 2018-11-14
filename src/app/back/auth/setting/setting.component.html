@@ -22,14 +22,6 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            是否可以后台登录
-          </nz-form-label>
-          <nz-form-control class="ant-col-16">
-            <nz-switch formControlName="isAdmin"></nz-switch>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzRequired]="true" class="ant-col-6">
             密码（默认：123456）
           </nz-form-label>
           <nz-form-control class="ant-col-16">
@@ -46,28 +38,12 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzRequired]="true" class="ant-col-6">
-            所属角色
-          </nz-form-label>
-          <nz-form-control class="{{roleList?'ant-col-16':'ant-col-16 haserror'}}">
-            <nz-select formControlName="roleId">
-              <nz-option [nzValue]="role.id" [nzLabel]="role.name" *ngFor="let role of roles"></nz-option>
-            </nz-select>
-            <span *ngIf="!roleList" nz-tooltip style="color:red;cursor: pointer;" (click)="initRoleList()" nzTitle="{{roleListError}}点击重新加载" >
-          <i nz-icon type="question-circle" theme="outline" *ngIf="!isLoadingRoleList"></i>
-          <i nz-icon type="loading" theme="outline" *ngIf="isLoadingRoleList"></i>
-        </span>
-            <nz-form-explain *ngIf="validateForm.get('roleId').dirty && validateForm.get('roleId').errors">请选择一个角色！</nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
           <nz-form-label class="ant-col-6">
             设置头像
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <div nz-row>
               <nz-avatar [nzSrc]="user.avatar ? (serverPath + user.avatar) : ''" style="width: 64px;height:64px;font-size: 48px;line-height: 48px;" [nzIcon]="'user'">
-
               </nz-avatar>
               <nz-tabset [nzSelectedIndex]="avaTabSelectedIndex">
                 <nz-tab [nzTitle]="'从本地上传'">
@@ -76,6 +52,7 @@
                       [nzAction]="uploadPath"
                       [nzShowUploadList]="false"
                       [nzBeforeUpload]="beforeUpload"
+                      [nzCustomRequest]="customReq"
                       (nzChange)="handleChange($event)"
                     >
                       <button nz-button type="button">
@@ -100,7 +77,7 @@
     </nz-card>
   </nz-content>
   <nz-footer class="fixed-footer">
-    <button nz-button *ngIf="showEditBtn" [nzType]="'primary'" [nzLoading]="isSubmitLoading" (click)="submitForm()" [disabled]="!validateForm.valid">
+    <button nz-button [nzType]="'primary'" [nzLoading]="isSubmitLoading" (click)="submitForm()" [disabled]="!validateForm.valid">
       <i nz-icon type="save" theme="outline"></i>
       提交保存
     </button>

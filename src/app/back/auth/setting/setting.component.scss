@@ -1,0 +1,12 @@
+nz-card{
+  border-bottom: none;
+}
+::ng-deep .ant-card-head{
+  background-color: #fafafa;
+}
+button{
+  margin-right: 8px;
+}
+.ant-card{
+  overflow-y: scroll;
+}

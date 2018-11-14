@@ -19,4 +19,5 @@ export const EduConfig = {
     images_upload_handler: null,
     relative_urls : true,
   },
+  atLeastOneSelected: '请您至少选取一条记录！',
 }

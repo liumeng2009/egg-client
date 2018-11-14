@@ -5,6 +5,9 @@ import {NzMessageService} from 'ng-zorro-antd';
 
 import {ActivatedRoute, Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie';
+import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {catchError, tap} from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable()
 export class ToolService {
@@ -14,6 +17,7 @@ export class ToolService {
     private route: ActivatedRoute,
     private location: Location,
     private cookieService: CookieService,
+    private http: HttpClient,
   ) {
 
   }
@@ -43,8 +47,16 @@ export class ToolService {
     });
   }
 
-  apiException(error: any) {
+  upload(url: string, formData: any) {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'authorization': token ? token : ''});
+    const req = new HttpRequest('POST', url, formData, {headers: headers});
+    return this.http.request(req).pipe(
+      tap((data: ResponseData) => {
 
+      }),
+      catchError(this.handleError<any>())
+    );
   }
 
   private rememberUrl() {
@@ -64,5 +76,24 @@ export class ToolService {
     } else {
       this.router.navigate(['/admin/login']);
     }
+  }
+  private handleError<T>(result?: T) {
+    return (error: any): Observable<T> => {
+      console.log(error);
+      if (error.name === 'HttpErrorResponse') {
+        if (error.status === 404) {
+          this.message.error('服务器错误：未找到请求路径！');
+        } else if (error.status === 0) {
+          this.message.error('服务器错误：未响应！');
+        } else {
+          this.message.error('服务器错误：未知！');
+        }
+
+      } else {
+        this.message.error(error.statusText);
+      }
+      return throwError(result as T);
+
+    };
   }
 }

@@ -6,7 +6,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ResponseData} from '../../../../bean/responseData';
 import {ToolService} from '../../../../util/tool.service';
 import {RememberService} from '../../../main/remember.service';
-import {MissionService} from '../../../main/mission.service';
 import {AuthService} from '../../auth.service';
 import {Auth, AuthList} from '../../../../bean/auth';
 import {NzMessageService} from 'ng-zorro-antd';
@@ -22,7 +21,6 @@ export class RoleEditComponent implements OnInit {
   role: Role;
   canAdd = false;
   canDel = false;
-  @ViewChild('cardHeaderTemplate') cardHeaderTemplate: ElementRef;
   isLoading = false;
   isLoadingAuthList = false;
   isSubmitLoading = false;

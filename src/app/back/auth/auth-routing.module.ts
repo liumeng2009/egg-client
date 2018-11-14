@@ -19,7 +19,7 @@ const routes: Routes = [
       {
         path: 'role',
         loadChildren: './role/role.module#RoleModule',
-      },
+      }
     ]
   }
 ];

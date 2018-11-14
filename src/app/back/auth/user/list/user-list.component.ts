@@ -8,6 +8,7 @@ import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
 import {RoleService} from '../../role/role.service';
 import {RememberService} from '../../../main/remember.service';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 
 
 @Component({
@@ -35,6 +36,12 @@ export class UserListComponent implements OnInit {
   roleList = false;
   roleListError = '';
   isLoadingRoleList = false;
+  nameFilterStyle = {
+    color: '#bfbfbf',
+  }
+  roleFilterStyle = {
+    color: '#bfbfbf',
+  }
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -42,6 +49,8 @@ export class UserListComponent implements OnInit {
     private toolService: ToolService,
     private roleService: RoleService,
     private rememberService: RememberService,
+    private modalService: NzModalService,
+    private messageService: NzMessageService,
   ) {}
 
   ngOnInit() {
@@ -106,7 +115,7 @@ export class UserListComponent implements OnInit {
     this.roleService.getRoleList(0, 0, '')
       .subscribe(
         (data: ResponseData) => {
-          //this.isLoadingRoleList = false;
+          this.isLoadingRoleList = false;
           this.toolService.apiResult(data, true).then((result: ResponseData) => {
             this.roleList = true;
             this.roles = [...result.data.rows];
@@ -121,7 +130,7 @@ export class UserListComponent implements OnInit {
           });
         },
         error => {
-          //this.isLoadingRoleList = false;
+          this.isLoadingRoleList = false;
         }
       );
   }
@@ -138,14 +147,29 @@ export class UserListComponent implements OnInit {
     }
     return true;
   }
-  private filterByRole() {
+  filterByRole() {
     this.roleArray.splice(0, this.roleArray.length);
     for (const trole of this.roles) {
       if (trole.checked === true) {
         this.roleArray.push( trole.id );
       }
     }
-    console.log(this.roleArray);
+    if (this.roleFilterAllStatus()) {
+      this.roleFilterStyle.color = '#bfbfbf';
+    } else {
+      this.roleFilterStyle.color = '#1890ff';
+    }
+    this.getData(0, 0, this.searchkey, this.roleArray);
+  }
+  filterRemoveRole() {
+    this.roleFilterAllChanged(true)
+    this.roleArray.splice(0, this.roleArray.length);
+    for (const trole of this.roles) {
+      if (trole.checked === true) {
+        this.roleArray.push( trole.id );
+      }
+    }
+    this.roleFilterStyle.color = '#bfbfbf';
     this.getData(0, 0, this.searchkey, this.roleArray);
   }
 
@@ -166,10 +190,16 @@ export class UserListComponent implements OnInit {
       );
   }
   refresh() {
+    if (this.searchkey.trim() === '') {
+      this.nameFilterStyle.color = '#bfbfbf';
+    } else {
+      this.nameFilterStyle.color = '#1890ff';
+    }
     this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
   }
   refreshNoSearchKey() {
     this.searchkey = '';
+    this.nameFilterStyle.color = '#bfbfbf';
     this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
   }
   private add() {
@@ -179,23 +209,33 @@ export class UserListComponent implements OnInit {
     this.router.navigate([id], {relativeTo: this.route.parent});
   }
   private delete() {
-    this.isLoadingDelete = true;
     for (const user of this.users) {
       if (user.checked) {
         this.userDelete.push(user.id);
       }
     }
-    this.userService.delete(this.userDelete).subscribe(
-      (data: ResponseData) => {
-        this.isLoadingDelete = false;
-        this.toolService.apiResult(data, false).then((result: ResponseData) => {
-          this.deleteUserInArray(this.userDelete);
-        }).catch(() => {});
+    if (this.userDelete.length === 0) {
+      this.messageService.error(EduConfig.atLeastOneSelected);
+      return;
+    }
+    this.modalService.confirm({
+      nzTitle: '确认',
+      nzContent: '确认要删除该用户吗？',
+      nzOnOk: () => {
+        this.isLoadingDelete = true;
+        this.userService.delete(this.userDelete).subscribe(
+          (data: ResponseData) => {
+            this.isLoadingDelete = false;
+            this.toolService.apiResult(data, false).then((result: ResponseData) => {
+              this.deleteUserInArray(this.userDelete);
+            }).catch(() => {});
+          },
+          error => {
+            this.isLoadingDelete = false;
+          }
+        );
       },
-      error => {
-        this.isLoadingDelete = false;
-      }
-    );
+    });
   }
   private deleteUserInArray(ids: number[]) {
     for (const id of ids) {

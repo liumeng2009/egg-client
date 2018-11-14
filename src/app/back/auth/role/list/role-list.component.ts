@@ -5,7 +5,7 @@ import {RoleService} from '../role.service';
 import {ToolService} from '../../../../util/tool.service';
 import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {RememberService} from '../../../main/remember.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class RoleListComponent implements OnInit {
 
   searchkey = '';
   isLoading = false;
+  isDeleteLoading = false;
   roles: Role[] = [];
   roleDelete: number[] = [];
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
@@ -27,13 +28,16 @@ export class RoleListComponent implements OnInit {
   showAddBtn = false;
   showEditBtn = false;
   showDelBtn = false;
-  showModalBtn = false;
+  nameFilterStyle = {
+    color: '#bfbfbf',
+  };
   constructor(
     private roleService: RoleService,
     private router: Router,
     private route: ActivatedRoute,
     private toolService: ToolService,
     private modalService: NzModalService,
+    private messageService: NzMessageService,
     private rememberService: RememberService,
   ) {}
 
@@ -118,10 +122,16 @@ export class RoleListComponent implements OnInit {
       );
   }
   refresh() {
+    if (this.searchkey.trim() === '') {
+      this.nameFilterStyle.color = '#bfbfbf';
+    } else {
+      this.nameFilterStyle.color = '#1890ff';
+    }
     this.getData(this.pageIndex, this.pageSize, this.searchkey);
   }
   refreshNoSearchKey() {
     this.searchkey = '';
+    this.nameFilterStyle.color = '#bfbfbf';
     this.getData(this.pageIndex, this.pageSize, this.searchkey);
   }
   private add() {
@@ -138,18 +148,32 @@ export class RoleListComponent implements OnInit {
         this.roleDelete.push(role.id);
       }
     }
-    this.roleService.delete(this.roleDelete).subscribe(
-      (data: ResponseData) => {
-        this.toolService.apiResult(data, false).then(
-          (result: ResponseData) => {
-            this.deleteRoleInArray(this.roleDelete);
-          }
-        ).catch(() => {});
-      },
-      error => {
 
-      }
-    );
+    if (this.roleDelete.length === 0) {
+      this.messageService.error(EduConfig.atLeastOneSelected);
+      return;
+    }
+    this.modalService.confirm({
+      nzTitle: '确认',
+      nzContent: '确认要删除该角色吗？',
+      nzOnOk: () => {
+        this.isDeleteLoading = true;
+        this.roleService.delete(this.roleDelete).subscribe(
+          (data: ResponseData) => {
+            this.isDeleteLoading = false;
+            this.toolService.apiResult(data, false).then(
+              (result: ResponseData) => {
+                this.deleteRoleInArray(this.roleDelete);
+              }
+            ).catch(() => {});
+          },
+          error => {
+            this.isDeleteLoading = false;
+          }
+        );
+      },
+    });
+
   }
 
   private deleteRoleInArray(ids: number[]) {

@@ -285,7 +285,7 @@ export class MainComponent implements OnInit {
       if (user.avatar) {
         if (user.avatarUseSys === 0) {
           // 说明是上传的图片
-          return this.baseImageUrl + '/uploads/' + user.avatar;
+          return this.baseImageUrl + user.avatar;
         } else {
           return this.baseImageUrl + user.avatar;
         }

@@ -9,8 +9,23 @@
   <thead>
   <tr>
     <th nzWidth="50px" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
-    <th nzWidth="200px">
+    <th nzWidth="200px" nzCustomFilter>
       标题
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <i nz-icon type="filter" theme="outline"  *ngIf="searchkey === ''" class="ant-table-filter-icon" nz-dropdown></i>
+        <i nz-icon type="filter" style="color:#1890ff" *ngIf="searchkey !== ''" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+        <div class="custom-filter-dropdown">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="关键字" [(ngModel)]="searchkey">
+            </li>
+          </ul>
+          <div class="ant-table-filter-dropdown-btns">
+            <a class="ant-table-filter-dropdown-link confirm" (click)="filterByProp()" ><span>确定</span></a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoSearchKey()" ><span>重置</span></a>
+          </div>
+        </div>
+      </nz-dropdown>
     </th>
     <th nzCustomFilter>
       类别
@@ -20,7 +35,7 @@
     <th nzWidth="250px" nzCustomFilter>
       属性
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-        <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+        <i nz-icon type="filter" theme="outline" [ngStyle]="propFilterStyle" class="ant-table-filter-icon" nz-dropdown></i>
         <div class="custom-filter-dropdown">
           <ul nz-menu>
             <li nz-menu-item *ngFor="let ap of articleProperties">
@@ -32,7 +47,8 @@
             <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoProp()" ><span>重置</span></a>
           </div>
         </div>
-      </nz-dropdown></th>
+      </nz-dropdown>
+    </th>
     <th nzWidth="100px">操作</th>
   </tr>
   </thead>
@@ -41,7 +57,8 @@
     <td nzWidth="50px" [nzShowCheckbox]="'true'" [(nzChecked)]="article.checked"></td>
     <td nzWidth="200px">
       <i nz-icon nz-tooltip style="color:#F50" *ngIf="article.status === 2" nzTitle="未经过审核" type="warning" theme="outline"></i>
-      {{article.title}}
+      <span style="color: red" *ngIf="article.status === 2">{{article.title}}</span>
+      <span *ngIf="article.status === 1">{{article.title}}</span>
     </td>
     <td>
       {{getAllCategory(article.categoryId)}}

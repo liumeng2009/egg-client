@@ -198,7 +198,7 @@ export class UserEditComponent implements OnInit {
               this.avatarUrl = img;
             });*/
       this.user.avatarUseSys = 0;
-      this.user.avatar = info.file.response.data.path;
+      this.user.avatar = info.file.response.location;
     }
   }
   submitForm() {

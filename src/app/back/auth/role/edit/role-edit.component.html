@@ -3,13 +3,6 @@
     <nz-card>
       <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
         <nz-form-item>
-          <nz-form-control class="ant-col-16 ant-col-offset-6">
-            <button nz-button type="button" style="float:right;" (click)="refresh()" [title]="'刷新'" [nzLoading]="isLoading||isLoadingAuthList">
-              <i nz-icon type="reload" theme="outline"></i>
-            </button>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
             角色名
           </nz-form-label>
@@ -64,6 +57,9 @@
       提交保存
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+    <button nz-button (click)="refresh()" [nzLoading]="isLoading||isLoadingAuthList">
+      <i nz-icon type="reload" theme="outline"></i>
+    </button>
   </nz-footer>
 </nz-layout>
 

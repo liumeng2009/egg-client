@@ -45,6 +45,9 @@ export class ArticleListComponent implements OnInit {
   showDelBtn = false;
   showAuditingBtn = false;
   articleProperties: ArticleProperty[] = [];
+  propFilterStyle = {
+    color: '#bfbfbf',
+  }
   constructor(
     private rememberService: RememberService,
     private toolService: ToolService,
@@ -232,7 +235,7 @@ export class ArticleListComponent implements OnInit {
     this.articleProperties.push(prop_isSlide);
   }
   filterByProp() {
-    let status = 999;
+/*    let status = 999;
     if (this.articleProperties[0].checked) {
       status = 1;
     }
@@ -261,7 +264,19 @@ export class ArticleListComponent implements OnInit {
       error => {
 
       }
-    );
+    );*/
+    if (this.articleProperties[0].checked === true &&
+      this.articleProperties[1].checked === true &&
+      this.articleProperties[2].checked === false &&
+      this.articleProperties[3].checked === false &&
+      this.articleProperties[4].checked === false &&
+      this.articleProperties[5].checked === false &&
+      this.articleProperties[6].checked === false) {
+      this.propFilterStyle.color = '#bfbfbf';
+    } else {
+      this.propFilterStyle.color = '#1890ff';
+    }
+    this.getData();
   }
   refreshNoProp() {
     this.articleProperties[0].checked = true,
@@ -271,10 +286,47 @@ export class ArticleListComponent implements OnInit {
     this.articleProperties[4].checked = false,
     this.articleProperties[5].checked = false,
     this.articleProperties[6].checked = false,
+    this.propFilterStyle.color = '#bfbfbf';
+    this.getData();
+  }
+
+  refreshNoSearchKey() {
+    this.searchkey = '';
     this.getData();
   }
   private getData() {
+    this.isLoading = true;
+    let status = 999;
+    if (this.articleProperties[0].checked) {
+      status = 1;
+    }
+    if (this.articleProperties[1].checked) {
+      status = 2;
+    }
+    // 3代表status === 1 or status === 2
+    if (this.articleProperties[1].checked && this.articleProperties[0].checked) {
+      status = 3;
+    }
     this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
+      this.channelSelected, this.categorySelected, status,
+      this.articleProperties[2].checked ? this.articleProperties[2].checked : undefined,
+      this.articleProperties[3].checked ? this.articleProperties[3].checked : undefined,
+      this.articleProperties[4].checked ? this.articleProperties[4].checked : undefined,
+      this.articleProperties[5].checked ? this.articleProperties[5].checked : undefined,
+      this.articleProperties[6].checked ? this.articleProperties[6].checked : undefined,
+    ).subscribe(
+      (data: ResponseData) => {
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+          this.isLoading = false;
+          this.articles = [...result.data.rows];
+          this.total = result.data.count;
+        });
+      },
+      error => {
+        this.isLoading = false;
+      }
+    );
+/*    this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
       this.channelSelected, this.categorySelected).subscribe(
       (data: ResponseData) => {
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
@@ -286,7 +338,7 @@ export class ArticleListComponent implements OnInit {
       error => {
 
       }
-    );
+    );*/
   }
   refresh() {
     this.getData();
