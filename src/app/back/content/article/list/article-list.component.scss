@@ -9,3 +9,93 @@
     border-radius: 4px 4px 0 0;
   }
 }
+
+.my-card-head{
+  position:relative;
+  border:1px solid #e8e8e8;
+  padding:12px 16px;
+  top: 1px;
+  border-radius: 4px 4px 0 0;
+}
+.my-card{
+  min-width:230px;
+  border:#bfbfbf 1px solid;
+  h1{
+    position: absolute;
+    display: block;
+    padding: 10px 20px;
+    left: 0px;
+    top: 95px;
+    right: 0;
+    height: 70px;
+    margin:0px;
+    a{
+      color:#fff;
+      font-size:14px;
+      font-weight: bolder;
+    }
+  }
+  .pic{
+    height:165px;
+    overflow: hidden;
+  }
+  .remark{
+    display: block;
+    padding: 10px 15px;
+    padding-bottom:0px;
+    margin-bottom: 10px;
+    height: 60px;
+    color: #666;
+    font-size: 12px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-bottom:#eee 1px solid;
+  }
+  .tools{
+    display: block;
+    position: relative;
+    padding: 0 15px;
+    height:30px;
+    .sort{
+      width:70px;
+      float:right;
+    }
+  }
+  .foot{
+    clear: both;
+    display: block;
+    padding: 10px 15px;
+    height: 40px;
+    .action{
+      float:right;
+      button{
+        margin-left: 8px;
+        margin-top: -2px;
+      }
+    }
+  }
+  .nopic{
+    h1{
+      display: block;
+      position: static;
+      top: 0px;
+      padding: 17px 20px;
+      height:85px;
+      border-bottom:#eee 1px solid;
+      a{
+        color:#1890ff;
+      }
+    }
+    .remark{
+      height: 140px;
+    }
+    .tools{
+
+    }
+    .foot{
+
+    }
+  }
+
+}

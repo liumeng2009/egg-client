@@ -48,6 +48,8 @@ export class ArticleListComponent implements OnInit {
   propFilterStyle = {
     color: '#bfbfbf',
   }
+  showMethodList = false;
+  serverPath = EduConfig.serverPath;
   constructor(
     private rememberService: RememberService,
     private toolService: ToolService,
@@ -456,5 +458,12 @@ export class ArticleListComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  showAsCard() {
+    this.showMethodList = false;
+  }
+  showAsList() {
+    this.showMethodList = true;
   }
 }
