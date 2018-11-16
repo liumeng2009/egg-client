@@ -202,8 +202,4 @@ export class SettingComponent implements OnInit {
   refresh() {
     this.getData();
   }
-  returnToList(e) {
-    e.stopPropagation();
-    this.router.navigate(['list'], {relativeTo: this.route.parent});
-  }
 }

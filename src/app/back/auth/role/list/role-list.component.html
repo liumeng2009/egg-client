@@ -4,9 +4,10 @@
           [nzSize]="'middle'"
           [nzTitle]="headerTemplate"
           [nzLoading]="isLoading"
-          [nzScroll]="false"
+          [nzScroll]="scrollHeight"
           [nzBordered]="true"
           [nzFrontPagination]="'false'"
+          [nzShowTotal]="rangeTemplate"
           [nzTotal]="total"
           [nzPageIndex]="pageIndex"
           [nzPageSize]="pageSize"
@@ -63,5 +64,8 @@
     </button>
   </nz-button-group>
 
+</ng-template>
+<ng-template #rangeTemplate let-range="range" let-total>
+  第{{range[0]}}到{{range[1]}}条 共有 {{total}} 条记录
 </ng-template>
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {EduConfig} from '../../../../config/config';
 import {Article, ArticleProperty} from '../../../../bean/Article';
 import {ResponseData} from '../../../../bean/responseData';
@@ -48,7 +48,10 @@ export class ArticleListComponent implements OnInit {
   propFilterStyle = {
     color: '#bfbfbf',
   }
-  showMethodList = false;
+
+  scrollHeight = {
+    y: '0px',
+  }
   serverPath = EduConfig.serverPath;
   constructor(
     private rememberService: RememberService,
@@ -59,6 +62,9 @@ export class ArticleListComponent implements OnInit {
     private articleService: ArticleService,
   ) {}
   ngOnInit() {
+    setTimeout(() => {
+      this.initHeight();
+    }, 0);
     this.auth();
     this.initArticleProperties();
     this.channelSelected = this.rememberService.getChannel();
@@ -69,6 +75,9 @@ export class ArticleListComponent implements OnInit {
         }).catch(() => {});
       }
     ).catch(() => {});
+  }
+  private initHeight() {
+    this.scrollHeight.y = (window.document.body.clientHeight - 290) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();
@@ -237,36 +246,6 @@ export class ArticleListComponent implements OnInit {
     this.articleProperties.push(prop_isSlide);
   }
   filterByProp() {
-/*    let status = 999;
-    if (this.articleProperties[0].checked) {
-      status = 1;
-    }
-    if (this.articleProperties[1].checked) {
-      status = 2;
-    }
-    // 3代表status === 1 or status === 2
-    if (this.articleProperties[1].checked && this.articleProperties[0].checked) {
-      status = 3;
-    }
-    this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
-      this.channelSelected, this.categorySelected, status,
-      this.articleProperties[2].checked ? this.articleProperties[2].checked : undefined,
-      this.articleProperties[3].checked ? this.articleProperties[3].checked : undefined,
-      this.articleProperties[4].checked ? this.articleProperties[4].checked : undefined,
-      this.articleProperties[5].checked ? this.articleProperties[5].checked : undefined,
-      this.articleProperties[6].checked ? this.articleProperties[6].checked : undefined,
-      ).subscribe(
-      (data: ResponseData) => {
-        this.toolService.apiResult(data, false).then((result: ResponseData) => {
-          console.log(result);
-          this.articles = [...result.data.rows];
-          this.total = result.data.count;
-        });
-      },
-      error => {
-
-      }
-    );*/
     if (this.articleProperties[0].checked === true &&
       this.articleProperties[1].checked === true &&
       this.articleProperties[2].checked === false &&
@@ -328,21 +307,12 @@ export class ArticleListComponent implements OnInit {
         this.isLoading = false;
       }
     );
-/*    this.articleService.getArticleList(this.pageIndex, this.pageSize, this.searchkey,
-      this.channelSelected, this.categorySelected).subscribe(
-      (data: ResponseData) => {
-        this.toolService.apiResult(data, false).then((result: ResponseData) => {
-          console.log(result);
-          this.articles = [...result.data.rows];
-          this.total = result.data.count;
-        });
-      },
-      error => {
-
-      }
-    );*/
   }
   refresh() {
+    this.getData();
+  }
+  pageChanged(e) {
+    this.pageIndex = e;
     this.getData();
   }
   add() {
@@ -350,6 +320,9 @@ export class ArticleListComponent implements OnInit {
   }
   edit(id) {
     this.router.navigate([id], {relativeTo: this.route.parent});
+  }
+  copy(id) {
+
   }
   auditing() {
     this.articleAuditing.splice(0, this.articleAuditing.length);
@@ -416,9 +389,8 @@ export class ArticleListComponent implements OnInit {
   tagChanged(e, article, propertyName) {
     for (const p in article) {
       if (p === propertyName) {
-        article[p] = e;
+        article[p] = !article[p];
         article.publishAt = moment(article.publishAt).format('YYYY-MM-DD HH:mm:ss');
-        console.log(article);
         this.articleService.update(article).subscribe(
           (data: ResponseData) => {
             this.toolService.apiResult(data, false).then((result: ResponseData) => {
@@ -460,10 +432,21 @@ export class ArticleListComponent implements OnInit {
     return true;
   }
 
-  showAsCard() {
-    this.showMethodList = false;
-  }
-  showAsList() {
-    this.showMethodList = true;
+  sortChanged(e, article: Article) {
+    console.log(e);
+    article.sort = e;
+    article.publishAt = moment(article.publishAt).format('YYYY-MM-DD HH:mm:ss');
+    this.articleService.update(article).subscribe(
+      (data: ResponseData) => {
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+
+        }).catch(() => {
+          article.sort = e;
+        });
+      },
+      error => {
+        // article.sort = !e;
+      }
+    );
   }
 }

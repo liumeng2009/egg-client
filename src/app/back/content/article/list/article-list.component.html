@@ -5,7 +5,13 @@
           [nzBordered]="true"
           [nzLoading]="isLoading"
           [nzNoResult]="noResult"
-          *ngIf="showMethodList"
+          [nzScroll]="scrollHeight"
+          [nzPageIndex]="pageIndex"
+          [nzPageSize]="pageSize"
+          [nzTotal]="total"
+          [nzShowTotal]="rangeTemplate"
+          [nzFrontPagination]="false"
+          (nzPageIndexChange)="pageChanged($event)"
 >
   <thead>
   <tr>
@@ -32,7 +38,7 @@
       类别
     </th>
     <th nzWidth="250px">发布时间</th>
-    <th nzWidth="50px">排序</th>
+    <th nzWidth="150px">排序</th>
     <th nzWidth="250px" nzCustomFilter>
       属性
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
@@ -67,25 +73,27 @@
     <td nzWidth="250px">
       {{article.publishAt|date:'MM月dd日 HH:mm:ss'}}
     </td>
-    <td nzWidth="100px">
-      <nz-input-number [nzStep]="1" [ngModel]="article.sort"></nz-input-number>
+    <td nzWidth="150px">
+      <nz-input-number [nzStep]="1" [ngModel]="article.sort" (ngModelChange)="sortChanged($event, article)"></nz-input-number>
     </td>
     <td nzWidth="250px">
-      <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event, article, 'isComment')" title="允许评论">
-        <i nz-icon type="message" theme="outline"></i>
-      </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isTop" (nzCheckedChange)="tagChanged($event, article, 'isTop')">
-        <i nz-icon type="to-top" theme="outline"></i>
-      </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isRed" (nzCheckedChange)="tagChanged($event, article, 'isRed')">
-        <i nz-icon type="like" theme="outline"></i>
-      </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isHot" (nzCheckedChange)="tagChanged($event, article, 'isHot')">
-        <i nz-icon type="fire" theme="outline"></i>
-      </nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="article.isSlide" (nzCheckedChange)="tagChanged($event, article, 'isSlide')">
-        <i nz-icon type="picture" theme="outline"></i>
-      </nz-tag>
+      <nz-button-group [nzSize]="'small'">
+        <button nz-button [nzType]="article.isComment?'primary':'default'" (click)="tagChanged($event, article, 'isComment')" title="允许评论">
+          <i nz-icon type="message"></i>
+        </button>
+        <button nz-button [nzType]="article.isTop?'primary':'default'" (click)="tagChanged($event, article, 'isComment')" title="置顶">
+          <i nz-icon type="to-top"></i>
+        </button>
+        <button nz-button [nzType]="article.isRed?'primary':'default'" (click)="tagChanged($event, article, 'isComment')" title="推荐">
+          <i nz-icon type="like"></i>
+        </button>
+        <button nz-button [nzType]="article.isHot?'primary':'default'" (click)="tagChanged($event, article, 'isComment')" title="热门">
+          <i nz-icon type="fire"></i>
+        </button>
+        <button nz-button [nzType]="article.isSlide?'primary':'default'" (click)="tagChanged($event, article, 'isComment')" title="作为幻灯片">
+          <i nz-icon type="picture"></i>
+        </button>
+      </nz-button-group>
     </td>
     <td nzWidth="100px">
       <a *ngIf="showEditBtn" (click)="edit(article.id)">
@@ -99,57 +107,6 @@
   </tr>
   </tbody>
 </nz-table>
-<div *ngIf="!showMethodList">
-  <div class="my-card-head">
-    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-  </div>
-  <div nz-row [nzGutter]="16" style="padding:12px 16px;">
-    <div nz-col class="ant-col-xs-24 ant-col-sm-12 ant-col-md-8 ant-col-lg-6" *ngFor="let article of articles">
-      <div class="my-card">
-        <div class="{{article.imgUrl?'':'nopic'}}">
-          <div class="pic" *ngIf="article.imgUrl && article.imgUrl !== ''">
-            <img src="{{serverPath + article.imgUrl}}">
-          </div>
-          <h1>
-            <a>{{article.title}}</a>
-          </h1>
-          <div class="remark">
-            {{article.zhaiyao}}
-          </div>
-          <div class="tools">
-            <nz-tag nzMode="checkable" [nzChecked]="article.isComment" (nzCheckedChange)="tagChanged($event, article, 'isComment')" title="允许评论">
-              <i nz-icon type="message" theme="outline"></i>
-            </nz-tag>
-            <nz-tag nzMode="checkable" [nzChecked]="article.isTop" (nzCheckedChange)="tagChanged($event, article, 'isTop')">
-              <i nz-icon type="to-top" theme="outline"></i>
-            </nz-tag>
-            <nz-tag nzMode="checkable" [nzChecked]="article.isRed" (nzCheckedChange)="tagChanged($event, article, 'isRed')">
-              <i nz-icon type="like" theme="outline"></i>
-            </nz-tag>
-            <nz-tag nzMode="checkable" [nzChecked]="article.isHot" (nzCheckedChange)="tagChanged($event, article, 'isHot')">
-              <i nz-icon type="fire" theme="outline"></i>
-            </nz-tag>
-            <nz-tag nzMode="checkable" [nzChecked]="article.isSlide" (nzCheckedChange)="tagChanged($event, article, 'isSlide')">
-              <i nz-icon type="picture" theme="outline"></i>
-            </nz-tag>
-          </div>
-          <div class="foot">
-            <span>{{article.publishAt|date:'MM月dd日 HH:mm:ss'}}</span>
-            <span class="action">
-               <button nz-button [nzSize]="'small'">
-                <i nz-icon type="copy"></i>
-               </button>
-               <button nz-button [nzSize]="'small'">
-                <i nz-icon type="edit"></i>
-               </button>
-            </span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
 <ng-template #headerTemplate>
   <nz-button-group>
     <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add(0)">
@@ -193,13 +150,8 @@
         <i nz-icon type="loading" theme="outline" *ngIf="isCategoryLoading"></i>
       </span>
   </label>
+</ng-template>
 
-  <label style="float: right;margin-right: 8px;">
-    <button nz-button [nzType]="showMethodList?'primary':'default'" (click)="showAsList()" style="margin-right: 8px;">
-      <i nz-icon type="ordered-list" theme="outline"></i>
-    </button>
-    <button nz-button [nzType]="!showMethodList?'primary':'default'" (click)="showAsCard()">
-      <i nz-icon type="table" theme="outline"></i>
-    </button>
-  </label>
+<ng-template #rangeTemplate let-range="range" let-total>
+  第{{range[0]}}到{{range[1]}}条 共有 {{total}} 条记录
 </ng-template>

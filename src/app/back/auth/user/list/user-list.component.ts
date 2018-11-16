@@ -42,6 +42,9 @@ export class UserListComponent implements OnInit {
   roleFilterStyle = {
     color: '#bfbfbf',
   }
+  scrollHeight = {
+    y: '0px',
+  }
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -54,13 +57,15 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.initHeight();
+    setTimeout(() => {
+      this.initHeight();
+    }, 0);
     this.auth();
     this.getData(this.pageIndex, this.pageSize, this.searchkey, this.roleArray);
     this.initRoleList();
   }
   private initHeight() {
-    // this.tableHeight.y = (window.document.body.clientHeight - (32 + 64 + 69 + 21 + 16 + 49 + 32 + 25 + 7 + 17)) + 'px';
+    this.scrollHeight.y = (window.document.body.clientHeight - 290) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();

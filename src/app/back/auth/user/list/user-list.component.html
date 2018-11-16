@@ -5,10 +5,12 @@
           [nzSize]="'middle'"
           [nzBordered]="true"
           [nzFrontPagination]="'false'"
+          [nzShowTotal]="rangeTemplate"
           [nzTotal]="total"
           [nzPageIndex]="pageIndex"
           [nzPageSize]="pageSize"
           [nzNoResult]="noResult"
+          [nzScroll]="scrollHeight"
           (nzPageIndexChange)="pageChanged($event)"
 >
   <thead>
@@ -90,6 +92,9 @@
       <i nz-icon type="reload" theme="outline"></i>刷新
     </button>
   </nz-button-group>
+</ng-template>
+<ng-template #rangeTemplate let-range="range" let-total>
+  第{{range[0]}}到{{range[1]}}条 共有 {{total}} 条记录
 </ng-template>
 
 
