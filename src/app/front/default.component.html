@@ -16,7 +16,7 @@
       <div id="search-box">
         <i nz-icon type="search"></i>
         <span class="algolia-search">
-          <input nz-input placeholder="搜索" [(ngModel)]="searchKey" (input)="onInput($event.target?.value)" [nzAutocomplete]="auto">
+          <input nz-input #search placeholder="搜索" [(ngModel)]="searchKey" (keyup)="onInput($event.target?.value)" [nzAutocomplete]="auto">
           <nz-autocomplete nzBackfill #auto>
             <nz-auto-option *ngFor="let option of options" [nzValue]="option">
             {{option}}
