@@ -117,6 +117,10 @@
       <i nz-icon type="audit" theme="outline"></i>
       审核
     </button>
+    <button nz-button [nzType]="'primary'" *ngIf="showAuditingBtn" [nzLoading]="isLoadingAuditing" (click)="pushAlgolia()">
+      <i nz-icon type="audit" theme="outline"></i>
+      上传到云搜索
+    </button>
     <button nz-button [nzType]="'danger'" [nzLoading]="isLoadingDelete" *ngIf="showDelBtn" nz-popconfirm nzTitle="确定要删除选中的文章吗?" nzPlacement="bottomRight" (nzOnConfirm)="delete()">
       <i nz-icon type="delete" theme="outline"></i>删除
     </button>

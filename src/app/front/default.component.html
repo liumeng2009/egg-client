@@ -1,1 +1,36 @@
-<h1>一个内容发布类型的网站，使用egg+angular构建</h1>
+<nz-layout>
+  <nz-header id="header">
+    <div nz-row class="ant-row">
+      <div nz-col="" class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4">
+        <a href="" id="logo">
+          <img alt="logo" src="./assets/image/logo.svg">
+          <img alt="NG-ZORRO" src="./assets/image/zorro.svg">
+        </a>
+      </div>
+      <nz-divider [nzType]="'vertical'" style="position:relative;top:26px;float:left;"></nz-divider>
+      <ul nz-menu [nzMode]="'horizontal'" id="menu">
+        <li nz-menu-item>公司新闻</li>
+        <li nz-menu-item>行业新闻</li>
+        <li nz-menu-item>关于我们</li>
+      </ul>
+      <div id="search-box">
+        <i nz-icon type="search"></i>
+        <span class="algolia-search">
+          <input nz-input placeholder="搜索" [(ngModel)]="searchKey" (input)="onInput($event.target?.value)" [nzAutocomplete]="auto">
+          <nz-autocomplete nzBackfill #auto>
+            <nz-auto-option *ngFor="let option of options" [nzValue]="option">
+            {{option}}
+            </nz-auto-option>
+          </nz-autocomplete>
+        </span>
+      </div>
+    </div>
+  </nz-header>
+  <nz-content class="main-wrapper">
+    <h1>一个内容发布类型的网站，使用egg+angular构建</h1>
+    <a href="http://127.0.0.1:4200/admin" target="_blank">内容管理后台</a>
+  </nz-content>
+  <nz-footer id="footer">
+
+  </nz-footer>
+</nz-layout>

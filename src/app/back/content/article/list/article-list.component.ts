@@ -449,4 +449,18 @@ export class ArticleListComponent implements OnInit {
       }
     );
   }
+  pushAlgolia() {
+    this.articleService.pushAlgolia().subscribe(
+      (data: ResponseData) => {
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+
+        }).catch(() => {
+
+        });
+      },
+      error => {
+
+      }
+    );
+  }
 }
