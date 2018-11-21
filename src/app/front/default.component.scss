@@ -58,6 +58,26 @@
   background: #fff;
   padding: 40px 0 0;
   position: relative;
+  min-height:750px;
+}
+#banner{
+  width:1152px;
+  margin:auto;
+}
+[nz-carousel-content] {
+  text-align: center;
+  height: 444px;
+  line-height: 444px;
+  background: #364d79;
+  color: #fff;
+  overflow: hidden;
+  margin:auto;
+}
+
+
+
+h3 {
+  color: #fff;
 }
 #footer {
   clear: both;

@@ -20,6 +20,7 @@ export class DefaultComponent implements OnInit {
   searchText$ = new Subject<any>();
   @ViewChild('search') searchInput;
   showSearchBox = false;
+  array = [ 1, 2, 3, 4 ];
   constructor(
 
   ) {
@@ -56,9 +57,32 @@ export class DefaultComponent implements OnInit {
       t.options = [...content.hits];
       console.log(t.options);
       t.showSearchBox = true;
-      // return content.hits;
+      // 处理高亮
+      if (t.options.length === 0) {
+        return;
+      }
+      for (const hit of content.hits) {
+        if (hit._highlightResult) {
+          for (const prop in hit._highlightResult) {
+            for (const opProp in t.options[0]) {
+              if (prop.toString() === opProp.toString()) {
+                console.log(prop.toString());
+                // 说明是这个属性有高亮
+                for (const op of t.options) {
+                  if (hit._highlightResult[prop].matchedWords) {
+                    for (const mw of hit._highlightResult[prop].matchedWords) {
+                      const reg = new RegExp( mw , 'g' )
+                      op[opProp] = op[opProp].toString().replace(reg,
+                        '<span class="algolia-docsearch-suggestion--highlight">' + mw + '</span>');
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     });
-    // return null;
   }
 
   onInput(value: string): void {

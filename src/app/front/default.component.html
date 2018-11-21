@@ -27,11 +27,21 @@
                     </div>
                     <div class="algolia-docsearch-suggestion--wrapper">
                       <div class="algolia-docsearch-suggestion--subcategory-column">
-                        <span class="algolia-docsearch-suggestion--subcategory-column-text"><span class="algolia-docsearch-suggestion--highlight">I</span>nputNumber 数字输入框</span>
+                        <span class="algolia-docsearch-suggestion--subcategory-column-text">
+                          <span class="algolia-docsearch-suggestion--highlight">I</span>
+                          nputNumber 数字输入框
+                        </span>
                       </div>
                       <div class="algolia-docsearch-suggestion--content">
-                        <div class="algolia-docsearch-suggestion--subcategory-inline"><span class="algolia-docsearch-suggestion--highlight">I</span>nputNumber 数字输入框</div>
-                        <div class="algolia-docsearch-suggestion--title"><span class="algolia-docsearch-suggestion--highlight">I</span>{{option.title}}</div>
+                        <div class="algolia-docsearch-suggestion--subcategory-inline">
+                          <span class="algolia-docsearch-suggestion--highlight">I</span>
+                          nputNumber 数字输入框
+                        </div>
+                        <div class="algolia-docsearch-suggestion--title">
+                          <span class="algolia-docsearch-suggestion--highlight">I</span>
+                          <span [innerHtml]="option.title"></span>
+                          <span [innerHtml]="option.content"></span>
+                        </div>
                       </div>
                     </div>
                   </a>
@@ -63,7 +73,11 @@
     </div>
   </nz-header>
   <nz-content class="main-wrapper">
-    <h1>一个内容发布类型的网站，使用egg+angular构建</h1>
+    <div id="banner">
+      <nz-carousel nzAutoPlay>
+        <div nz-carousel-content *ngFor="let index of array"><h3>{{index}}</h3></div>
+      </nz-carousel>
+    </div>
     <a href="http://127.0.0.1:4200/admin" target="_blank">内容管理后台</a>
   </nz-content>
   <nz-footer id="footer">
