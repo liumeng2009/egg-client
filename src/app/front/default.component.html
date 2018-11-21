@@ -15,13 +15,49 @@
       </ul>
       <div id="search-box">
         <i nz-icon type="search"></i>
-        <span class="algolia-search">
-          <input nz-input #search placeholder="搜索" [(ngModel)]="searchKey" (keyup)="onInput($event.target?.value)" [nzAutocomplete]="auto">
-          <nz-autocomplete nzBackfill #auto>
-            <nz-auto-option *ngFor="let option of options" [nzValue]="option">
-            {{option}}
+        <span class="algolia-search algolia-autocomplete algolia-autocomplete-left">
+          <input nz-input #search placeholder="搜索" [(ngModel)]="searchKey" (input)="onInput($event.target?.value)">
+          <span #popupOp class="ds-dropdown-menu" *ngIf="showSearchBox" style="position: absolute;top: 100%;z-index: 100;left: 0px;right: auto;">
+            <div class="ds-dataset-1">
+              <span class="ds-suggestions">
+                <div class="ds-suggestion" *ngFor="let option of options">
+                  <a class="algolia-docsearch-suggestion algolia-docsearch-suggestion__main algolia-docsearch-suggestion__secondary">
+                    <div class="algolia-docsearch-suggestion--category-header">
+                      <span class="algolia-docsearch-suggestion--category-header-lvl0">Components</span>
+                    </div>
+                    <div class="algolia-docsearch-suggestion--wrapper">
+                      <div class="algolia-docsearch-suggestion--subcategory-column">
+                        <span class="algolia-docsearch-suggestion--subcategory-column-text"><span class="algolia-docsearch-suggestion--highlight">I</span>nputNumber 数字输入框</span>
+                      </div>
+                      <div class="algolia-docsearch-suggestion--content">
+                        <div class="algolia-docsearch-suggestion--subcategory-inline"><span class="algolia-docsearch-suggestion--highlight">I</span>nputNumber 数字输入框</div>
+                        <div class="algolia-docsearch-suggestion--title"><span class="algolia-docsearch-suggestion--highlight">I</span>{{option.title}}</div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </span>
+              <div *ngIf="options.length===0" class="algolia-docsearch-suggestion">
+                <div class="algolia-docsearch-suggestion--wrapper">
+                  <div class="algolia-docsearch-suggestion--content algolia-docsearch-suggestion--no-results">
+                    <div class="algolia-docsearch-suggestion--title">
+                      <div class="algolia-docsearch-suggestion--text">
+                          关键字 <b>"{{searchKey}}"</b>，没有搜索结果
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="algolia-docsearch-footer">
+                Search by <a class="algolia-docsearch-footer--logo" href="https://www.algolia.com/docsearch">Algolia</a>
+              </div>
+            </div>
+          </span>
+<!--          <nz-autocomplete nzBackfill #auto>
+            <nz-auto-option *ngFor="let option of options" [nzValue]="option?.title">
+            {{option?.title}}
             </nz-auto-option>
-          </nz-autocomplete>
+          </nz-autocomplete>-->
         </span>
       </div>
     </div>

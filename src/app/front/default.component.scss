@@ -49,6 +49,10 @@
     box-shadow: none;
     background: 0 0;
   }
+  input:focus{
+    outline:none;
+    box-shadow: none;
+  }
 }
 .main-wrapper {
   background: #fff;
