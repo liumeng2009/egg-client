@@ -14,6 +14,7 @@ import {Article} from '../../../bean/Article';
 @Injectable()
 export class ArticleService {
   private article_url = EduConfig.serverPath + '/api/content/article';
+  private elastic_url = EduConfig.serverPath + '/api/elastic';
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
@@ -113,10 +114,10 @@ export class ArticleService {
         catchError(this.handleError<any>())
       );
   }
-  pushAlgolia(): Observable<ResponseData> {
+  pushElastic(id): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.get(this.article_url + '/pushAlgolia', {headers: headers})
+    return this.http.post(this.elastic_url, {articleId: id}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 
