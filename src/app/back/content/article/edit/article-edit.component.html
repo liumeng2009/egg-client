@@ -12,9 +12,9 @@
               <nz-form-control class="{{channelList?'ant-col-16':'ant-col-16 haserror'}}">
                 {{channel?.name}}
                 <span nz-tooltip *ngIf="!channelList" style="cursor: pointer;" (click)="initChannel()" nzTitle="{{channelListError}}点击重新加载" >
-              <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingchannel"></i>
-              <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingchannel"></i>
-            </span>
+                  <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingchannel"></i>
+                  <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingchannel"></i>
+                </span>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
@@ -175,6 +175,19 @@
               </nz-form-control>
             </nz-form-item>
           </nz-tab>
+          <nz-tab [nzTitle]="'全文检索'">
+            <pre>
+              {{elasticStr | json}}
+            </pre>
+            <nz-button-group>
+              <button nz-button [nzType]="'primary'" [nzLoading]="isUpdateElasticLoading" (click)="updateElastic(article.id)">
+                更新
+              </button>
+              <button nz-button [nzType]="'danger'" [nzLoading]="isDeleteElasticLoading" (click)="deleteElastic(article.id)">
+                删除
+              </button>
+            </nz-button-group>
+          </nz-tab>
         </nz-tabset>
       </form>
     </nz-card>
@@ -185,7 +198,7 @@
       提交保存
     </button>
     <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
-    <button nz-button (click)="getData()" [nzLoading]="isLoading">
+    <button nz-button (click)="refresh()" [nzLoading]="isLoading">
       <i nz-icon type="reload" theme="outline"></i>
     </button>
   </nz-footer>

@@ -11,7 +11,16 @@ import {CategoryService} from '../category/category.service';
 import {MyPipeModule} from '../../../util/myPipe.module';
 import {ArticleService} from './article.service';
 import {EditorModule} from '@tinymce/tinymce-angular';
+import hljs from 'highlight.js/lib/highlight';
+import * as json from 'highlight.js/lib/languages/json';
+import { HighlightJsModule, HIGHLIGHT_JS } from 'angular-highlight-js';
+// const hljs: any = require('highlight.js/lib/highlight');
+hljs.registerLanguage('json', json);
+import {PrettyJsonModule} from 'angular2-prettyjson';
 
+export function highlightJsFactory() {
+  return hljs;
+}
 
 /* The @NgModule decorator lets Angular know that this is an NgModule. */
 @NgModule({
@@ -28,7 +37,12 @@ import {EditorModule} from '@tinymce/tinymce-angular';
     NgZorroAntdModule,
     ArticleRoutingModule,
     MyPipeModule,
-    EditorModule
+    EditorModule,
+    HighlightJsModule.forRoot({
+      provide: HIGHLIGHT_JS,
+      useFactory: highlightJsFactory
+    }),
+    PrettyJsonModule,
   ],
   providers: [
     CategoryService,

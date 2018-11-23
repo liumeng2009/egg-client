@@ -114,10 +114,32 @@ export class ArticleService {
         catchError(this.handleError<any>())
       );
   }
-  pushElastic(id): Observable<ResponseData> {
+  pushElastic(ids: number[]): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
-    return this.http.post(this.elastic_url, {articleId: id}, {headers: headers})
+    return this.http.post(this.elastic_url, {ids: ids}, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  getElastic(id): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.get(this.elastic_url + '/' + id, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
+  deleteElastic(ids: number[]): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    return this.http.post(this.elastic_url + '/delete', {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
 

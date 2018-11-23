@@ -450,14 +450,13 @@ export class ArticleListComponent implements OnInit {
     );
   }
   pushAlgolia() {
-    let id = 0;
+    const ids: number[] = [];
     for (const article of this.articles) {
       if (article.checked) {
-        id = article.id;
-        break;
+        ids.push(article.id);
       }
     }
-    this.articleService.pushElastic(id).subscribe(
+    this.articleService.pushElastic(ids).subscribe(
       (data: ResponseData) => {
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
 

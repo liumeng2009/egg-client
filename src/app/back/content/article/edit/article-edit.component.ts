@@ -5,7 +5,7 @@ import {Channel} from '../../../../bean/Channel';
 import {Article} from '../../../../bean/Article';
 import {User} from '../../../../bean/user';
 import {EduConfig} from '../../../../config/config';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {RoleService} from '../../../auth/role/role.service';
 import {UserService} from '../../../auth/user/user.service';
 import {ToolService} from '../../../../util/tool.service';
@@ -38,7 +38,8 @@ export class ArticleEditComponent implements OnInit {
   channelList = false;
   channelListError = '';
   isLoadingchannel = false;
-  formHeight = {
+  formHeight =
+  {
     height : '0px'
   }
   articleId = 0;
@@ -62,6 +63,10 @@ export class ArticleEditComponent implements OnInit {
   previewVisible = false;
   previewMultiVisible = false;
   tinyMceInitOption = EduConfig.tinyMceOptions;
+  elasticStr = {};
+  isLoadingElasticStr = false;
+  isUpdateElasticLoading = false;
+  isDeleteElasticLoading = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -102,6 +107,7 @@ export class ArticleEditComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.articleId = params.id;
       this.getData();
+      this.getElasticData();
     });
   }
   private initHeight() {
@@ -196,7 +202,7 @@ export class ArticleEditComponent implements OnInit {
     this.articleService.getArticle(this.articleId).subscribe(
       (data: ResponseData) => {
         this.isLoading = false;
-        this.toolService.apiResult(data, false).then(
+        this.toolService.apiResult(data, true).then(
           (result: ResponseData) => {
             this.article = {...result.data};
             console.log(this.article);
@@ -266,6 +272,30 @@ export class ArticleEditComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+  getElasticData() {
+    this.isLoadingElasticStr = true;
+    this.articleService.getElastic(this.articleId).subscribe(
+      (data: ResponseData) => {
+        this.isLoadingElasticStr = false;
+        this.toolService.apiResult(data, true).then(
+          (result: ResponseData) => {
+            if (result.data.found) {
+              this.elasticStr = result.data._source;
+            }
+          }
+        ).catch((error) => {
+          this.elasticStr = {};
+        });
+      },
+      error => {
+        this.isLoadingElasticStr = false;
+      }
+    );
+  }
+  refresh() {
+    this.getData();
+    this.getElasticData();
   }
   beforeUpload = (file: File) => {
     const isJPG = file.type === 'image/jpeg';
@@ -415,5 +445,41 @@ export class ArticleEditComponent implements OnInit {
   returnToList(e) {
     e.stopPropagation();
     this.router.navigate(['list'], {relativeTo: this.route.parent});
+  }
+  updateElastic(id) {
+    this.isUpdateElasticLoading = true;
+    this.articleService.pushElastic([id]).subscribe(
+      (data: ResponseData) => {
+        this.isUpdateElasticLoading = false;
+        this.toolService.apiResult(data, true).then(
+          (result: ResponseData) => {
+            this.getElasticData();
+          }
+        ).catch((error) => {
+
+        });
+      },
+      error => {
+        this.isUpdateElasticLoading = false;
+      }
+    );
+  }
+  deleteElastic(id) {
+    this.isDeleteElasticLoading = true;
+    this.articleService.deleteElastic([id]).subscribe(
+      (data: ResponseData) => {
+        this.isDeleteElasticLoading = false;
+        this.toolService.apiResult(data, true).then(
+          (result: ResponseData) => {
+            this.getElasticData();
+          }
+        ).catch((error) => {
+
+        });
+      },
+      error => {
+        this.isDeleteElasticLoading = false;
+      }
+    );
   }
 }
