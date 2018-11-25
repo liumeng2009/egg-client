@@ -19,6 +19,15 @@
           <input nz-input #search placeholder="搜索" [(ngModel)]="searchKey" (input)="onInput($event.target?.value)">
           <span #popupOp class="ds-dropdown-menu" *ngIf="showSearchBox" style="position: absolute;top: 100%;z-index: 100;left: 0px;right: auto;">
             <div class="ds-dataset-1">
+              <div class="algolia-docsearch-suggestion" *ngIf="isSearchLoading">
+                <div class="algolia-docsearch-suggestion--content algolia-docsearch-suggestion--no-results">
+                  <div class="algolia-docsearch-suggestion--title">
+                    <div class="algolia-docsearch-suggestion--text">
+                      <i nz-icon type="loading"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <span class="ds-suggestions">
                 <div class="ds-suggestion" *ngFor="let option of options">
                   <a class="algolia-docsearch-suggestion algolia-docsearch-suggestion__main algolia-docsearch-suggestion__secondary">
@@ -58,16 +67,8 @@
                   </div>
                 </div>
               </div>
-              <div class="algolia-docsearch-footer">
-                Search by <a class="algolia-docsearch-footer--logo" href="https://www.algolia.com/docsearch">Algolia</a>
-              </div>
             </div>
           </span>
-<!--          <nz-autocomplete nzBackfill #auto>
-            <nz-auto-option *ngFor="let option of options" [nzValue]="option?.title">
-            {{option?.title}}
-            </nz-auto-option>
-          </nz-autocomplete>-->
         </span>
       </div>
     </div>

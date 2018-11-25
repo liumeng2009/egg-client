@@ -43,7 +43,7 @@ export class ArticleAddComponent implements OnInit {
   }
   article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
-    null, null, null, null, [],
+    null, null, null, null, [], null,
     );
   canAuditing = false;
   saveBtn = false;

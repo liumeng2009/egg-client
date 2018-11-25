@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {MissionService} from '../main/mission.service';
 
 @Component({
   templateUrl: './total.component.html',

@@ -147,6 +147,20 @@ export class ArticleService {
         catchError(this.handleError<any>())
       );
   }
+  searchByElastic(searchkey: string): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const params = new HttpParams().set('searchkey', searchkey)
+    return this.http.get(this.elastic_url, {
+      headers: headers,
+      params: params,
+    }).pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+    );
+  }
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
       if (error.name === 'HttpErrorResponse') {

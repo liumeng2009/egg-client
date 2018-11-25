@@ -23,6 +23,7 @@ export class Article {
     public publishAt: string,
     public checked: boolean,
     public article_albums: ArticleAlbum[],
+    public isElastic: boolean,
   ) {  }
 }
 

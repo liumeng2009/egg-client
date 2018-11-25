@@ -3,6 +3,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {CommonModule} from '@angular/common';
 import {LoginRoutingModule} from './main-routing.module';
 import {MainComponent} from './main.component';
+import { NgProgressModule } from '@ngx-progressbar/core';
 
 /* The @NgModule decorator lets Angular know that this is an NgModule. */
 @NgModule({
@@ -13,6 +14,7 @@ import {MainComponent} from './main.component';
     CommonModule,
     NgZorroAntdModule,
     LoginRoutingModule,
+    NgProgressModule.forRoot(),
   ],
   bootstrap: [MainComponent]
 })

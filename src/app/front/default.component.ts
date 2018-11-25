@@ -1,8 +1,10 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import algoliasearch from 'algoliasearch';
-import {AlgoliaConfig, AlgoliaQueryConfig} from '../config/algolia';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Title} from '@angular/platform-browser';
+import {ArticleService} from '../back/content/article/article.service';
+import {ResponseData} from '../bean/responseData';
+import {ToolService} from '../util/tool.service';
 
 @Component({
   selector: 'app-default-page',
@@ -20,22 +22,26 @@ export class DefaultComponent implements OnInit {
   searchText$ = new Subject<any>();
   @ViewChild('search') searchInput;
   showSearchBox = false;
+  isSearchLoading = false;
   array = [ 1, 2, 3, 4 ];
+  @ViewChild('search') public anchorOp: ElementRef;
+  @ViewChild('popupOp', { read: ElementRef }) public popupOp: ElementRef;
   constructor(
-
+    private title: Title,
+    private articleService: ArticleService,
+    private toolService: ToolService,
   ) {
-    this.client = algoliasearch(
-      'Y2MNOEONET',
-      'a729eedd4490cfd5898cdc2f0bc672f9'
-    );
-    this.index = this.client.initIndex('demo_egg');
+
     this.packages$ = this.searchText$.pipe(
       debounceTime(500),
+      distinctUntilChanged(),
     );
   }
 
   ngOnInit() {
+    this.title.setTitle('首页');
     this.packages$.subscribe( (value) => {
+      console.log('关键字有效');
       this.searchFromAlgolia(value);
     });
   }
@@ -44,53 +50,32 @@ export class DefaultComponent implements OnInit {
     if (value === '') {
       return;
     }
+    this.showSearchBox = true;
+    this.isSearchLoading = true;
     const t = this;
-    this.index.setSettings(AlgoliaConfig);
-    this.index.batchRules(AlgoliaQueryConfig);
-    this.index.search({query: value}, function searchDone(err, content) {
-      if (err) {
-        throw err;
-      }
-/*      for (const result of content.hits) {
-        t.options.push({title: result.title});
-      }*/
-      t.options = [...content.hits];
-      console.log(t.options);
-      t.showSearchBox = true;
-      // 处理高亮
-      if (t.options.length === 0) {
-        return;
-      }
-      for (const hit of content.hits) {
-        if (hit._highlightResult) {
-          for (const prop in hit._highlightResult) {
-            for (const opProp in t.options[0]) {
-              if (prop.toString() === opProp.toString()) {
-                console.log(prop.toString());
-                // 说明是这个属性有高亮
-                for (const op of t.options) {
-                  if (hit._highlightResult[prop].matchedWords) {
-                    for (const mw of hit._highlightResult[prop].matchedWords) {
-                      const reg = new RegExp( mw , 'g' )
-                      op[opProp] = op[opProp].toString().replace(reg,
-                        '<span class="algolia-docsearch-suggestion--highlight">' + mw + '</span>');
-                    }
-                  }
-                }
-              }
+    this.articleService.searchByElastic(value).subscribe(
+      (data: ResponseData) => {
+        // this.isSearchLoading = false;
+        this.toolService.apiResult(data, true).then(
+          (result: ResponseData) => {
+            console.log(result);
+            if (result.data.hits && result.data.hits.hits) {
+              this.options = [...result.data.hits.hits];
             }
           }
-        }
-      }
-    });
+        ).catch(() => {});
+      },
+      error => {
+        // this.isSearchLoading = false;
+      },
+    );
   }
 
   onInput(value: string): void {
     this.searchText$.next(value);
   }
 
-  @ViewChild('search') public anchorOp: ElementRef;
-  @ViewChild('popupOp', { read: ElementRef }) public popupOp: ElementRef;
+
   private contains(target: any): boolean {
     return this.anchorOp.nativeElement.contains(target) ||
       (this.popupOp ? this.popupOp.nativeElement.contains(target) : false);

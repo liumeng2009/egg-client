@@ -297,11 +297,11 @@ export class ArticleListComponent implements OnInit {
       this.articleProperties[6].checked ? this.articleProperties[6].checked : undefined,
     ).subscribe(
       (data: ResponseData) => {
+        this.isLoading = false;
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
-          this.isLoading = false;
           this.articles = [...result.data.rows];
           this.total = result.data.count;
-        });
+        }).catch(() => {});
       },
       error => {
         this.isLoading = false;

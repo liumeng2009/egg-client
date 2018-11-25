@@ -1,15 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {Title} from '@angular/platform-browser';
 import {ToolService} from '../../util/tool.service';
 import {Bread} from '../../bean/bread';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {User} from '../../bean/user';
 import {RememberService} from './remember.service';
 import {CookieService} from 'ngx-cookie';
 import {NzMessageService} from 'ng-zorro-antd';
 import {EduConfig} from '../../config/config';
 import {RouteList} from '../../app-routes';
+import * as moment from 'moment';
+import {NgProgress, NgProgressComponent, NgProgressRef} from '@ngx-progressbar/core';
 
 @Component({
   selector: 'app-main-page',
@@ -29,8 +31,9 @@ export class MainComponent implements OnInit {
     private rememberService: RememberService,
     private cookieService: CookieService,
     private message: NzMessageService,
+    private progressService: NgProgress,
   ) {
-    this.title.setTitle('首页');
+    this.title.setTitle('后台管理首页');
   }
 
   collapsed = false;
@@ -44,6 +47,7 @@ export class MainComponent implements OnInit {
   baseImageUrl: string = EduConfig.serverPath;
   avatarImagePath = '';
   routesMenuUse: any[] = [];
+  progressRef: NgProgressRef;
   ngOnInit(): void {
     // 额，算是深拷贝吧。。。。
     // this.routesMenuUse = JSON.parse(JSON.stringify(this.router.config));
@@ -52,6 +56,7 @@ export class MainComponent implements OnInit {
     this.createBreadCrumb();
     this.pathAutoToList();
     this.initLoginUser();
+    this.progressRef = this.progressService.ref();
     // this.router.navigateByUrl('/admin/total');
 
   }
@@ -206,9 +211,11 @@ export class MainComponent implements OnInit {
     }
     this.router.events
       .subscribe((event) => {
+        if (event instanceof  NavigationStart) {
+          this.progressRef.start();
+        }
         if (event instanceof NavigationEnd) { // 当导航成功结束时执行
-          // let urlNow = event.url;
-          // urlNow = urlNow.substring(1, urlNow.length);
+          this.progressRef.complete();
           if (event.url === '/admin') {
             this.router.navigateByUrl('/admin/total').then(() => {
               this.createBreadCrumb();

@@ -180,7 +180,7 @@
               {{elasticStr | json}}
             </pre>
             <nz-button-group>
-              <button nz-button [nzType]="'primary'" [nzLoading]="isUpdateElasticLoading" (click)="updateElastic(article.id)">
+              <button nz-button [nzType]="'primary'" [nzLoading]="isLoadingElasticStr" (click)="updateElastic(article.id)">
                 更新
               </button>
               <button nz-button [nzType]="'danger'" [nzLoading]="isDeleteElasticLoading" (click)="deleteElastic(article.id)">

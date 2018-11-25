@@ -45,7 +45,7 @@ export class ArticleEditComponent implements OnInit {
   articleId = 0;
   article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
-    null, null, null, null, [],
+    null, null, null, null, [], null,
   );
   canAuditing = false;
   saveBtn = false;
@@ -65,7 +65,6 @@ export class ArticleEditComponent implements OnInit {
   tinyMceInitOption = EduConfig.tinyMceOptions;
   elasticStr = {};
   isLoadingElasticStr = false;
-  isUpdateElasticLoading = false;
   isDeleteElasticLoading = false;
   constructor(
     private fb: FormBuilder,
@@ -447,10 +446,10 @@ export class ArticleEditComponent implements OnInit {
     this.router.navigate(['list'], {relativeTo: this.route.parent});
   }
   updateElastic(id) {
-    this.isUpdateElasticLoading = true;
+    this.isLoadingElasticStr = true;
     this.articleService.pushElastic([id]).subscribe(
       (data: ResponseData) => {
-        this.isUpdateElasticLoading = false;
+        this.isLoadingElasticStr = false;
         this.toolService.apiResult(data, true).then(
           (result: ResponseData) => {
             this.getElasticData();
@@ -460,7 +459,7 @@ export class ArticleEditComponent implements OnInit {
         });
       },
       error => {
-        this.isUpdateElasticLoading = false;
+        this.isLoadingElasticStr = false;
       }
     );
   }
