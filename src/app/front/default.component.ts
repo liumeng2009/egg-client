@@ -23,6 +23,7 @@ export class DefaultComponent implements OnInit {
   @ViewChild('search') searchInput;
   showSearchBox = false;
   isSearchLoading = false;
+  searchResult = [];
   array = [ 1, 2, 3, 4 ];
   @ViewChild('search') public anchorOp: ElementRef;
   @ViewChild('popupOp', { read: ElementRef }) public popupOp: ElementRef;
@@ -55,20 +56,76 @@ export class DefaultComponent implements OnInit {
     const t = this;
     this.articleService.searchByElastic(value).subscribe(
       (data: ResponseData) => {
-        // this.isSearchLoading = false;
+        this.isSearchLoading = false;
         this.toolService.apiResult(data, true).then(
           (result: ResponseData) => {
             console.log(result);
+            this.searchResult = result.data;
             if (result.data.hits && result.data.hits.hits) {
-              this.options = [...result.data.hits.hits];
+              this.formatSearchResult(result.data);
+              console.log(this.options);
             }
           }
         ).catch(() => {});
       },
       error => {
-        // this.isSearchLoading = false;
+        this.isSearchLoading = false;
       },
     );
+  }
+
+  formatSearchResult(searchResult: any) {
+    this.options.splice(0, this.options.length);
+    const groupByChannel = searchResult.aggregations.group_by_channel.buckets;
+    const articles = searchResult.hits.hits;
+    for (const group of groupByChannel) {
+      const option = {
+        channel: group.key,
+        categories: [],
+      };
+      this.options.push(option);
+      for (let article of articles) {
+        article = this.setHightLight(article);
+        console.log(article)
+        const _article = article._source;
+        if (group.key === _article.channel) {
+          const isExistCategory = this.isExistCategory(option.categories, _article.category);
+          if (isExistCategory) {
+            isExistCategory.articles.push(_article);
+          } else {
+            const newCategory = {
+              category: _article.category,
+              articles: [
+                _article
+              ],
+            };
+            option.categories.push(newCategory);
+          }
+        }
+      }
+    }
+    console.log(this.options);
+  }
+
+  isExistCategory(categories, category) {
+    if (categories.length === 0) {
+      return false;
+    }
+    for (const cate of categories) {
+      if (cate.category === category) {
+        return cate;
+      }
+    }
+    return false;
+  }
+
+  setHightLight(article) {
+    const _article = article._source;
+    const hightlight = article.highlight;
+    for (const prop in hightlight) {
+      _article[prop] = hightlight[prop][0];
+    }
+    return article;
   }
 
   onInput(value: string): void {
@@ -83,7 +140,6 @@ export class DefaultComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
-    console.log('click');
     if (!this.contains(event.target)) {
       this.showSearchBox = false;
     }

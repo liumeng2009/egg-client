@@ -1,21 +1,24 @@
 <nz-layout>
   <nz-header id="header">
     <div nz-row class="ant-row">
-      <div nz-col="" class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4">
+      <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4">
         <a href="" id="logo">
           <img alt="logo" src="./assets/image/logo.svg">
           <img alt="NG-ZORRO" src="./assets/image/zorro.svg">
         </a>
       </div>
-      <nz-divider [nzType]="'vertical'" style="position:relative;top:26px;float:left;"></nz-divider>
-      <ul nz-menu [nzMode]="'horizontal'" id="menu">
-        <li nz-menu-item>公司新闻</li>
-        <li nz-menu-item>行业新闻</li>
-        <li nz-menu-item>关于我们</li>
-      </ul>
-      <div id="search-box">
-        <i nz-icon type="search"></i>
-        <span class="algolia-search algolia-autocomplete algolia-autocomplete-left">
+      <div class="nav nav-hide ant-col-xs-0 ant-col-sm-0 ant-col-md-16 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20">
+        <nz-divider [nzType]="'vertical'" style="position:relative;top:26px;float:left;"></nz-divider>
+        <ul nz-menu [nzMode]="'horizontal'" id="menu">
+          <li nz-menu-item>
+            <a routerLink="/list">公司新闻</a>
+          </li>
+          <li nz-menu-item>行业新闻</li>
+          <li nz-menu-item>关于我们</li>
+        </ul>
+        <div id="search-box">
+          <i nz-icon type="search"></i>
+          <span class="algolia-search algolia-autocomplete algolia-autocomplete-left">
           <input nz-input #search placeholder="搜索" [(ngModel)]="searchKey" (input)="onInput($event.target?.value)">
           <span #popupOp class="ds-dropdown-menu" *ngIf="showSearchBox" style="position: absolute;top: 100%;z-index: 100;left: 0px;right: auto;">
             <div class="ds-dataset-1">
@@ -30,33 +33,36 @@
               </div>
               <span class="ds-suggestions">
                 <div class="ds-suggestion" *ngFor="let option of options">
-                  <a class="algolia-docsearch-suggestion algolia-docsearch-suggestion__main algolia-docsearch-suggestion__secondary">
+                  <div class="algolia-docsearch-suggestion algolia-docsearch-suggestion__main algolia-docsearch-suggestion__secondary">
                     <div class="algolia-docsearch-suggestion--category-header">
-                      <span class="algolia-docsearch-suggestion--category-header-lvl0">Components</span>
+                      <span class="algolia-docsearch-suggestion--category-header-lvl0">{{option.channel}}</span>
                     </div>
-                    <div class="algolia-docsearch-suggestion--wrapper">
+                    <div *ngFor="let cate of option.categories" class="algolia-docsearch-suggestion--wrapper">
                       <div class="algolia-docsearch-suggestion--subcategory-column">
                         <span class="algolia-docsearch-suggestion--subcategory-column-text">
                           <span class="algolia-docsearch-suggestion--highlight">I</span>
-                          nputNumber 数字输入框
+                          {{cate.category}}
                         </span>
                       </div>
-                      <div class="algolia-docsearch-suggestion--content">
-                        <div class="algolia-docsearch-suggestion--subcategory-inline">
-                          <span class="algolia-docsearch-suggestion--highlight">I</span>
-                          nputNumber 数字输入框
-                        </div>
-                        <div class="algolia-docsearch-suggestion--title">
-                          <span class="algolia-docsearch-suggestion--highlight">I</span>
-                          <span [innerHtml]="option.title"></span>
-                          <span [innerHtml]="option.content"></span>
-                        </div>
+                      <div *ngFor="let article of cate.articles" class="algolia-docsearch-suggestion--content">
+                        <a routerLink="/article/{{article.id}}">
+                          <div class="algolia-docsearch-suggestion--subcategory-inline">
+                            <span [innerHtml]="article.title"></span>
+                          </div>
+                          <div class="algolia-docsearch-suggestion--title">
+                            <span [innerHtml]="article.title"></span>
+                          </div>
+                           <div class="algolia-docsearch-suggestion--text">
+                            <span [innerHtml]="article.zhaiyao"></span>
+                           </div>
+                        </a>
+
                       </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </span>
-              <div *ngIf="options.length===0" class="algolia-docsearch-suggestion">
+              <div *ngIf="options.length===0&&!isSearchLoading" class="algolia-docsearch-suggestion">
                 <div class="algolia-docsearch-suggestion--wrapper">
                   <div class="algolia-docsearch-suggestion--content algolia-docsearch-suggestion--no-results">
                     <div class="algolia-docsearch-suggestion--title">
@@ -70,6 +76,11 @@
             </div>
           </span>
         </span>
+        </div>
+        <button nz-button [nzSize]="'small'" class="header-lang-button">English</button>
+        <a style="float:right">注册</a>
+        <nz-divider [nzType]="'vertical'" style="position:relative;top:26px;float:right;"></nz-divider>
+        <a style="float:right">登录</a>
       </div>
     </div>
   </nz-header>
@@ -79,7 +90,9 @@
         <div nz-carousel-content *ngFor="let index of array"><h3>{{index}}</h3></div>
       </nz-carousel>
     </div>
-    <a href="http://127.0.0.1:4200/admin" target="_blank">内容管理后台</a>
+    <pre>
+      {{searchResult | json}}
+    </pre>
   </nz-content>
   <nz-footer id="footer">
 
