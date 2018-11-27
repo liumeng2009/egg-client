@@ -5,6 +5,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {CommonModule} from '@angular/common';
 import {FrontMainRoutingModule} from './main-routing.module';
 import { NgProgressModule } from '@ngx-progressbar/core';
+import {PublicDataService} from '../public-data.service';
 
 /* The @NgModule decorator lets Angular know that this is an NgModule. */
 @NgModule({
@@ -19,7 +20,9 @@ import { NgProgressModule } from '@ngx-progressbar/core';
     FrontMainRoutingModule,
     NgProgressModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    PublicDataService,
+  ],
   bootstrap: [FrontMainComponent]
 })
 export class MainModule { }
