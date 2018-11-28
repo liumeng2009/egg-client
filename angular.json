@@ -55,15 +55,19 @@
               "aot": true,
               "outputPath": "dist/egg-client-zh/",
               "i18nFile": "src/locale/messages.zh.xlf",
+              "baseHref": "/zh/",
               "i18nFormat": "xlf",
-              "i18nLocale": "zh"
+              "i18nLocale": "zh",
+              "i18nMissingTranslation": "error"
             },
             "en": {
               "aot": true,
               "outputPath": "dist/egg-client-en/",
               "i18nFile": "src/locale/messages.xlf",
+              "baseHref": "/en/",
               "i18nFormat": "xlf",
-              "i18nLocale": "en"
+              "i18nLocale": "en",
+              "i18nMissingTranslation": "error"
             }
           }
         },

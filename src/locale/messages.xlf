@@ -2,13 +2,33 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="9349ef63a2bccf507f265c1b182204a56588023a" datatype="html">
-        <source>Hello I18N!</source>
+      <trans-unit id="c518cc8df4a182cbc44d6131ddaba155b2949cdb" datatype="html">
+        <source>abc</source>
         <target>Hello I18N!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">6</context>
         </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+
+      <trans-unit id="0140abc1c474a573fd6ff53aca42f0bb1ba3e843" datatype="html">
+        <source>Choose Date</source>
+        <target>Choose Date</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="123" datatype="html">
+        <source>Choose Date</source>
+        <target>Choose Date</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
       </trans-unit>
     </body>
   </file>

@@ -78,8 +78,8 @@
           </span>
         </span>
         </div>
-        <button nz-button *ngIf="selectedLang === 'zh-cn'" [nzSize]="'small'" class="header-lang-button" (click)="switchLanguage('en_US')">English</button>
-        <button nz-button *ngIf="selectedLang === 'en'" [nzSize]="'small'" class="header-lang-button" (click)="switchLanguage('zh_CN')">中文</button>
+        <button nz-button *ngIf="selectedLang === 'zh'" [nzSize]="'small'" class="header-lang-button" (click)="switchLanguage('en')">English</button>
+        <button nz-button *ngIf="selectedLang === 'en'" [nzSize]="'small'" class="header-lang-button" (click)="switchLanguage('zh')">中文</button>
         <a style="float:right">注册</a>
         <nz-divider [nzType]="'vertical'" style="position:relative;top:26px;float:right;"></nz-divider>
         <a style="float:right">登录</a>

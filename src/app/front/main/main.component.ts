@@ -4,12 +4,8 @@ import {NgProgress, NgProgressRef} from '@ngx-progressbar/core';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {ResponseData} from '../../bean/responseData';
-import {en_US, zh_CN, NzI18nService, NzI18nInterface} from 'ng-zorro-antd';
 import {ToolService} from '../../util/tool.service';
 import {PublicDataService} from '../public-data.service';
-import {CookieService} from 'ngx-cookie';
-import {MyLocaleService} from '../mylocale.service';
-import {MissionService} from '../../util/mission.service';
 
 @Component({
   selector: 'app-front-main-page',
@@ -38,10 +34,6 @@ export class FrontMainComponent implements OnInit {
     private progressService: NgProgress,
     private publicDataService: PublicDataService,
     private toolService: ToolService,
-    private nzI18nService: NzI18nService,
-    private cookieService: CookieService,
-    private myLocaleService: MyLocaleService,
-    private missionService: MissionService,
   ) {
     this.progressRef = this.progressService.ref();
     this.packages$ = this.searchText$.pipe(
@@ -56,11 +48,6 @@ export class FrontMainComponent implements OnInit {
       this.searchFromAlgolia(value);
     });
     this.initLang();
-  }
-  initLang() {
-    const localeObj = this.nzI18nService.getLocale();
-    const locale = this.nzI18nService.getLocaleId();
-    this.selectedLang = locale;
   }
   addRouteListener() {
     this.router.events
@@ -168,18 +155,31 @@ export class FrontMainComponent implements OnInit {
       this.showSearchBox = false;
     }
   }
-  switchLanguage() {
-    if (this.selectedLang === 'zh-cn') {
-      this.nzI18nService.setLocale(en_US);
+  initLang() {
+    const pathname = location.pathname;
+    if (pathname.indexOf('/zh/') > -1) {
+      this.selectedLang = 'zh';
+    } else if (pathname.indexOf('/en/') > -1) {
       this.selectedLang = 'en';
-    } else if (this.selectedLang === 'en') {
-      this.nzI18nService.setLocale(zh_CN);
-      this.selectedLang = 'zh-cn';
     } else {
-      this.nzI18nService.setLocale(zh_CN);
-      this.selectedLang = 'zh-cn';
+      this.selectedLang = 'zh';
     }
-    this.cookieService.put('lang', this.selectedLang);
-    this.missionService.langChange.emit(this.selectedLang);
+  }
+  switchLanguage(lang) {
+    console.log(location);
+    const origin = location.origin;
+    const pathname = location.pathname;
+    let newPathName = '';
+    switch (lang) {
+      case 'zh':
+        newPathName = '/zh/' + pathname.substring(4, pathname.length - 1);
+        break;
+      case 'en':
+        newPathName = '/en/' + pathname.substring(4, pathname.length - 1);
+        break;
+      default:
+        newPathName = '/zh/' + pathname.substring(4, pathname.length - 1);
+    }
+    location.href = origin + newPathName;
   }
 }
