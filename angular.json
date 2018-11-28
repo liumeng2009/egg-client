@@ -50,6 +50,20 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "zh": {
+              "aot": true,
+              "outputPath": "dist/egg-client-zh/",
+              "i18nFile": "src/locale/messages.zh.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "zh"
+            },
+            "en": {
+              "aot": true,
+              "outputPath": "dist/egg-client-en/",
+              "i18nFile": "src/locale/messages.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en"
             }
           }
         },
@@ -61,6 +75,12 @@
           "configurations": {
             "production": {
               "browserTarget": "egg-client:build:production"
+            },
+            "zh": {
+              "browserTarget": "egg-client:build:zh"
+            },
+            "en": {
+              "browserTarget": "egg-client:build:en"
             }
           }
         },

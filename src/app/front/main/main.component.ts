@@ -4,10 +4,12 @@ import {NgProgress, NgProgressRef} from '@ngx-progressbar/core';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {ResponseData} from '../../bean/responseData';
-import {en_US, zh_CN, NzI18nService} from 'ng-zorro-antd';
+import {en_US, zh_CN, NzI18nService, NzI18nInterface} from 'ng-zorro-antd';
 import {ToolService} from '../../util/tool.service';
 import {PublicDataService} from '../public-data.service';
 import {CookieService} from 'ngx-cookie';
+import {MyLocaleService} from '../mylocale.service';
+import {MissionService} from '../../util/mission.service';
 
 @Component({
   selector: 'app-front-main-page',
@@ -27,7 +29,6 @@ export class FrontMainComponent implements OnInit {
   showSearchBox = false;
   isSearchLoading = false;
   searchResult = [];
-  array = [ 1, 2, 3, 4 ];
   @ViewChild('search') public anchorOp: ElementRef;
   @ViewChild('popupOp', { read: ElementRef }) public popupOp: ElementRef;
   progressRef: NgProgressRef;
@@ -39,6 +40,8 @@ export class FrontMainComponent implements OnInit {
     private toolService: ToolService,
     private nzI18nService: NzI18nService,
     private cookieService: CookieService,
+    private myLocaleService: MyLocaleService,
+    private missionService: MissionService,
   ) {
     this.progressRef = this.progressService.ref();
     this.packages$ = this.searchText$.pipe(
@@ -55,6 +58,7 @@ export class FrontMainComponent implements OnInit {
     this.initLang();
   }
   initLang() {
+    const localeObj = this.nzI18nService.getLocale();
     const locale = this.nzI18nService.getLocaleId();
     this.selectedLang = locale;
   }
@@ -167,8 +171,8 @@ export class FrontMainComponent implements OnInit {
   switchLanguage() {
     if (this.selectedLang === 'zh-cn') {
       this.nzI18nService.setLocale(en_US);
-      this.selectedLang = 'en-us';
-    } else if (this.selectedLang === 'en-us') {
+      this.selectedLang = 'en';
+    } else if (this.selectedLang === 'en') {
       this.nzI18nService.setLocale(zh_CN);
       this.selectedLang = 'zh-cn';
     } else {
@@ -176,5 +180,6 @@ export class FrontMainComponent implements OnInit {
       this.selectedLang = 'zh-cn';
     }
     this.cookieService.put('lang', this.selectedLang);
+    this.missionService.langChange.emit(this.selectedLang);
   }
 }

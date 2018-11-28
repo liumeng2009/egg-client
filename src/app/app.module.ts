@@ -17,7 +17,7 @@ import {RoleService} from './back/auth/role/role.service';
 import {UserService} from './back/auth/user/user.service';
 import {AuthGuard} from './back/main/authGuard.service';
 import {NoAuthComponent} from './back/myComponents/noAuth/noAuth.component';
-import {MissionService} from './back/main/mission.service';
+import {MissionService} from './util/mission.service';
 import {CookieModule} from 'ngx-cookie';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { PlusCircleOutline,
@@ -56,6 +56,7 @@ import { PlusCircleOutline,
   CopyOutline,
   SearchOutline,
 } from '@ant-design/icons-angular/icons';
+import {MyLocaleService} from './front/mylocale.service';
 
 const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutline, UserOutline, SettingOutline,
   LogoutOutline,
@@ -120,6 +121,7 @@ registerLocaleData(zh);
     RoleService,
     UserService,
     MissionService,
+    MyLocaleService,
   ],
   bootstrap: [AppComponent]
 })

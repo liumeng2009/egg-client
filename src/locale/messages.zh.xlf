@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="9349ef63a2bccf507f265c1b182204a56588023a" datatype="html">
         <source>Hello I18N!</source>
-        <target>Hello I18N!</target>
+        <target>你好 I18N!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">98</context>
