@@ -11,7 +11,7 @@ import {RoleService} from '../../role/role.service';
 import {UserService} from '../user.service';
 import {ToolService} from '../../../../util/tool.service';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 
 @Component({
   selector: 'app-user-edit-page',

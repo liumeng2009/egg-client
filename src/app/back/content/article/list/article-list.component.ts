@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {EduConfig} from '../../../../config/config';
 import {Article, ArticleProperty} from '../../../../bean/Article';
 import {ResponseData} from '../../../../bean/responseData';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 import {ToolService} from '../../../../util/tool.service';
 import {CategoryService} from '../../category/category.service';
 import {Channel} from '../../../../bean/Channel';

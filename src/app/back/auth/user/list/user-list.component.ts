@@ -7,7 +7,7 @@ import {User} from '../../../../bean/user';
 import {ResponseData} from '../../../../bean/responseData';
 import {EduConfig} from '../../../../config/config';
 import {RoleService} from '../../role/role.service';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 
 

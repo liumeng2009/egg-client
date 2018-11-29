@@ -8,7 +8,7 @@ import {Location} from '@angular/common';
 import {AuthService} from '../auth/auth.service';
 import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
-import {RememberService} from './remember.service';
+import {RememberService} from '../../util/remember.service';
 import {User} from '../../bean/user';
 import {NzMessageService} from 'ng-zorro-antd';
 

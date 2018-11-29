@@ -6,6 +6,7 @@ export const EduConfig = {
   pageSize : 15,
   noResult : '还没有记录！',
   noResultBecauseOfAuth : '您没有权限查看这些记录！',
+  // 富文本编辑器设置
   tinyMceOptions: {
     branding: false,
     plugins: 'link image code fullscreen textcolor print preview directionality emoticons table',
@@ -20,4 +21,7 @@ export const EduConfig = {
     relative_urls : true,
   },
   atLeastOneSelected: '请您至少选取一条记录！',
+  // 多语切换使用
+  hostEn: 'http://localhost:4200',
+  hostZh: 'http://localhost:4201',
 }

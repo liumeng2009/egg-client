@@ -28,6 +28,10 @@ export class ToolService {
         this.message.error(data.error + '，即将重新登录！');
         setTimeout(() => {this.gotoLoginPage(); }, 500);
         reject();
+      } else if (data.code === 500 && data.error === 'jwt expired') {
+        this.message.error('身份凭证过期，即将重新登录！');
+        setTimeout(() => {this.gotoLoginPage(); }, 500);
+        reject();
       } else if (data.code === 0) {
         if (data.message) {
           this.message.success(data.message);

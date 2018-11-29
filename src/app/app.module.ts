@@ -11,7 +11,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {ToolService} from './util/tool.service';
 import {TokenGuard} from './back/main/tokenGuard.service';
 import {AuthService} from './back/auth/auth.service';
-import {RememberService} from './back/main/remember.service';
+import {RememberService} from './util/remember.service';
 import {OtherComponent} from './back/myComponents/noFound/other.component';
 import {RoleService} from './back/auth/role/role.service';
 import {UserService} from './back/auth/user/user.service';
@@ -56,7 +56,6 @@ import { PlusCircleOutline,
   CopyOutline,
   SearchOutline,
 } from '@ant-design/icons-angular/icons';
-import {MyLocaleService} from './front/mylocale.service';
 
 const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutline, UserOutline, SettingOutline,
   LogoutOutline,
@@ -121,7 +120,6 @@ registerLocaleData(zh);
     RoleService,
     UserService,
     MissionService,
-    MyLocaleService,
   ],
   bootstrap: [AppComponent]
 })

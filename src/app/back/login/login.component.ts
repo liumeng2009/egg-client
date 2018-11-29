@@ -8,7 +8,7 @@ import {User} from '../../bean/user';
 import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
 import {Router, ActivatedRoute} from '@angular/router';
-import {RememberService} from '../main/remember.service';
+import {RememberService} from '../../util/remember.service';
 
 
 @Component({

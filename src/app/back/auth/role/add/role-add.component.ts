@@ -5,7 +5,7 @@ import {Role} from '../../../../bean/role';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ResponseData} from '../../../../bean/responseData';
 import {ToolService} from '../../../../util/tool.service';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 import {AuthService} from '../../auth.service';
 import {AuthList} from '../../../../bean/auth';
 

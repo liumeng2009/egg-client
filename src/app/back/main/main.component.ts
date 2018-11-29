@@ -1,17 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {Title} from '@angular/platform-browser';
 import {ToolService} from '../../util/tool.service';
 import {Bread} from '../../bean/bread';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {User} from '../../bean/user';
-import {RememberService} from './remember.service';
+import {RememberService} from '../../util/remember.service';
 import {CookieService} from 'ngx-cookie';
 import {NzMessageService} from 'ng-zorro-antd';
 import {EduConfig} from '../../config/config';
 import {RouteList} from '../../app-routes';
-import * as moment from 'moment';
-import {NgProgress, NgProgressComponent, NgProgressRef} from '@ngx-progressbar/core';
+import {NgProgress, NgProgressRef} from '@ngx-progressbar/core';
 
 @Component({
   selector: 'app-main-page',

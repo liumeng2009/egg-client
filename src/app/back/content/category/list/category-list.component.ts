@@ -4,7 +4,7 @@ import {ToolService} from '../../../../util/tool.service';
 import {CategoryService} from '../category.service';
 import {ResponseData} from '../../../../bean/responseData';
 import {Channel} from '../../../../bean/Channel';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

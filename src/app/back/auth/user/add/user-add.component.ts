@@ -11,9 +11,9 @@ import {Avatar} from '../../../../bean/avatar';
 import {EduConfig} from '../../../../config/config';
 import {NzMessageService, UploadFile, UploadXHRArgs} from 'ng-zorro-antd';
 import {ConstomValidators} from '../../../../util/validators';
-import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 
 
 @Component({

@@ -6,6 +6,7 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
 import {PublicDataService} from '../public-data.service';
+import {EduConfig} from '../../config/config';
 
 @Component({
   selector: 'app-front-main-page',
@@ -167,19 +168,24 @@ export class FrontMainComponent implements OnInit {
   }
   switchLanguage(lang) {
     console.log(location);
-    const origin = location.origin;
+    // const origin = location.origin;
     const pathname = location.pathname;
+    let newOrigin = '';
     let newPathName = '';
     switch (lang) {
       case 'zh':
-        newPathName = '/zh/' + pathname.substring(4, pathname.length - 1);
+        newOrigin = EduConfig.hostZh;
+        newPathName = '/zh/' + pathname.substring(4, pathname.length);
         break;
       case 'en':
-        newPathName = '/en/' + pathname.substring(4, pathname.length - 1);
+        newOrigin = EduConfig.hostEn;
+        newPathName = '/en/' + pathname.substring(4, pathname.length);
         break;
       default:
-        newPathName = '/zh/' + pathname.substring(4, pathname.length - 1);
+        newOrigin = EduConfig.hostZh;
+        newPathName = '/zh/' + pathname.substring(4, pathname.length);
     }
-    location.href = origin + newPathName;
+    console.log(newOrigin + newPathName);
+    location.href = newOrigin + newPathName;
   }
 }

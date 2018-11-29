@@ -2,9 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="c518cc8df4a182cbc44d6131ddaba155b2949cdb" datatype="html">
-        <source>abc</source>
-        <target>你好，I18N！</target>
+      <trans-unit id="my-locale-search" datatype="html">
+        <source>search</source>
+        <target>搜索</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">6</context>
@@ -12,18 +12,49 @@
         <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
       </trans-unit>
 
-      <trans-unit id="0140abc1c474a573fd6ff53aca42f0bb1ba3e843" datatype="html">
+      <trans-unit id="my-locale-choose-date" datatype="html">
         <source>Choose Date</source>
-        <target>选择时间</target>
+        <target>选择日期</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
         <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
       </trans-unit>
-      <trans-unit id="123" datatype="html">
-        <source>Choose Date</source>
-        <target>选择时间</target>
+
+      <trans-unit id="my-locale-log-in" datatype="html">
+        <source>LogIn</source>
+        <target>登录</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+
+      <trans-unit id="my-locale-log-in-up-case" datatype="html">
+        <source>LogIn</source>
+        <target>登录</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+
+      <trans-unit id="my-locale-sign-up" datatype="html">
+        <source>SignUp</source>
+        <target>注册</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+
+      <trans-unit id="my-locale-forgot-password" datatype="html">
+        <source>forgotPassword?</source>
+        <target>忘记密码？</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">6</context>

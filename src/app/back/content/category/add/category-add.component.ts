@@ -7,11 +7,10 @@ import {ToolService} from '../../../../util/tool.service';
 import {NzMessageService} from 'ng-zorro-antd';
 import {CookieService} from 'ngx-cookie';
 import {HttpClient} from '@angular/common/http';
-import {RememberService} from '../../../main/remember.service';
+import {RememberService} from '../../../../util/remember.service';
 import {ArticleCategory} from '../../../../bean/ArticleCategory';
 import {CategoryService} from '../category.service';
 import {ResponseData} from '../../../../bean/responseData';
-import {ConstomValidators} from '../../../../util/validators';
 import {Channel} from '../../../../bean/Channel';
 
 @Component({
