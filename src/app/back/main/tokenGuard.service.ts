@@ -37,7 +37,7 @@ export class TokenGuard implements CanActivate {
               if (this.rememberService.getUser()) {
 
               } else {
-                this.message.success((user.realname ? user.realname : user.mobile) + '，登录成功！');
+                this.message.success(this.toolService.getOwnLang('LoginSuccess'));
               }
               this.rememberService.setUser(user);
               resolve(true);

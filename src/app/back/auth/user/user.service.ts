@@ -9,6 +9,7 @@ import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 import {User} from '../../../bean/user';
+import {ToolService} from '../../../util/tool.service';
 
 
 @Injectable()
@@ -19,11 +20,15 @@ export class UserService {
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
+              private toolService: ToolService,
   ) {}
 
   getUserList(page, pagesize, searchkey, roles): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     const params = new HttpParams().set('page', page)
       .set('pagesize', pagesize)
       .set('searchkey', searchkey)
@@ -41,7 +46,10 @@ export class UserService {
   }
   show(id): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.user_url + '/' + id, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -52,7 +60,10 @@ export class UserService {
   }
   showOwn(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.user_url + '/show/own', {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -63,7 +74,10 @@ export class UserService {
   }
   getAvatarList(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.avatar_url, {
       headers: headers,
     })
@@ -76,7 +90,10 @@ export class UserService {
   }
   create(user: User): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.user_url, user, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -87,7 +104,10 @@ export class UserService {
   }
   update(user: User): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.put(this.user_url, user, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -98,7 +118,10 @@ export class UserService {
   }
   delete(ids): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.user_url + '/delete', {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -109,7 +132,10 @@ export class UserService {
   }
   changePassword(password: any): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.put(this.user_url + '/changepassword', password, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -137,70 +163,4 @@ export class UserService {
 
     };
   }
-
-  /*  getRole(id):Promise<ResponseData>{
-      let url=this.geturl+'/'+id
-      return this.http.get(url)
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError)
-    }
-
-    create(role:any): Promise<ResponseData> {
-      let token=this.cookieService.get('optToken');
-      let headers= new Headers({'Content-Type': 'application/json','authorization':token});
-      return this.http
-        .post(this.addurl, role, {headers: headers})
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    edit(role:any): Promise<ResponseData> {
-      let token=this.cookieService.get('optToken');
-      let headers= new Headers({'Content-Type': 'application/json','authorization':token});
-      return this.http
-        .post(this.editurl, role, {headers: headers})
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    delete(id:string):Promise<ResponseData> {
-      let token=this.cookieService.get('optToken');
-      let headers= new Headers({'Content-Type': 'application/json','authorization':token});
-      return this.http
-          .get(this.deleteurl+'/'+id,{headers:headers})
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    authInRoleCreate(authInRole:any): Promise<ResponseData> {
-      let token=this.cookieService.get('optToken');
-      let headers= new Headers({'Content-Type': 'application/json','authorization':token});
-      return this.http
-        .post(this.authInRoleAddUrl, authInRole, {headers: headers})
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    authInRoleDelete(authInRole:any): Promise<ResponseData> {
-      let token=this.cookieService.get('optToken');
-      let headers= new Headers({'Content-Type': 'application/json','authorization':token});
-      return this.http
-        .post(this.authInRoleDeleteUrl, authInRole, {headers: headers})
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    authInRoleList(roleId:string):Promise<ResponseData>{
-      let url=this.authInRoleListUrl+'/'+roleId;
-      return this.http.get(url)
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError)
-    }*/
 }

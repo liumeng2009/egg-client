@@ -9,6 +9,7 @@ import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 import {Article} from '../../../bean/Article';
+import {ToolService} from '../../../util/tool.service';
 
 
 @Injectable()
@@ -18,13 +19,17 @@ export class ArticleService {
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
+              private toolService: ToolService,
   ) {}
 
   getArticleList(page, pagesize, searchkey, channelId, categoryId,
     status?, isComment?, isTop?, isRed?, isHot?, isSlide?
   ): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     const params = new HttpParams().set('page', page)
       .set('pagesize', pagesize)
       .set('searchkey', searchkey)
@@ -49,7 +54,10 @@ export class ArticleService {
   }
   getArticle(id): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.article_url + '/' + id, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -60,7 +68,10 @@ export class ArticleService {
   }
   getArticleByCode(code): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.article_url + '/code/' + code, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -72,7 +83,10 @@ export class ArticleService {
 
   create(article: Article): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.article_url, article, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -83,7 +97,10 @@ export class ArticleService {
   }
   update(article: Article): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.put(this.article_url, article, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -94,7 +111,10 @@ export class ArticleService {
   }
   delete(ids): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.article_url + '/delete', {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -105,7 +125,10 @@ export class ArticleService {
   }
   auditing(ids): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.article_url + '/auditing', {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -116,7 +139,10 @@ export class ArticleService {
   }
   pushElastic(ids: number[]): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.elastic_url, {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -127,7 +153,10 @@ export class ArticleService {
   }
   getElastic(id): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.elastic_url + '/' + id, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -138,7 +167,10 @@ export class ArticleService {
   }
   deleteElastic(ids: number[]): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.elastic_url + '/delete', {ids: ids}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -149,7 +181,10 @@ export class ArticleService {
   }
   searchByElastic(searchkey: string): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     const params = new HttpParams().set('searchkey', searchkey)
     return this.http.get(this.elastic_url, {
       headers: headers,

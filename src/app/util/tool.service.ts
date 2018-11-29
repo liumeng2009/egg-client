@@ -8,6 +8,9 @@ import {CookieService} from 'ngx-cookie';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
+import {RememberService} from './remember.service';
+import {ZH} from '../config/zh';
+import {EN} from '../config/en';
 
 @Injectable()
 export class ToolService {
@@ -18,6 +21,7 @@ export class ToolService {
     private location: Location,
     private cookieService: CookieService,
     private http: HttpClient,
+    private rememberService: RememberService,
   ) {
 
   }
@@ -61,6 +65,40 @@ export class ToolService {
       }),
       catchError(this.handleError<any>())
     );
+  }
+
+  getHeaderlang() {
+    const lang = this.rememberService.getLang();
+    switch (lang) {
+      case 'zh':
+        return 'zh-CN,zh;q=0.5';
+      case 'en':
+        return 'en-US,en;q=0.5';
+      default:
+        return 'zh-CN,zh;q=0.5';
+    }
+  }
+  getOwnLang(langname) {
+    const lang = this.rememberService.getLang();
+    let obj;
+    switch (lang) {
+      case 'zh':
+        obj = ZH;
+        break;
+      case 'en':
+        obj = EN;
+        break;
+      default:
+        obj = ZH;
+    }
+
+    for (const prop in obj) {
+      if (prop === langname) {
+        return obj[prop];
+      }
+    }
+    return '';
+
   }
 
   private rememberUrl() {

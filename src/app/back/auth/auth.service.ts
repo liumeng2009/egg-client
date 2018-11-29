@@ -10,6 +10,7 @@ import {EduConfig} from '../../config/config';
 import {ResponseData} from '../../bean/responseData';
 import {Auth} from '../../bean/auth';
 import {CookieService} from 'ngx-cookie';
+import {ToolService} from '../../util/tool.service';
 
 @Injectable()
 export class AuthService {
@@ -21,11 +22,15 @@ export class AuthService {
     private http: HttpClient,
     private cookieService: CookieService,
     private message: NzMessageService,
+    private toolService: ToolService,
   ) {}
 
   checkToken(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.checktokenurl, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -37,7 +42,9 @@ export class AuthService {
 
   getAuthList(roleId): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '', 'Accept-Language' : langHeader});
     return this.http.get(this.auth_url + '/' + roleId, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -48,9 +55,11 @@ export class AuthService {
   }
 
   create(auth: Auth): Observable<ResponseData> {
-    console.log(auth);
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.auth_url, auth, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -61,7 +70,10 @@ export class AuthService {
   }
   destroy(auth: Auth): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.delete(this.auth_url + '/' + auth.roleId + '/' + auth.authId, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
@@ -73,7 +85,10 @@ export class AuthService {
 
   checkAuth(func, op): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.auth_check_url, {func: func, op: op}, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {

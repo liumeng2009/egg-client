@@ -9,6 +9,7 @@ import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../../../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
 import {ArticleCategory} from '../../../bean/ArticleCategory';
+import {ToolService} from '../../../util/tool.service';
 
 
 @Injectable()
@@ -18,11 +19,15 @@ export class CategoryService {
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
+              private toolService: ToolService,
   ) {}
 
   getChannelList(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.channel_url, {
       headers: headers,
     })
@@ -35,7 +40,10 @@ export class CategoryService {
   }
   showChannel(channelId): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.get(this.channel_url + '/' + channelId, {
       headers: headers,
     })
@@ -49,7 +57,10 @@ export class CategoryService {
 
   getCategoryList(channelId): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     const params = new HttpParams().set('channelId', channelId);
     return this.http.get(this.category_url, {
       headers: headers,
@@ -64,7 +75,10 @@ export class CategoryService {
   }
   create(category: ArticleCategory): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
-    const headers = new HttpHeaders({'Content-Type': 'application/json', 'authorization': token ? token : ''});
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
     return this.http.post(this.category_url, category, {headers: headers})
       .pipe(
         tap((data: ResponseData) => {
