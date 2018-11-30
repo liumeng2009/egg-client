@@ -1,3 +1,3 @@
 export const EN = {
-  LoginSuccess: 'Login successfully!'
+  LoginSuccess: 'Login successfully.'
 }

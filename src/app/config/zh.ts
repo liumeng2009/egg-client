@@ -1,3 +1,3 @@
 export const ZH = {
-  LoginSuccess: '登陆成功！'
+  LoginSuccess: '登陆成功。'
 }

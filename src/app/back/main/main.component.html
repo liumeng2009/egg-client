@@ -21,14 +21,14 @@
         <ul nz-menu nzSelectable>
           <li nz-menu-item>
             <a routerLink="setting">
-              <i nz-icon type="setting" theme="outline"></i>
-              设置
+              <i nz-icon style="margin-right:8px;" type="setting" theme="outline"></i>
+              <span i18n="@@my-locale-settings">settings</span>
             </a>
           </li>
           <li nz-menu-item>
-            <a nz-popconfirm nzTitle="确定要退出当前用户吗?" nzPlacement="bottomRight" (nzOnConfirm)="confirmExit()">
-              <i nz-icon type="logout" theme="outline"></i>
-              切换用户
+            <a nz-popconfirm nzTitle="确定要退出当前用户吗?" i18n-nzTitle="@@my-locale-confirm-sign-out" nzPlacement="bottomRight" (nzOnConfirm)="confirmExit()">
+              <i nz-icon style="margin-right:8px;" type="logout" theme="outline"></i>
+              <span i18n="@@my-locale-sign-out">signOut</span>
             </a>
           </li>
         </ul>
@@ -58,7 +58,7 @@
         <nz-breadcrumb style="padding:16px 0px;position: fixed;background-color: #f0f2f5;width: 100%;">
           <button nz-button (click)="back()" style="margin-right: 32px" >
             <i nz-icon type="rollback" theme="outline"></i>
-            返回
+            <ng-container i18n="@@my-locale-go-back">goBack</ng-container>
           </button>
           <nz-breadcrumb-item *ngFor="let bread of breadcrumb;index as i" letIndex>
             <i nz-icon type="home" theme="outline" style="margin-right: 4px;" *ngIf="i===0"></i>
