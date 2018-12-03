@@ -55,6 +55,8 @@ import { PlusCircleOutline,
   EditOutline,
   CopyOutline,
   SearchOutline,
+  WechatOutline,
+  WeiboCircleOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutline, UserOutline, SettingOutline,
@@ -89,6 +91,8 @@ const icons: IconDefinition[] = [ PlusCircleOutline, DeleteOutline, ReloadOutlin
   EditOutline,
   CopyOutline,
   SearchOutline,
+  WechatOutline,
+  WeiboCircleOutline,
 ];
 
 registerLocaleData(zh);

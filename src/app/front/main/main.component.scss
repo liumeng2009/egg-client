@@ -65,6 +65,10 @@
   margin-top: 20px;
   margin-left: 16px;
 }
+.container{
+  width:1152px;
+  margin: 0 auto;
+}
 .main-wrapper {
   background: #fff;
   padding: 40px 0 0;
@@ -78,10 +82,26 @@ h3 {
   clear: both;
   font-size: 14px;
   background-color: #000;
-  position: relative;
-  z-index: 100;
+  padding:36px 0px;
   box-shadow: 0 1000px 0 1000px #fff;
-  h1{
-    color: rgba(255,255,255,.65);
+  position:relative;
+  .footer-links{
+    a{
+      color:#fff;
+      text-underline: none;
+      margin: 0 10px;
+    }
+    a:hover {
+      color:#cccccc;
+    }
+  }
+  .footer-copyright{
+    font-size:12px;
+    color:#cccccc;
+    margin:8px 0px 0px 10px;
+  }
+  .footer-wrap{
+    color:#cccccc;
+    font-size:32px;
   }
 }
