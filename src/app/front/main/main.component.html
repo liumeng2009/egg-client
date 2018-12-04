@@ -91,9 +91,15 @@
   </nz-content>
   <nz-footer id="footer">
     <div class="container">
-      <div class="footer-wrap">
-        <i nz-icon type="wechat" theme="outline"></i>
-        <i nz-icon type="weibo-circle" theme="outline"></i>
+      <div nz-row nzGutter="8" class="footer-wrap">
+        <div nz-col nz-popover [nzContent]="wechatTemplate" nzPlacement="top" class="icon-link ant-col-12">
+          <i nz-icon type="wechat" theme="outline"></i>
+          <span>官方公众号</span>
+        </div>
+        <a nz-col class="icon-link ant-col-12" href="http://www.baidu.com">
+          <i nz-icon type="weibo-circle" theme="outline"></i>
+          <span>微博</span>
+        </a>
       </div>
       <div class="footer-links">
         <a>企业合作</a>
@@ -105,6 +111,11 @@
         powered by liumeng
       </div>
     </div>
+    <ng-template #wechatTemplate>
+      <div>
+        <img src="./assets/image/logo.svg" style="width: 48px;height:48px;">
+      </div>
+    </ng-template>
   </nz-footer>
 </nz-layout>
 

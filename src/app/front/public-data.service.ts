@@ -6,14 +6,17 @@ import {EduConfig} from '../config/config';
 import {CookieService} from 'ngx-cookie';
 import {ResponseData} from '../bean/responseData';
 import {NzMessageService} from 'ng-zorro-antd';
+import {ToolService} from '../util/tool.service';
 
 
 @Injectable()
 export class PublicDataService {
   private elastic_url = EduConfig.serverPath + '/api/elastic';
+  private public_url = EduConfig.serverPath + '/api/public';
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private message: NzMessageService,
+              private toolService: ToolService,
   ) {}
   searchByElastic(searchkey: string): Observable<ResponseData> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -28,6 +31,22 @@ export class PublicDataService {
       catchError(this.handleError<any>())
     );
   }
+
+  articleIndexByCode(code) {
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept-Language' : langHeader});
+    const params = new HttpParams().set('code', code)
+    return this.http.get(this.public_url + '/article', {
+      headers: headers,
+      params: params,
+    }).pipe(
+      tap((data: ResponseData) => {
+
+      }),
+      catchError(this.handleError<any>())
+    );
+  }
+
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
       if (error.name === 'HttpErrorResponse') {

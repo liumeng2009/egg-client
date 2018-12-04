@@ -56,7 +56,7 @@
         </div>
       </nz-dropdown>
     </th>
-    <th nzWidth="100px">操作</th>
+    <th nzWidth="100px" i18n="@@my-locale-action">action</th>
   </tr>
   </thead>
   <tbody>
@@ -128,7 +128,7 @@
   </nz-button-group>
 
   <label style="margin-left: 24px;">
-    当前频道：
+    <ng-container i18n="@@my-locale-channel">channel</ng-container>
     <nz-select style="width: 120px;" [(ngModel)]="channelSelected" nzAllowClear="false" (ngModelChange)="channelSelectChanged($event)">
       <nz-option *ngFor="let channel of channels" [nzValue]="channel.id" [nzLabel]="channel.name"></nz-option>
     </nz-select>

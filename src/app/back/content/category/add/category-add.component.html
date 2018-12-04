@@ -4,7 +4,7 @@
       <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            所属频道
+            <ng-container i18n="@@my-locale-channel">channel</ng-container>
           </nz-form-label>
           <nz-form-control class="{{channelList?'ant-col-16':'ant-col-16 haserror'}}">
             {{channel?.name}}
@@ -16,7 +16,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            所属父级菜单
+            <ng-container i18n="@@my-locale-parent">parent</ng-container>
           </nz-form-label>
           <nz-form-control class="{{categoryList?'ant-col-16':'ant-col-16 haserror'}}">
             <nz-select  formControlName="parentId">
@@ -35,7 +35,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            分类名称
+            <ng-container i18n="@@my-locale-name">name</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="name">
@@ -44,7 +44,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            分类别名（方便调用）
+            <ng-container i18n="@@my-locale-alias">alias</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="code">
@@ -53,7 +53,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            排序
+            <ng-container i18n="@@my-locale-sort">sort</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <nz-input-number  formControlName="sort" [nzStep]="1"></nz-input-number>

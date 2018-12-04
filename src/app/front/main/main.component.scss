@@ -85,6 +85,9 @@ h3 {
   padding:36px 0px;
   box-shadow: 0 1000px 0 1000px #fff;
   position:relative;
+  .container{
+    position:relative;
+  }
   .footer-links{
     a{
       color:#fff;
@@ -102,6 +105,26 @@ h3 {
   }
   .footer-wrap{
     color:#cccccc;
-    font-size:32px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+    font-size:12px;
+    width:140px;
+    cursor: pointer;
+    .icon-link{
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    a{
+      color:#cccccc;
+    }
+    a:hover{
+      color:#cccccc;
+    }
+    i{
+      font-size:32px;
+      margin-bottom: 4px;
+    }
   }
 }
