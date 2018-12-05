@@ -47,10 +47,12 @@ export class MainComponent implements OnInit {
   avatarImagePath = '';
   routesMenuUse: any[] = [];
   progressRef: NgProgressRef;
+  selectedLang = '';
   ngOnInit(): void {
     // 额，算是深拷贝吧。。。。
     // this.routesMenuUse = JSON.parse(JSON.stringify(this.router.config));
     this.routesMenuUse = new RouteList().rl;
+    this.initLang();
     this.initHeight();
     this.createBreadCrumb();
     this.pathAutoToList();
@@ -58,6 +60,16 @@ export class MainComponent implements OnInit {
     this.progressRef = this.progressService.ref();
     // this.router.navigateByUrl('/admin/total');
 
+  }
+  initLang() {
+    const pathname = location.pathname;
+    if (pathname.indexOf('/zh/') > -1) {
+      this.selectedLang = 'zh';
+    } else if (pathname.indexOf('/en/') > -1) {
+      this.selectedLang = 'en';
+    } else {
+      this.selectedLang = 'zh';
+    }
   }
   initHeight() {
     const screenHeight = document.documentElement.clientHeight;
@@ -329,6 +341,28 @@ export class MainComponent implements OnInit {
   }
   back() {
     window.history.go(-1);
+  }
+  switchLanguage(lang) {
+    console.log(location);
+    // const origin = location.origin;
+    const pathname = location.pathname;
+    let newOrigin = '';
+    let newPathName = '';
+    switch (lang) {
+      case 'zh':
+        newOrigin = EduConfig.hostZh;
+        newPathName = '/zh/' + pathname.substring(4, pathname.length);
+        break;
+      case 'en':
+        newOrigin = EduConfig.hostEn;
+        newPathName = '/en/' + pathname.substring(4, pathname.length);
+        break;
+      default:
+        newOrigin = EduConfig.hostZh;
+        newPathName = '/zh/' + pathname.substring(4, pathname.length);
+    }
+    console.log(newOrigin + newPathName);
+    location.href = newOrigin + newPathName;
   }
 
 }

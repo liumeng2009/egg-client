@@ -129,6 +129,7 @@
 
   <label style="margin-left: 24px;">
     <ng-container i18n="@@my-locale-channel">channel</ng-container>
+    <ng-container i18n="@@my-locale-colon">colon</ng-container>
     <nz-select style="width: 120px;" [(ngModel)]="channelSelected" nzAllowClear="false" (ngModelChange)="channelSelectChanged($event)">
       <nz-option *ngFor="let channel of channels" [nzValue]="channel.id" [nzLabel]="channel.name"></nz-option>
     </nz-select>

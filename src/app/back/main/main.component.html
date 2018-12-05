@@ -6,6 +6,8 @@
     </div>
     <i nz-icon type="menu-unfold" theme="outline" class="trigger" *ngIf="collapsed" (click)="toggleCollapse()"></i>
     <i nz-icon type="menu-fold" theme="outline" class="trigger" *ngIf="!collapsed" (click)="toggleCollapse()"></i>
+    <button nz-button *ngIf="selectedLang === 'zh'" [nzSize]="'small'" class="header-lang-button" (click)="switchLanguage('en')">English</button>
+    <a *ngIf="selectedLang === 'en'" class="header-lang-button" (click)="switchLanguage('zh')">中文</a>
     <div class="avatar-area">
       <nz-dropdown>
         <a nz-dropdown nz-row nzType="flex" nzAlign="middle">

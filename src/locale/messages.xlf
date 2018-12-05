@@ -190,7 +190,7 @@
       </trans-unit>
       <trans-unit id="my-locale-is-top" datatype="html">
         <source>isTop</source>
-        <target>isTop</target>
+        <target>Top article</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">6</context>
@@ -315,6 +315,141 @@
       <trans-unit id="my-locale-action" datatype="html">
         <source>action</source>
         <target>Action</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-colon" datatype="html">
+        <source>colon</source>
+        <target>&nbsp;:&nbsp;</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-cover" datatype="html">
+        <source>cover</source>
+        <target>Cover photo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-clicks" datatype="html">
+        <source>clicks</source>
+        <target>Clicks</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-pubdate" datatype="html">
+        <source>pubdate</source>
+        <target>Pubdate</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-is-publish" datatype="html">
+        <source>isPublish</source>
+        <target>Is publish</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-default-if-null" datatype="html">
+        <source>defaultIfNull</source>
+        <target>The default is the current time if not filled in.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-basic" datatype="html">
+        <source>basic</source>
+        <target>Basic information</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-select-category" datatype="html">
+        <source>selectCategory</source>
+        <target>Please select categories.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-click-upload" datatype="html">
+        <source>clickUpload</source>
+        <target>Click upload.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-save" datatype="html">
+        <source>save</source>
+        <target>Save</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-extended-information" datatype="html">
+        <source>extendedInformation</source>
+        <target>Extended information</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-summary" datatype="html">
+        <source>summary</source>
+        <target>Summary</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-content" datatype="html">
+        <source>content</source>
+        <target>Content</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-video" datatype="html">
+        <source>video</source>
+        <target>Video</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-attachment" datatype="html">
+        <source>attachment</source>
+        <target>Attachment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">6</context>

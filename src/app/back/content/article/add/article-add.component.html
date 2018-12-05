@@ -3,11 +3,10 @@
     <nz-card [ngStyle]="formHeight">
       <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
       <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
-        <nz-tab [nzTitle]="'基本信息'">
-
+        <nz-tab nzTitle="basic" i18n-nzTitle="@@my-locale-basic">
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                所属频道
+                <ng-container i18n="@@my-locale-channel">channel</ng-container>
               </nz-form-label>
               <nz-form-control class="{{channelList?'ant-col-16':'ant-col-16 haserror'}}">
                 {{channel?.name}}
@@ -19,10 +18,10 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label [nzRequired]="true" class="ant-col-6">
-                所属分类
+                <ng-container i18n="@@my-locale-category">category</ng-container>
               </nz-form-label>
               <nz-form-control class="{{categoryList?'ant-col-16':'ant-col-16 haserror'}}">
-                <nz-select  formControlName="categoryId" [nzPlaceHolder]="'请选择分类'">
+                <nz-select  formControlName="categoryId" nzPlaceHolder="selectCategory" i18n-nzPlaceHolder="@@my-locale-select-category" >
                   <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
                     <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
                     <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
@@ -39,7 +38,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                是否发布
+                <ng-container i18n="@@my-locale-is-publish">isPublish</ng-container>
                 <i nz-icon nz-tooltip *ngIf="!canAuditing" nzTitle="需要管理员进行审核" type="question-circle" theme="outline"></i>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
@@ -48,19 +47,29 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                设置类型
+                <ng-container i18n="@@my-locale-property">property</ng-container>
               </nz-form-label>
               <nz-form-control>
-                <label nz-checkbox formControlName="isComment">允许评论</label>
-                <label nz-checkbox formControlName="isTop">置顶</label>
-                <label nz-checkbox formControlName="isRed">推荐</label>
-                <label nz-checkbox formControlName="isHot">热门</label>
-                <label nz-checkbox formControlName="isSlide">幻灯片</label>
+                <label nz-checkbox formControlName="isComment">
+                  <ng-container i18n="@@my-locale-allow-comment">allowComment</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isTop">
+                  <ng-container i18n="@@my-locale-is-top">isTop</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isRed">
+                  <ng-container i18n="@@my-locale-is-red">isRed</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isHot">
+                  <ng-container i18n="@@my-locale-is-hot">isHot</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isSlide">
+                  <ng-container i18n="@@my-locale-is-slide">isSlide</ng-container>
+                </label>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
               <nz-form-label [nzRequired]="true" class="ant-col-6">
-                内容标题
+                <ng-container i18n="@@my-locale-title">title</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <input type="text" nz-input formControlName="title">
@@ -69,7 +78,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                调用别名
+                <ng-container i18n="@@my-locale-alias">alias</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <input type="text" nz-input formControlName="code">
@@ -77,7 +86,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                封面图片
+                <ng-container i18n="@@my-locale-cover">cover</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <div>
@@ -91,7 +100,9 @@
                     [nzPreview]="handlePreview"
                   >
                     <i nz-icon type="plus" class="upload-icon" theme="outline"></i>
-                    <div class="ant-upload-text">点击上传</div>
+                    <div class="ant-upload-text">
+                      <ng-container i18n="@@my-locale-click-upload">clickUpload</ng-container>
+                    </div>
 <!--                    <button nz-button>
                       <i nz-icon type="upload" theme="outline"></i><span>点击上传</span>
                     </button>-->
@@ -106,7 +117,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                排序
+                <ng-container i18n="@@my-locale-sort">sort</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <nz-input-number  formControlName="sort" [nzStep]="1"></nz-input-number>
@@ -114,7 +125,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                点击量
+                <ng-container i18n="@@my-locale-clicks">clicks</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <nz-input-number  formControlName="click" [nzStep]="1"></nz-input-number>
@@ -123,8 +134,8 @@
             <nz-form-item>
               <nz-form-label class="ant-col-6">
             <span>
-              发布时间
-              <i nz-icon nz-tooltip nzTitle="不填写则默认为当前时间" type="question-circle" theme="outline"></i>
+              <ng-container i18n="@@my-locale-pubdate">pubdate</ng-container>
+              <i nz-icon nz-tooltip nzTitle="defaultIfNull" i18n-nzTitle="@@my-locale-default-if-null" type="question-circle" theme="outline"></i>
             </span>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
@@ -132,7 +143,7 @@
                   formControlName="publishAt"
                   nzShowTime
                   nzFormat="yyyy-MM-dd HH:mm:ss"
-                  nzPlaceHolder="选择时间"
+                  i18n-nzPlaceHolder = '@@my-locale-choose-date'
                 ></nz-date-picker>
               </nz-form-control>
             </nz-form-item>
@@ -158,27 +169,27 @@
             </ng-template>
           </nz-modal>
         </nz-tab>
-        <nz-tab [nzTitle]="'附件信息'" *ngIf="channel?.id === 4">
+        <nz-tab nzTitle="attachment" i18n-nzTitle="@@my-locale-attachment" *ngIf="channel?.id === 4">
 
         </nz-tab>
-        <nz-tab [nzTitle]="'视频信息'" *ngIf="channel?.id === 2">
+        <nz-tab nzTitle="video" i18n-nzTitle="@@my-locale-video" *ngIf="channel?.id === 2">
 
         </nz-tab>
-        <nz-tab [nzTitle]="'扩展信息'">
+        <nz-tab nzTitle="extendedInformation" i18n-nzTitle="@@my-locale-extended-information">
           <nz-form-item>
-            <nz-form-label class="ant-col-4">
-              摘要
+            <nz-form-label class="ant-col-4" i18n="@@my-locale-summary">
+              summary
             </nz-form-label>
             <nz-form-control class="ant-col-18">
-              <textarea nz-input formControlName="zhaiyao" placeHolder="摘要" nzAutosize rows="3"></textarea>
+              <textarea nz-input formControlName="zhaiyao" nzAutosize rows="3"></textarea>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label class="ant-col-4">
-              详细内容
+            <nz-form-label class="ant-col-4" i18n="@@my-locale-content">
+              content
             </nz-form-label>
             <div nz-form-control  class="ant-col-18">
-              <editor placeholder="内容" [init]="tinyMceInitOption" formControlName="content" language="zh_CN" ></editor>
+              <editor [init]="tinyMceInitOption" formControlName="content" language="zh_CN" ></editor>
             </div>
           </nz-form-item>
         </nz-tab>
@@ -189,9 +200,11 @@
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存
+      <ng-container i18n="@@my-locale-save">save</ng-container>
     </button>
-    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+    <button nz-button type="button" (click)="returnToList($event)">
+      <ng-container i18n="@@my-locale-go-back">goBack</ng-container>
+    </button>
   </nz-footer>
 </nz-layout>
 

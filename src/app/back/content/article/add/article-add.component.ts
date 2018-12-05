@@ -73,6 +73,7 @@ export class ArticleAddComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.initHeight();
+    this.initLang();
     this.auth();
     this.tinyMceInitOption.images_upload_handler = this.tinyImageUploadHander;
     this.validateForm = this.fb.group({
@@ -99,6 +100,16 @@ export class ArticleAddComponent implements OnInit {
   }
   private initHeight() {
     this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69)) + 'px';
+  }
+  initLang() {
+    const pathname = location.pathname;
+    if (pathname.indexOf('/zh/') > -1) {
+      this.tinyMceInitOption.language = 'zh-CN';
+    } else if (pathname.indexOf('/en/') > -1) {
+      this.tinyMceInitOption.language = 'en-US';
+    } else {
+      this.tinyMceInitOption.language = 'zh-CN';
+    }
   }
   private auth() {
     const user = this.rememberService.getUser();
