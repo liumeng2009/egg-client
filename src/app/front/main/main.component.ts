@@ -8,6 +8,7 @@ import {ToolService} from '../../util/tool.service';
 import {PublicDataService} from '../public-data.service';
 import {EduConfig} from '../../config/config';
 import {Article} from '../../bean/Article';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-front-main-page',
@@ -31,13 +32,13 @@ export class FrontMainComponent implements OnInit {
   @ViewChild('popupOp', { read: ElementRef }) public popupOp: ElementRef;
   progressRef: NgProgressRef;
   selectedLang = '';
-  isDefaultPage: false;
-  footerArticleList: Article[] = [];
+  isDefaultPage = false;
   constructor(
     private router: Router,
     private progressService: NgProgress,
     private publicDataService: PublicDataService,
     private toolService: ToolService,
+    private location: Location,
   ) {
     this.progressRef = this.progressService.ref();
     this.packages$ = this.searchText$.pipe(
@@ -51,25 +52,24 @@ export class FrontMainComponent implements OnInit {
       this.searchFromAlgolia(value);
     });
     this.initLang();
-    this.initFooterArticleList();
-  }
-  initFooterArticleList() {
-    this.publicDataService.articleIndexByCode('footer-news').subscribe(
-      (data: ResponseData) => {
-        this.toolService.apiResult(data, true).then((result: ResponseData) => {
-          this.footerArticleList = [...result.data];
-        }).catch(() => {});
-      },
-      error => {}
-    );
   }
   addRouteListener() {
+    const location = this.location.path();
+    if (location === '') {
+      this.isDefaultPage = true;
+    }
     this.router.events
       .subscribe((event) => {
         if (event instanceof  NavigationStart) {
           this.progressRef.start();
         }
-        if (event instanceof NavigationEnd) { // 当导航成功结束时执行
+        if (event instanceof NavigationEnd) {
+          const path = event.url;
+          if (path === '/') {
+            this.isDefaultPage = true;
+          } else {
+            this.isDefaultPage = false;
+          }
           this.progressRef.complete();
         }
       });
@@ -159,8 +159,12 @@ export class FrontMainComponent implements OnInit {
 
 
   private contains(target: any): boolean {
-    return this.anchorOp.nativeElement.contains(target) ||
-      (this.popupOp ? this.popupOp.nativeElement.contains(target) : false);
+    if (this.anchorOp) {
+      return this.anchorOp.nativeElement.contains(target) ||
+        (this.popupOp ? this.popupOp.nativeElement.contains(target) : false);
+    } else {
+      return false;
+    }
   }
 
   @HostListener('document:click', ['$event'])

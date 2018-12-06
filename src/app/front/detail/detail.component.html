@@ -1,1 +1,6 @@
-<h1>{{articleId}}文章详情</h1>
+<div *ngIf="article">
+  <h1>文章标题：{{article?.title}}</h1>
+  <h2>文章摘要：{{article?.zhaiyao}}</h2>
+  <p [innerHTML]="article?.content"></p>
+</div>
+<h1 *ngIf="!article">文章不存在</h1>

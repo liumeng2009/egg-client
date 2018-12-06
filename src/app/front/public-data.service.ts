@@ -32,13 +32,29 @@ export class PublicDataService {
     );
   }
 
-  articleIndexByCode(code): Observable<ResponseData> {
+  // 分类的别名，得到下面文章列表
+  articleIndexByCategoryCode(code: string, pagesize: number): Observable<ResponseData> {
     const langHeader = this.toolService.getHeaderlang();
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept-Language' : langHeader});
     const params = new HttpParams().set('code', code)
+      .set('pagesize', pagesize.toString());
     return this.http.get(this.public_url + '/article', {
       headers: headers,
       params: params,
+    }).pipe(
+      tap((data: ResponseData) => {
+
+      }),
+      catchError(this.handleError<any>())
+    );
+  }
+
+  // 分类的别名，得到下面文章列表
+  articleShow(id: string): Observable<ResponseData> {
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept-Language' : langHeader});
+    return this.http.get(this.public_url + '/article/' + id, {
+      headers: headers,
     }).pipe(
       tap((data: ResponseData) => {
 

@@ -29,11 +29,11 @@ export class ToolService {
   apiResult(data: ResponseData, infoHidden) {
     return new Promise((resolve, reject) => {
       if (data.code === 53302) {
-        this.message.error(data.error + '，即将重新登录！');
+        this.message.error(data.error + ' ' + this.getOwnLang('WillLogin'));
         setTimeout(() => {this.gotoLoginPage(); }, 500);
         reject();
       } else if (data.code === 500 && data.error === 'jwt expired') {
-        this.message.error('身份凭证过期，即将重新登录！');
+        this.message.error(this.getOwnLang('TokenExpired') + ' ' + this.getOwnLang('WillLogin'));
         setTimeout(() => {this.gotoLoginPage(); }, 500);
         reject();
       } else if (data.code === 0) {
@@ -45,9 +45,9 @@ export class ToolService {
         resolve(data);
       } else if (data.code === 422) {
         if (!infoHidden) {
-          this.message.error('传入的参数异常');
+          this.message.error(this.getOwnLang('ParameterException'));
         }
-        reject('传入的参数异常');
+        reject(this.getOwnLang('ParameterException'));
       } else {
         if (!infoHidden) {
           this.message.error(data.error);
@@ -126,11 +126,17 @@ export class ToolService {
       console.log(error);
       if (error.name === 'HttpErrorResponse') {
         if (error.status === 404) {
-          this.message.error('服务器错误：未找到请求路径！');
+          this.message.error(this.getOwnLang('ServerError')
+            + this.getOwnLang('Colon')
+            + this.getOwnLang('PathNotFound'));
         } else if (error.status === 0) {
-          this.message.error('服务器错误：未响应！');
+          this.message.error(this.getOwnLang('ServerError')
+            + this.getOwnLang('Colon')
+            + this.getOwnLang('NoResponse'));
         } else {
-          this.message.error('服务器错误：未知！');
+          this.message.error(this.getOwnLang('ServerError')
+            + this.getOwnLang('Colon')
+            + this.getOwnLang('UnknownError'));
         }
 
       } else {
