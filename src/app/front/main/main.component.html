@@ -1,6 +1,6 @@
 <ng-progress></ng-progress>
 <nz-layout>
-  <nz-header id="header">
+  <nz-header id="header" *ngIf="isDefaultPage">
     <div nz-row class="ant-row">
       <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4">
         <a routerLink="/" id="logo">
@@ -86,6 +86,9 @@
       </div>
     </div>
   </nz-header>
+  <nz-header *ngIf="!isDefaultPage">
+    123
+  </nz-header>
   <nz-content class="main-wrapper">
     <router-outlet></router-outlet>
   </nz-content>
@@ -102,10 +105,9 @@
         </a>
       </div>
       <div class="footer-links">
-        <a>企业合作</a>
-        <a>人才招聘</a>
-        <a>联系我们</a>
-        <a>友情链接</a>
+        <a *ngFor="let fa of footerArticleList" href="/article/{{fa.id}}" target="_blank">
+          {{fa.title}}
+        </a>
       </div>
       <div class="footer-copyright">
         powered by liumeng

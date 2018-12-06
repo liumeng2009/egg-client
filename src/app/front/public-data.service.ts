@@ -32,7 +32,7 @@ export class PublicDataService {
     );
   }
 
-  articleIndexByCode(code) {
+  articleIndexByCode(code): Observable<ResponseData> {
     const langHeader = this.toolService.getHeaderlang();
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept-Language' : langHeader});
     const params = new HttpParams().set('code', code)

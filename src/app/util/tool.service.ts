@@ -38,7 +38,9 @@ export class ToolService {
         reject();
       } else if (data.code === 0) {
         if (data.message) {
-          this.message.success(data.message);
+          if (!infoHidden) {
+            this.message.success(data.message);
+          }
         }
         resolve(data);
       } else if (data.code === 422) {

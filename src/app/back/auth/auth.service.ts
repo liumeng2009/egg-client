@@ -28,6 +28,7 @@ export class AuthService {
   checkToken(): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const langHeader = this.toolService.getHeaderlang();
+    console.log(langHeader);
     const headers = new HttpHeaders({'Content-Type': 'application/json',
       'authorization': token ? token : '',
       'Accept-Language' : langHeader});

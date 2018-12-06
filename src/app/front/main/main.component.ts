@@ -7,6 +7,7 @@ import {ResponseData} from '../../bean/responseData';
 import {ToolService} from '../../util/tool.service';
 import {PublicDataService} from '../public-data.service';
 import {EduConfig} from '../../config/config';
+import {Article} from '../../bean/Article';
 
 @Component({
   selector: 'app-front-main-page',
@@ -30,6 +31,8 @@ export class FrontMainComponent implements OnInit {
   @ViewChild('popupOp', { read: ElementRef }) public popupOp: ElementRef;
   progressRef: NgProgressRef;
   selectedLang = '';
+  isDefaultPage: false;
+  footerArticleList: Article[] = [];
   constructor(
     private router: Router,
     private progressService: NgProgress,
@@ -45,10 +48,20 @@ export class FrontMainComponent implements OnInit {
   ngOnInit() {
     this.addRouteListener();
     this.packages$.subscribe( (value) => {
-      console.log('关键字有效');
       this.searchFromAlgolia(value);
     });
     this.initLang();
+    this.initFooterArticleList();
+  }
+  initFooterArticleList() {
+    this.publicDataService.articleIndexByCode('footer-news').subscribe(
+      (data: ResponseData) => {
+        this.toolService.apiResult(data, true).then((result: ResponseData) => {
+          this.footerArticleList = [...result.data];
+        }).catch(() => {});
+      },
+      error => {}
+    );
   }
   addRouteListener() {
     this.router.events

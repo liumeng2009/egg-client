@@ -106,7 +106,7 @@ export class ArticleAddComponent implements OnInit {
     if (pathname.indexOf('/zh/') > -1) {
       this.tinyMceInitOption.language = 'zh-CN';
     } else if (pathname.indexOf('/en/') > -1) {
-      this.tinyMceInitOption.language = 'en-US';
+      this.tinyMceInitOption.language = '';
     } else {
       this.tinyMceInitOption.language = 'zh-CN';
     }

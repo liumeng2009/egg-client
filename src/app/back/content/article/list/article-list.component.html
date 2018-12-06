@@ -71,7 +71,7 @@
       {{getAllCategory(article.categoryId)}}
     </td>
     <td nzWidth="250px">
-      {{article.publishAt|date:'MM月dd日 HH:mm:ss'}}
+      {{article.publishAt|date:'short'}}
     </td>
     <td nzWidth="150px">
       <nz-input-number [nzStep]="1" [ngModel]="article.sort" (ngModelChange)="sortChanged($event, article)"></nz-input-number>
