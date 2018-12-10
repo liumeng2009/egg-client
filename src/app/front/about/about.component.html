@@ -1,0 +1,14 @@
+<div class="container">
+  <nz-breadcrumb style="margin:16px 0;">
+    <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+    <nz-breadcrumb-item>List</nz-breadcrumb-item>
+    <nz-breadcrumb-item>App</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div *ngIf="article">
+    <h1>文章标题：{{article?.title}}</h1>
+    <h2>文章摘要：{{article?.zhaiyao}}</h2>
+    <p [innerHTML]="article?.content"></p>
+  </div>
+  <h1 *ngIf="!article">文章不存在</h1>
+</div>
+

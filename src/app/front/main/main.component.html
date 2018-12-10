@@ -86,8 +86,15 @@
       </div>
     </div>
   </nz-header>
-  <nz-header *ngIf="!isDefaultPage">
-    123
+  <nz-header *ngIf="!isDefaultPage" class="small-header">
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 40px;">
+      <li nz-menu-item>网站首页</li>
+      <li nz-menu-item>nav 2</li>
+      <li nz-menu-item>nav 3</li>
+      <a style="float:right;color:#fff;" i18n="@@my-locale-sign-up">SignUp</a>
+      <nz-divider [nzType]="'vertical'" style="position:relative;top:15px;float:right;"></nz-divider>
+      <a style="float:right;color:#fff;" i18n="@@my-locale-log-in">LogIn</a>
+    </ul>
   </nz-header>
   <nz-content class="main-wrapper">
     <router-outlet></router-outlet>
@@ -105,10 +112,10 @@
         </a>
       </div>
       <div class="footer-links">
-        <a routerLink="/article/cooperation">企业合作</a>
-        <a routerLink="/article/recruit">人才招聘</a>
-        <a routerLink="/article/contact">联系我们</a>
-        <a routerLink="/article/links">友情链接</a>
+        <a routerLink="/about/team">团队介绍</a>
+        <a routerLink="/about/jobs">人才招聘</a>
+        <a routerLink="/about/contact">联系我们</a>
+        <a routerLink="/about/links">友情链接</a>
       </div>
       <div class="footer-copyright">
         powered by liumeng

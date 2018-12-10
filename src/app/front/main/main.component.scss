@@ -65,13 +65,16 @@
   margin-top: 20px;
   margin-left: 16px;
 }
+.small-header{
+  height:40px;
+}
 .container{
   width:1152px;
   margin: 0 auto;
 }
 .main-wrapper {
   background: #fff;
-  padding: 40px 0 0;
+  padding: 16px 0 0;
   position: relative;
   min-height:750px;
 }
