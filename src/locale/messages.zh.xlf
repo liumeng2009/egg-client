@@ -455,6 +455,69 @@
           </context-group>
           <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
         </trans-unit>
+        <trans-unit id="my-locale-about-team" datatype="html">
+          <source>aboutTeam</source>
+          <target>团队介绍</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
+        <trans-unit id="my-locale-about-jobs" datatype="html">
+          <source>aboutJobs</source>
+          <target>招聘信息</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
+        <trans-unit id="my-locale-about-contact" datatype="html">
+          <source>aboutContact</source>
+          <target>联系我们</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
+        <trans-unit id="my-locale-about-links" datatype="html">
+          <source>aboutLinks</source>
+          <target>友情链接</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
+        <trans-unit id="my-locale-home" datatype="html">
+          <source>home</source>
+          <target>网站首页</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
+        <trans-unit id="my-locale-wechat" datatype="html">
+          <source>wechat</source>
+          <target>官方公众号</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
+        <trans-unit id="my-locale-weibo" datatype="html">
+          <source>weibo</source>
+          <target>微博</target>
+          <context-group purpose="location">
+            <context context-type="sourcefile">app/front/default.component.html</context>
+            <context context-type="linenumber">6</context>
+          </context-group>
+          <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+        </trans-unit>
     </body>
   </file>
 </xliff>

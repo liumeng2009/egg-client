@@ -33,6 +33,9 @@ export class FrontMainComponent implements OnInit {
   progressRef: NgProgressRef;
   selectedLang = '';
   isDefaultPage = false;
+  minHeight = {
+    minHeight: '0px',
+  }
   constructor(
     private router: Router,
     private progressService: NgProgress,
@@ -52,6 +55,14 @@ export class FrontMainComponent implements OnInit {
       this.searchFromAlgolia(value);
     });
     this.initLang();
+    this.initHeight();
+  }
+  initHeight() {
+    if (this.isDefaultPage) {
+      this.minHeight.minHeight = window.document.body.clientHeight - 119 - 64 + 'px';
+    } else {
+      this.minHeight.minHeight = window.document.body.clientHeight - 119 - 40 + 'px';
+    }
   }
   addRouteListener() {
     const location = this.location.path();
@@ -67,8 +78,10 @@ export class FrontMainComponent implements OnInit {
           const path = event.url;
           if (path === '/') {
             this.isDefaultPage = true;
+            this.initHeight();
           } else {
             this.isDefaultPage = false;
+            this.initHeight();
           }
           this.progressRef.complete();
         }

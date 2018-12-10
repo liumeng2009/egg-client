@@ -14,6 +14,7 @@ import {Article} from '../../bean/Article';
 
 export class AboutComponent implements OnInit {
   article: Article;
+  about: string;
   constructor(
     private title: Title,
     private route: ActivatedRoute,
@@ -23,6 +24,7 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('关于');
     this.route.params.subscribe((params: Params) => {
+      this.about = params.id;
       this.getData(params.id);
     });
   }

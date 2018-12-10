@@ -67,16 +67,22 @@
 }
 .small-header{
   height:40px;
+  font-size:12px;
 }
-.container{
-  width:1152px;
+.container {
+  width: 1386px;
   margin: 0 auto;
+}
+@media screen and (max-width: 1540px) {
+  .container {
+    width: 1200px;
+    margin: 0 auto;
+  }
 }
 .main-wrapper {
   background: #fff;
-  padding: 16px 0 0;
+  padding: 0px;
   position: relative;
-  min-height:750px;
 }
 h3 {
   color: #fff;
@@ -131,3 +137,4 @@ h3 {
     }
   }
 }
+

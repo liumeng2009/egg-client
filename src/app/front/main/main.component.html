@@ -88,7 +88,7 @@
   </nz-header>
   <nz-header *ngIf="!isDefaultPage" class="small-header">
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 40px;">
-      <li nz-menu-item>网站首页</li>
+      <li nz-menu-item routerLink="/" i18n="@@my-locale-home">home</li>
       <li nz-menu-item>nav 2</li>
       <li nz-menu-item>nav 3</li>
       <a style="float:right;color:#fff;" i18n="@@my-locale-sign-up">SignUp</a>
@@ -96,7 +96,7 @@
       <a style="float:right;color:#fff;" i18n="@@my-locale-log-in">LogIn</a>
     </ul>
   </nz-header>
-  <nz-content class="main-wrapper">
+  <nz-content class="main-wrapper" style="padding: 0px 50px;" [ngStyle]="minHeight">
     <router-outlet></router-outlet>
   </nz-content>
   <nz-footer id="footer">
@@ -104,18 +104,18 @@
       <div nz-row nzGutter="8" class="footer-wrap">
         <div nz-col nz-popover [nzContent]="wechatTemplate" nzPlacement="top" class="icon-link ant-col-12">
           <i nz-icon type="wechat" theme="outline"></i>
-          <span>官方公众号</span>
+          <span i18n="@@my-locale-wechat">wechat</span>
         </div>
         <a nz-col class="icon-link ant-col-12" href="http://www.baidu.com">
           <i nz-icon type="weibo-circle" theme="outline"></i>
-          <span>微博</span>
+          <span i18n="@@my-locale-weibo">weibo</span>
         </a>
       </div>
       <div class="footer-links">
-        <a routerLink="/about/team">团队介绍</a>
-        <a routerLink="/about/jobs">人才招聘</a>
-        <a routerLink="/about/contact">联系我们</a>
-        <a routerLink="/about/links">友情链接</a>
+        <a routerLink="/about/team" i18n="@@my-locale-about-team">aboutTeam</a>
+        <a routerLink="/about/jobs" i18n="@@my-locale-about-jobs">aboutJobs</a>
+        <a routerLink="/about/contact" i18n="@@my-locale-about-contact">aboutContact</a>
+        <a routerLink="/about/links" i18n="@@my-locale-about-links">aboutLinks</a>
       </div>
       <div class="footer-copyright">
         powered by liumeng

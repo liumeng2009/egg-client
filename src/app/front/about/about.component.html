@@ -1,14 +1,29 @@
 <div class="container">
-  <nz-breadcrumb style="margin:16px 0;">
-    <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-    <nz-breadcrumb-item>List</nz-breadcrumb-item>
-    <nz-breadcrumb-item>App</nz-breadcrumb-item>
-  </nz-breadcrumb>
-  <div *ngIf="article">
-    <h1>文章标题：{{article?.title}}</h1>
-    <h2>文章摘要：{{article?.zhaiyao}}</h2>
-    <p [innerHTML]="article?.content"></p>
-  </div>
-  <h1 *ngIf="!article">文章不存在</h1>
+  <nz-layout style="padding:24px 0px;background: #fff">
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item [nzSelected]="about==='team'" routerLink="/about/team">
+          <span title i18n="@@my-locale-about-team">aboutTeam</span>
+        </li>
+        <li nz-menu-item [nzSelected]="about==='jobs'" routerLink="/about/jobs">
+          <span title i18n="@@my-locale-about-jobs">aboutJobs</span>
+        </li>
+        <li nz-menu-item [nzSelected]="about==='contact'" routerLink="/about/contact">
+          <span title i18n="@@my-locale-about-contact">aboutContact</span>
+        </li>
+        <li nz-menu-item [nzSelected]="about==='links'" routerLink="/about/links">
+          <span title i18n="@@my-locale-about-links">aboutLinks</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-content style="padding: 0 24px; min-height: 280px;">
+      <div *ngIf="article">
+        <h1>文章标题：{{article?.title}}</h1>
+        <h2>文章摘要：{{article?.zhaiyao}}</h2>
+        <p [innerHTML]="article?.content"></p>
+      </div>
+      <h1 *ngIf="!article">文章不存在</h1>
+    </nz-content>
+  </nz-layout>
 </div>
 
