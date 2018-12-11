@@ -301,6 +301,7 @@ export class ArticleListComponent implements OnInit {
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
           this.articles = [...result.data.rows];
           this.total = result.data.count;
+          console.log(result);
         }).catch(() => {});
       },
       error => {

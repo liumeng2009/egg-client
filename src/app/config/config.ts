@@ -10,7 +10,7 @@ export const EduConfig = {
   tinyMceOptions: {
     branding: false,
     plugins: 'link image code fullscreen textcolor print preview directionality emoticons table',
-    language: 'en_US',
+    language: '',
     toolbar1: 'undo redo | italic bold underline strikethrough | superscript subscript | forecolor backcolor | numlist bullist',
     toolbar2: 'formatselect fontselect fontsizeselect | indent outdent | alignleft aligncenter alignright alignjustify | link unlink image table emoticons',
     toolbar3: 'code | removeformat | fullscreen | print | preview ',

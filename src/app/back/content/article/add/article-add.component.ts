@@ -41,9 +41,9 @@ export class ArticleAddComponent implements OnInit {
   formHeight = {
     height : '0px'
   }
-  article: Article = new Article(null, null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null,
-    null, null, null, null, [], null,
+  article: Article = new Article(null, null, null, null, null, null, null, null,
+    null, null, null, null, null, null, null, null,
+    null, null, null, null, null, [], null,
     );
   canAuditing = false;
   saveBtn = false;
@@ -57,6 +57,7 @@ export class ArticleAddComponent implements OnInit {
   previewVisible = false;
   previewMultiVisible = false;
   tinyMceInitOption = EduConfig.tinyMceOptions;
+  tinyMceInitOptionEn = EduConfig.tinyMceOptions;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -78,7 +79,7 @@ export class ArticleAddComponent implements OnInit {
     this.tinyMceInitOption.images_upload_handler = this.tinyImageUploadHander;
     this.validateForm = this.fb.group({
       categoryId: [ null , [ Validators.required ] ],
-      title: [ '', [ Validators.required ]],
+      title: [''],
       code: [null],
       imgUrl: [ '' ],
       zhaiyao: [''],

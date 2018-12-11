@@ -22,6 +22,7 @@ export class Article {
     public auditing: number,
     public publishAt: string,
     public checked: boolean,
+    public article_category: any,
     public article_albums: ArticleAlbum[],
     public isElastic: boolean,
   ) {  }

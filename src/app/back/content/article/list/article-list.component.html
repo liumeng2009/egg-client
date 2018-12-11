@@ -68,7 +68,7 @@
       <span *ngIf="article.status === 1">{{article.title}}</span>
     </td>
     <td>
-      {{getAllCategory(article.categoryId)}}
+      {{article.article_category.name}}
     </td>
     <td nzWidth="250px">
       {{article.publishAt|date:'short'}}

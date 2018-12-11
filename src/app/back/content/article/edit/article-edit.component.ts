@@ -45,7 +45,7 @@ export class ArticleEditComponent implements OnInit {
   articleId = 0;
   article: Article = new Article(null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null,
-    null, null, null, null, [], null,
+    null, null, null, null, null, [], null,
   );
   canAuditing = false;
   saveBtn = false;
