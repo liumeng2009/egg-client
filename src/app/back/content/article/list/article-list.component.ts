@@ -9,6 +9,8 @@ import {Channel} from '../../../../bean/Channel';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArticleCategory} from '../../../../bean/ArticleCategory';
 import {ArticleService} from '../article.service';
+import {EN} from '../../../../config/en';
+import {ZH} from '../../../../config/zh';
 import * as moment from 'moment';
 
 @Component({
@@ -177,6 +179,7 @@ export class ArticleListComponent implements OnInit {
   }
   categorySelectChanged(e) {
     this.categorySelected = e;
+    this.rememberService.setCategory(e);
     this.getData();
   }
   initCategoryList(channelId) {
@@ -186,11 +189,19 @@ export class ArticleListComponent implements OnInit {
           this.toolService.apiResult(data, true).then(
             (result: ResponseData) => {
               this.categories = [...result.data];
-              const categoryTop = new ArticleCategory(0, '所有分类', '', channelId,
+              const categoryTop = new ArticleCategory(0, this.rememberService.getLang() === 'en' ? EN.AllCategories : ZH.AllCategories,
+                '', channelId,
                 0, '', -1, 0, false);
               this.categories.unshift(categoryTop);
               this.categoryList = true;
               this.categorySelected = 0;
+              const cateRemember = this.rememberService.getCategory();
+              for (const cate of this.categories) {
+                if (cate.id === cateRemember) {
+                  this.categorySelected = cate.id;
+                  break;
+                }
+              }
               resolve();
             }
           ).catch((err) => {

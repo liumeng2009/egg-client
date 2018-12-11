@@ -443,7 +443,9 @@ export class ArticleEditComponent implements OnInit {
   }
   returnToList(e) {
     e.stopPropagation();
-    this.router.navigate(['list'], {relativeTo: this.route.parent});
+    this.route.params.subscribe((params) => {
+      this.router.navigate(['list', {categoryId: params.categoryId}], {relativeTo: this.route.parent});
+    });
   }
   updateElastic(id) {
     this.isLoadingElasticStr = true;

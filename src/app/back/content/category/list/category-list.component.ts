@@ -21,6 +21,7 @@ export class CategoryListComponent implements OnInit {
   channelList = false;
   channelListError = '';
   categoryDelete: number[] = [];
+  isLoadingDelete = false;
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   showAddBtn = false;
   showEditBtn = false;
@@ -174,5 +175,29 @@ export class CategoryListComponent implements OnInit {
       }
     }
     return true;
+  }
+  delete() {
+    this.isLoadingDelete = true;
+    for (const article of this.categories) {
+      if (article.checked) {
+        this.categoryDelete.push(article.id);
+      }
+    }
+    this.categoryService.delete(this.categoryDelete).subscribe(
+      (data: ResponseData) => {
+        this.isLoadingDelete = false;
+        this.toolService.apiResult(data, false).then((result: ResponseData) => {
+          this.deleteCategoryInArray(this.categoryDelete);
+        }).catch(() => {});
+      },
+      error => {
+        this.isLoadingDelete = false;
+      }
+    );
+  }
+  private deleteCategoryInArray(ids: number[]) {
+    for (const id of ids) {
+      this.categories = this.categories.filter(d => d.id !== id);
+    }
   }
 }

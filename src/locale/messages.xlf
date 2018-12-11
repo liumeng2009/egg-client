@@ -519,6 +519,15 @@
         </context-group>
         <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
       </trans-unit>
+      <trans-unit id="my-locale-confirm-delete" datatype="html">
+        <source>confirmDelete</source>
+        <target>Are you sure you want to delete this record?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

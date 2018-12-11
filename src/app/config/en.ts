@@ -7,5 +7,6 @@ export const EN = {
   Colon: ' : ',
   PathNotFound: 'Request path not found.',
   NoResponse: 'No response.',
-  UnknownError: 'Unknown error.'
+  UnknownError: 'Unknown error.',
+  AllCategories: 'All categories.'
 }
