@@ -22,7 +22,6 @@ import * as moment from 'moment';
 export class ArticleListComponent implements OnInit {
   searchkey = '';
   isLoading = false;
-  noResult = EduConfig.noResult;
   articles: Article[] = [];
   articleDelete: number[] = [];
   channelSelected = 0;
@@ -33,7 +32,7 @@ export class ArticleListComponent implements OnInit {
   categories: ArticleCategory[] = [];
   isCategoryLoading = false;
   categoryList = false;
-  categoryListError = '';
+  categoryListError = 'Channel data not loaded.';
   categorySelected = 0;
   @ViewChild('headerTemplate') headerTemplate: ElementRef;
   total = 0;
@@ -141,7 +140,7 @@ export class ArticleListComponent implements OnInit {
       this.categoryService.getChannelList().subscribe(
         (data: ResponseData) => {
           this.isChannelLoading = false;
-          this.toolService.apiResult(data, false).then(
+          this.toolService.apiResult(data, true).then(
             (result: ResponseData) => {
               this.channels = [...result.data];
               this.channelList = true;
@@ -183,9 +182,11 @@ export class ArticleListComponent implements OnInit {
     this.getData();
   }
   initCategoryList(channelId) {
+    this.isCategoryLoading = true;
     return new Promise((resolve, reject) => {
       this.categoryService.getCategoryList(channelId).subscribe(
         (data: ResponseData) => {
+          this.isCategoryLoading = false;
           this.toolService.apiResult(data, true).then(
             (result: ResponseData) => {
               this.categories = [...result.data];
@@ -211,12 +212,18 @@ export class ArticleListComponent implements OnInit {
           });
         },
         error => {
+          this.isCategoryLoading = false;
           this.categoryList = false;
           this.categoryListError = error;
-          reject();
+          reject(error);
         }
       );
     });
+  }
+  reloadCategory(channelId) {
+    this.initCategoryList(channelId).then(() => {
+
+    }).catch(() => {});
   }
   getAllCategory(categoryId) {
     let index = 0;
@@ -312,7 +319,6 @@ export class ArticleListComponent implements OnInit {
         this.toolService.apiResult(data, false).then((result: ResponseData) => {
           this.articles = [...result.data.rows];
           this.total = result.data.count;
-          console.log(result);
         }).catch(() => {});
       },
       error => {

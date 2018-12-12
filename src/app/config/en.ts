@@ -8,5 +8,6 @@ export const EN = {
   PathNotFound: 'Request path not found.',
   NoResponse: 'No response.',
   UnknownError: 'Unknown error.',
-  AllCategories: 'All categories.'
+  AllCategories: 'All categories.',
+  reloadData: 'Click to reload the data.',
 }

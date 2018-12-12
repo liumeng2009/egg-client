@@ -87,6 +87,20 @@ export class CategoryService {
         catchError(this.handleError<any>())
       );
   }
+  getCategory(id): Observable<ResponseData> {
+    const token = this.cookieService.get('eduToken');
+    const langHeader = this.toolService.getHeaderlang();
+    const headers = new HttpHeaders({'Content-Type': 'application/json',
+      'authorization': token ? token : '',
+      'Accept-Language' : langHeader});
+    return this.http.get(this.category_url + '/' + id, {headers: headers})
+      .pipe(
+        tap((data: ResponseData) => {
+
+        }),
+        catchError(this.handleError<any>())
+      );
+  }
   delete(ids): Observable<ResponseData> {
     const token = this.cookieService.get('eduToken');
     const langHeader = this.toolService.getHeaderlang();

@@ -1,1 +1,73 @@
-<h1>edit</h1>
+<nz-layout>
+  <nz-content>
+    <nz-card [ngStyle]="formHeight">
+      <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label class="ant-col-6">
+            <ng-container i18n="@@my-locale-channel">channel</ng-container>
+          </nz-form-label>
+          <nz-form-control class="{{channelList?'ant-col-16':'ant-col-16 haserror'}}">
+            {{channel?.name}}
+            <span nz-tooltip *ngIf="!channelList" style="cursor: pointer;" (click)="initChannel()" nzTitle="{{channelListError}}点击重新加载" >
+              <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingchannel"></i>
+              <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingchannel"></i>
+            </span>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label class="ant-col-6">
+            <ng-container i18n="@@my-locale-parent">parent</ng-container>
+          </nz-form-label>
+          <nz-form-control class="{{categoryList?'ant-col-16':'ant-col-16 haserror'}}">
+            <nz-select  formControlName="parentId">
+              <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
+                <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
+                <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
+                <i nz-icon type="file" *ngIf="category.level > 0" theme="outline"></i>
+                {{category.name}}
+              </nz-option>
+            </nz-select>
+            <span nz-tooltip *ngIf="!categoryList" style="cursor: pointer;" (click)="initCategoryList()" nzTitle="{{categoryListError}}点击重新加载" >
+              <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingCategoryList"></i>
+              <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingCategoryList"></i>
+            </span>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzRequired]="true" class="ant-col-6">
+            <ng-container i18n="@@my-locale-name">name</ng-container>
+          </nz-form-label>
+          <nz-form-control class="ant-col-16">
+            <input type="text" nz-input formControlName="name">
+            <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors?.required">请输入分类名称！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzRequired]="true" class="ant-col-6">
+            <ng-container i18n="@@my-locale-alias">alias</ng-container>
+          </nz-form-label>
+          <nz-form-control class="ant-col-16">
+            <input type="text" nz-input formControlName="code">
+            <nz-form-explain *ngIf="validateForm.get('code').dirty && validateForm.get('code').errors?.required">请输入分类别名！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzRequired]="true" class="ant-col-6">
+            <ng-container i18n="@@my-locale-sort">sort</ng-container>
+          </nz-form-label>
+          <nz-form-control class="ant-col-16">
+            <nz-input-number  formControlName="sort" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-card>
+
+  </nz-content>
+  <nz-footer class="fixed-footer">
+    <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
+      <i nz-icon type="save" theme="outline"></i>
+      提交保存
+    </button>
+    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+  </nz-footer>
+</nz-layout>
