@@ -47,7 +47,7 @@ export class CategoryListComponent implements OnInit {
     ).catch(() => {});
   }
   private initHeight() {
-    this.scrollHeight.y = (window.document.body.clientHeight - 220) + 'px';
+    this.scrollHeight.y = (window.document.body.clientHeight - 235) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();
