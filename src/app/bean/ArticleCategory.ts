@@ -4,6 +4,7 @@ export class ArticleCategory {
     public name: string,
     public code: string,
     public channelId: number,
+    public channel: any,
     public parentId: number,
     public parent_list: string,
     public level: number,

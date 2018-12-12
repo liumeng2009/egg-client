@@ -191,7 +191,7 @@ export class ArticleListComponent implements OnInit {
             (result: ResponseData) => {
               this.categories = [...result.data];
               const categoryTop = new ArticleCategory(0, this.rememberService.getLang() === 'en' ? EN.AllCategories : ZH.AllCategories,
-                '', channelId,
+                '', channelId, null,
                 0, '', -1, 0, false);
               this.categories.unshift(categoryTop);
               this.categoryList = true;

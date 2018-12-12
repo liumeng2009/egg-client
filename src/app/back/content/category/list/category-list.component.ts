@@ -26,6 +26,9 @@ export class CategoryListComponent implements OnInit {
   showAddBtn = false;
   showEditBtn = false;
   showDelBtn = false;
+  scrollHeight = {
+    y: '0px',
+  }
   constructor(
     private toolService: ToolService,
     private categoryService: CategoryService,
@@ -34,6 +37,7 @@ export class CategoryListComponent implements OnInit {
     private router: Router,
   ) {}
   ngOnInit() {
+    this.initHeight();
     this.auth();
     this.channelSelected = this.rememberService.getChannel();
     this.initChannelList().then(
@@ -41,6 +45,9 @@ export class CategoryListComponent implements OnInit {
         this.getData(this.channelSelected);
       }
     ).catch(() => {});
+  }
+  private initHeight() {
+    this.scrollHeight.y = (window.document.body.clientHeight - 220) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();

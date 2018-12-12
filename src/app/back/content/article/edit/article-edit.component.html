@@ -195,9 +195,11 @@
   <nz-footer class="fixed-footer">
     <button nz-button type="submit" *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isSubmitLoading" (click)="submitForm();">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存
+      <ng-container i18n="@@my-locale-save">save</ng-container>
     </button>
-    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+    <button nz-button type="button" (click)="returnToList($event)">
+      <ng-container i18n="@@my-locale-go-back">goBack</ng-container>
+    </button>
     <button nz-button (click)="refresh()" [nzLoading]="isLoading">
       <i nz-icon type="reload" theme="outline"></i>
     </button>

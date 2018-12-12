@@ -21,7 +21,7 @@ import {Channel} from '../../../../bean/Channel';
 
 export class CategoryAddComponent implements OnInit {
   category: ArticleCategory = new ArticleCategory(null, null, null,
-    null, null, null, null, null, true);
+    null, null, null, null, null, null, true);
   validateForm: FormGroup;
   isLoading = false;
   categories: ArticleCategory[] = [];
@@ -139,7 +139,7 @@ export class CategoryAddComponent implements OnInit {
           this.toolService.apiResult(data, true).then(
             (result: ResponseData) => {
               this.categories = [...result.data];
-              const categoryTop = new ArticleCategory(0, '无父级分类', '', channelId,
+              const categoryTop = new ArticleCategory(0, '无父级分类', '', channelId, null,
                 0, '', -1, 0, false);
               this.categories.unshift(categoryTop);
               console.log(this.categories);
@@ -187,7 +187,7 @@ export class CategoryAddComponent implements OnInit {
           this.toolService.apiResult(data, false).then(
             (result: ResponseData) => {
               console.log(result);
-              this.router.navigate(['list'], {relativeTo: this.route.parent});
+              // this.router.navigate(['list'], {relativeTo: this.route.parent});
             }
           ).catch(() => {});
         },
