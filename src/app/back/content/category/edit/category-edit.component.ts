@@ -17,7 +17,7 @@ import {ZH} from '../../../../config/zh';
 
 export class CategoryEditComponent implements OnInit {
   category: ArticleCategory = new ArticleCategory(null, null, null,
-    null, null, null, null, null, null, true);
+    null, null, null, null, null, null, 1, true);
   validateForm: FormGroup;
   isLoading = false;
   categories: ArticleCategory[] = [];
@@ -122,7 +122,7 @@ export class CategoryEditComponent implements OnInit {
             this.categoryList = true;
             const categoryTop = new ArticleCategory(0, this.rememberService.getLang() === 'en' ? EN.AllCategories : ZH.AllCategories,
               '', channelId, null,
-              0, '', -1, 0, false);
+              0, '', -1, 0, 1, false);
             this.categories.unshift(categoryTop);
           }
         ).catch((error) => {
@@ -159,7 +159,8 @@ export class CategoryEditComponent implements OnInit {
       }
       this.category.level = level;
       this.category.sort = sort;
-      this.categoryService.create(this.category).subscribe(
+      console.log(this.category);
+      this.categoryService.update(this.category).subscribe(
         (data: ResponseData) => {
           this.isLoading = false;
           this.toolService.apiResult(data, false).then(

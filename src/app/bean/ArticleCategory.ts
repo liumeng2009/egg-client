@@ -9,6 +9,7 @@ export class ArticleCategory {
     public parent_list: string,
     public level: number,
     public sort: number,
+    public status: number,
     public checked: boolean,
   ) {  }
 }
