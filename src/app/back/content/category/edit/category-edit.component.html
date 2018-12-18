@@ -15,7 +15,6 @@
             <ng-container i18n="@@my-locale-parent">parent</ng-container>
           </nz-form-label>
           <nz-form-control class="{{categoryList?'ant-col-16':'ant-col-16 haserror'}}">
-            {{category?.parentId}}
             <nz-select  formControlName="parentId">
               <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
                 <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
