@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: ContentComponent,
     canActivate: [AuthGuard],
-    data: {name: '网站内容管理'},
+    data: {name: '网站内容管理', name_en: 'Content'},
     children: [
       {
         path: 'category',

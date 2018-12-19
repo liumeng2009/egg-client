@@ -23,6 +23,9 @@ export class RoleAddComponent implements OnInit {
   authsSubmit: number[] = [];
   isLoadingAuthList = false;
   saveBtn = false;
+  formHeight = {
+    height : '0px'
+  }
   constructor(
     private fb: FormBuilder,
     private roleService: RoleService,
@@ -39,8 +42,12 @@ export class RoleAddComponent implements OnInit {
       name: [ '', [ Validators.required ] ],
       remark: [ '' ],
     });
+    this.initHeight();
     this.auth();
     this.getData(0);
+  }
+  private initHeight() {
+    this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69)) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();

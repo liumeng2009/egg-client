@@ -518,6 +518,222 @@
           </context-group>
           <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
         </trans-unit>
+      <trans-unit id="my-locale-confirm-delete" datatype="html">
+        <source>confirmDelete</source>
+        <target>您确定要删除这条记录吗？</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-channel-reload-data" datatype="html">
+        <source>{{channelListError}}channelReloadData</source>
+        <target>{{channelListError}}。点击重新加载数据。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-category-reload-data" datatype="html">
+        <source>{{categoryListError}}categoryReloadData</source>
+        <target>{{categoryListError}}。点击重新加载数据</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-no-result" datatype="html">
+        <source>noResult</source>
+        <target>没有记录。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-name-required" datatype="html">
+        <source>nameRequired</source>
+        <target>请输入用户名。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-name" datatype="html">
+        <source>roleName</source>
+        <target>角色名称</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-remark" datatype="html">
+        <source>remark</source>
+        <target>备注</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-category-required" datatype="html">
+        <source>categoryRequired</source>
+        <target>请选择一个分类。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-name-required" datatype="html">
+        <source>roleNameRequired</source>
+        <target>请输入一个角色名称。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-keyword" datatype="html">
+        <source>keyword</source>
+        <target>关键字</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-reset" datatype="html">
+        <source>reset</source>
+        <target>重置</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-nickname" datatype="html">
+        <source>nickname</source>
+        <target>昵称</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-mobile" datatype="html">
+        <source>mobile</source>
+        <target>手机号</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-reload-data" datatype="html">
+        <source>{{roleListError}}roleReloadData</source>
+        <target>{{roleListError}}。点击重新加载数据。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-error-mobile" datatype="html">
+        <source>errorMobile</source>
+        <target>不正确的手机号格式。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-is-administrator" datatype="html">
+        <source>isAdministrator</source>
+        <target>后台管理员</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-password" datatype="html">
+        <source>password</source>
+        <target>密码</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-password-default" datatype="html">
+        <source>passwordDefault</source>
+        <target>密码（默认：123456）</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-password-required" datatype="html">
+        <source>passwordRequired</source>
+        <target>请输入一个密码。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-age" datatype="html">
+        <source>age</source>
+        <target>年龄</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-required" datatype="html">
+        <source>roleRequired</source>
+        <target>请选择一个属于的角色。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-head" datatype="html">
+        <source>head</source>
+        <target>头像</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-upload" datatype="html">
+        <source>upload</source>
+        <target>本地上传</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role" datatype="html">
+        <source>role</source>
+        <target>角色</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

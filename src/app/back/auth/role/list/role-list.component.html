@@ -17,23 +17,29 @@
   <tr>
     <th width="10%" [nzShowCheckbox]="'true'" [nzChecked]="isAllChecked()" (nzCheckedChange)="allCheck($event)"></th>
     <th width="80%" nzCustomFilter>
-      名称
+      <ng-container i18n="@@my-locale-name">name</ng-container>
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
         <i nz-icon type="filter" theme="outline" [ngStyle]="nameFilterStyle" class="ant-table-filter-icon" nz-dropdown></i>
         <div class="custom-filter-dropdown">
           <ul nz-menu>
             <li nz-menu-item>
-              <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="关键字" [(ngModel)]="searchkey">
+              <input type="text" style="width: 150px;margin-right: 8px;" nz-input placeholder="keyword" i18n-placeholder="@@my-locale-keyword" [(ngModel)]="searchkey">
             </li>
           </ul>
           <div class="ant-table-filter-dropdown-btns">
-            <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" ><span>确定</span></a>
-            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoSearchKey()" ><span>重置</span></a>
+            <a class="ant-table-filter-dropdown-link confirm" (click)="refresh()" >
+              <span i18n="@@my-locale-search">search</span>
+            </a>
+            <a class="ant-table-filter-dropdown-link clear" (click)="refreshNoSearchKey()" >
+              <span i18n="@@my-locale-reset">reset</span>
+            </a>
           </div>
         </div>
       </nz-dropdown>
     </th>
-    <th>操作</th>
+    <th>
+      <ng-container i18n="@@my-locale-action">action</ng-container>
+    </th>
   </tr>
   </thead>
   <tbody>
@@ -42,10 +48,10 @@
     <td width="80%">{{data.name}}</td>
     <td>
       <a *ngIf="showEditBtn" (click)="edit(data.id)">
-        编辑
+        <span i18n="@@my-locale-edit">edit</span>
       </a>
       <button nz-button *ngIf="!showEditBtn" nzType="primary" (click)="edit(data.id)" [title]="'查看'">
-        查看
+        <span i18n="@@my-locale-view">view</span>
       </button>
     </td>
   </tr>
@@ -54,18 +60,21 @@
 <ng-template #headerTemplate>
   <nz-button-group>
     <button nz-button [nzType]="'primary'" *ngIf="showAddBtn" (click)="add()">
-      <i nz-icon type="plus-circle" theme="outline"></i>新增
+      <i nz-icon type="plus-circle" theme="outline"></i>
+      <span i18n="@@my-locale-new">new</span>
     </button>
     <button nz-button [nzType]="'danger'" *ngIf="showDelBtn" (click)="delete()">
-      <i nz-icon type="delete" theme="outline"></i>删除
+      <i nz-icon type="delete" theme="outline"></i>
+      <span i18n="@@my-locale-delete">delete</span>
     </button>
-    <button nz-button (click)="refresh()" [title]="'刷新'" >
-      <i nz-icon type="reload" theme="outline"></i>刷新
+    <button nz-button (click)="refresh()" title="refresh" i18n-title="@@my-locale-refresh" >
+      <i nz-icon type="reload" theme="outline"></i>
+      <span i18n="@@my-locale-refresh">refresh</span>
     </button>
   </nz-button-group>
 
 </ng-template>
 <ng-template #rangeTemplate let-range="range" let-total>
-  第{{range[0]}}到{{range[1]}}条 共有 {{total}} 条记录
+  <ng-container i18n="@@my-locale-pagination">{{range[0]}}{{range[1]}}page {{total}}</ng-container>
 </ng-template>
 

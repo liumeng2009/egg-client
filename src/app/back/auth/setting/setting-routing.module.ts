@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: SettingComponent,
     canActivate: [ TokenGuard],
-    data: {name: '个人设置'},
+    data: {name: '个人设置', name_en: 'Settings'},
   }
 ];
 

@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: TotalComponent,
     canActivate: [TokenGuard],
-    data: {name: '网站信息'},
+    data: {name: '网站信息', name_en: 'Dashboard'},
   }
 ];
 

@@ -1,14 +1,24 @@
 <nz-layout>
   <nz-content>
-    <nz-card>
+    <nz-card [ngStyle]="formHeight">
       <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            角色名
+            <ng-container i18n="@@my-locale-role-name">roleName</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="name">
-            <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入角色名！</nz-form-explain>
+            <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors" i18n="@@my-locale-role-name-required">
+              roleNameRequired
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label class="ant-col-6">
+            <ng-container i18n="@@my-locale-remark">remark</ng-container>
+          </nz-form-label>
+          <nz-form-control class="ant-col-16">
+            <input type="text" nz-input formControlName="remark">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -54,9 +64,11 @@
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存
+      <ng-container i18n="@@my-locale-save">save</ng-container>
     </button>
-    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+    <button nz-button type="button" (click)="returnToList($event)">
+      <ng-container i18n="@@my-locale-go-back">goBack</ng-container>
+    </button>
   </nz-footer>
 </nz-layout>
 

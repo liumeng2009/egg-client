@@ -51,7 +51,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     // 额，算是深拷贝吧。。。。
     // this.routesMenuUse = JSON.parse(JSON.stringify(this.router.config));
-    this.routesMenuUse = new RouteList().rl;
+
     this.initLang();
     this.initHeight();
     this.createBreadCrumb();
@@ -65,10 +65,13 @@ export class MainComponent implements OnInit {
     const pathname = location.pathname;
     if (pathname.indexOf('/zh/') > -1) {
       this.selectedLang = 'zh';
+      this.routesMenuUse = new RouteList().zh;
     } else if (pathname.indexOf('/en/') > -1) {
       this.selectedLang = 'en';
+      this.routesMenuUse = new RouteList().en;
     } else {
       this.selectedLang = 'zh';
+      this.routesMenuUse = new RouteList().zh;
     }
   }
   initHeight() {
@@ -84,9 +87,9 @@ export class MainComponent implements OnInit {
   // 希望有好的方案
   private createBreadCrumb() {
     this.breadcrumb.splice(0, this.breadcrumb.length);
-
+    const lang = this.rememberService.getLang();
     const firstBread: Bread = {
-      name: '首页',
+      name: lang === 'en' ? 'Home' : '首页',
       path: '/admin',
       disabled: false,
     };
@@ -102,7 +105,7 @@ export class MainComponent implements OnInit {
       this.breadcrumb.push(secondBread);
 
       this.route.firstChild.firstChild.data.subscribe((data => {
-        this.breadcrumb[1].name = data.name;
+        this.breadcrumb[1].name = lang === 'en' ? (data.name_en ? data.name_en : '') : data.name;
         this.title.setTitle(data.name);
       }));
 
@@ -124,7 +127,7 @@ export class MainComponent implements OnInit {
       this.breadcrumb.push(thirdBread);
 
       this.route.firstChild.firstChild.firstChild.firstChild.data.subscribe((data => {
-        this.breadcrumb[2].name = data.name;
+        this.breadcrumb[2].name = lang === 'en' ? (data.name_en ? data.name_en : '') : data.name;
         this.title.setTitle(data.name);
       }));
 
@@ -148,7 +151,7 @@ export class MainComponent implements OnInit {
       this.breadcrumb.push(fourBread);
 
       this.route.firstChild.firstChild.firstChild.firstChild.firstChild.data.subscribe((data => {
-        this.breadcrumb[3].name = data.name;
+        this.breadcrumb[3].name = lang === 'en' ? (data.name_en ? data.name_en : '') : data.name;
         this.title.setTitle(this.breadcrumb[2].name + '-' + data.name);
       }));
 

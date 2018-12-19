@@ -29,8 +29,10 @@
                     {{category.name}}
                   </nz-option>
                 </nz-select>
-                <nz-form-explain *ngIf="validateForm.get('categoryId').dirty && validateForm.get('categoryId').errors?.required">请选择分类！</nz-form-explain>
-                <span nz-tooltip *ngIf="!categoryList" style="cursor: pointer;" (click)="initCategoryList()" nzTitle="{{categoryListError}}点击重新加载" >
+                <nz-form-explain *ngIf="validateForm.get('categoryId').dirty && validateForm.get('categoryId').errors?.required" i18n="@@my-locale-category-required">
+                  categoryRequired
+                </nz-form-explain>
+                <span nz-tooltip *ngIf="!categoryList" style="cursor: pointer;" (click)="initCategoryList()" nzTitle="{{categoryListError}}categoryReloadData"  i18n-nzTitle="@@my-locale-category-reload-data" >
               <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingCategoryList"></i>
               <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingCategoryList"></i>
             </span>

@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: AuthComponent,
     canActivate: [AuthGuard],
-    data: {name: '用户权限管理'},
+    data: {name: '用户权限管理', name_en: 'Account'},
     children: [
       {
         path: 'user',

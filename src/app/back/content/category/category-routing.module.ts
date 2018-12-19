@@ -13,25 +13,25 @@ const routes: Routes = [
     path: '',
     component: CategoryComponent,
     canActivate: [ AuthGuard],
-    data: {name: '栏目管理'},
+    data: {name: '栏目管理', name_en: 'Category'},
     children: [
       {
         path: 'list',
         component: CategoryListComponent,
         canActivate: [ AuthGuard],
-        data: {name: '列表'},
+        data: {name: '列表', name_en: 'List'},
       },
       {
         path: 'add',
         component: CategoryAddComponent,
         canActivate: [ AuthGuard],
-        data: {name: '新增'},
+        data: {name: '新增', name_en: 'Add'},
       },
       {
         path: ':id',
         component: CategoryEditComponent,
         canActivate: [ AuthGuard],
-        data: {name: '编辑'},
+        data: {name: '编辑', name_en: 'Edit'},
       },
     ]
   }

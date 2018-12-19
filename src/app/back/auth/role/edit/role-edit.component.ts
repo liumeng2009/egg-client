@@ -26,6 +26,9 @@ export class RoleEditComponent implements OnInit {
   isSubmitLoading = false;
   auths: AuthList[];
   saveBtn = false;
+  formHeight = {
+    height : '0px'
+  }
   constructor(
     private fb: FormBuilder,
     private roleService: RoleService,
@@ -43,10 +46,14 @@ export class RoleEditComponent implements OnInit {
       name: [ '', [ Validators.required ] ],
       remark: [ '' ],
     });
+    this.initHeight();
     this.auth();
     this.route.params.subscribe((params: Params) => {
       this.getData(params.id);
     });
+  }
+  private initHeight() {
+    this.formHeight.height = (window.document.body.clientHeight - (53 + 64 + 69)) + 'px';
   }
   private auth() {
     const user = this.rememberService.getUser();

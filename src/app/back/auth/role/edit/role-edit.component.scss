@@ -1,6 +1,9 @@
 nz-card{
   border-bottom: none;
 }
+.ant-card{
+  overflow-y: scroll;
+}
 ::ng-deep .ant-card-head{
   background-color: #fafafa;
 }

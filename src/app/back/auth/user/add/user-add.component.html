@@ -4,17 +4,17 @@
       <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            用户名（手机号）
+            <ng-container i18n="@@my-locale-mobile">mobile</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="mobile">
-            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.required">请输入登录用户名！</nz-form-explain>
-            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.errorPhone">手机号格式不正确！</nz-form-explain>
+            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.required" i18n="@@my-locale-name-required">nameRequired</nz-form-explain>
+            <nz-form-explain *ngIf="validateForm.get('mobile').dirty && validateForm.get('mobile').errors?.errorPhone" i18n="@@my-locale-error-mobile">errorMobile</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            昵称
+            <ng-container i18n="@@my-locale-nickname">nickname</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="realname">
@@ -22,7 +22,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            是否可以后台登录
+            <ng-container i18n="@@my-locale-is-administrator">isAdministrator</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <nz-switch formControlName="isAdmin"></nz-switch>
@@ -30,16 +30,16 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            密码（默认：123456）
+            <ng-container i18n="@@my-locale-password-default">passwordDefault</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="password" nz-input formControlName="password">
-            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码！</nz-form-explain>
+            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors" i18n="@@my-locale-password-required">passwordRequired</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            年龄
+            <ng-container i18n="@@my-locale-age">age</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <nz-input-number  formControlName="age" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
@@ -47,22 +47,22 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            所属角色
+            <ng-container i18n="@@my-locale-role">role</ng-container>
           </nz-form-label>
           <nz-form-control class="{{roleList?'ant-col-16':'ant-col-16 haserror'}}">
             <nz-select formControlName="roleId">
               <nz-option [nzValue]="role.id" [nzLabel]="role.name" *ngFor="let role of roles"></nz-option>
             </nz-select>
-            <span *ngIf="!roleList" nz-tooltip style="color:red;cursor: pointer;" (click)="initRoleList()" nzTitle="{{roleListError}}点击重新加载" >
+            <span *ngIf="!roleList" nz-tooltip style="color:red;cursor: pointer;" (click)="initRoleList()" nzTitle="{{roleListError}}roleReloadData" i18n-nzTitle="@@my-locale-role-reload-data" >
           <i nz-icon type="question-circle" theme="outline" *ngIf="!isLoadingRoleList"></i>
           <i nz-icon type="loading" theme="outline" *ngIf="isLoadingRoleList"></i>
         </span>
-            <nz-form-explain *ngIf="validateForm.get('roleId').dirty && validateForm.get('roleId').errors">请选择一个角色！</nz-form-explain>
+            <nz-form-explain *ngIf="validateForm.get('roleId').dirty && validateForm.get('roleId').errors" i18n="@@my-locale-role-required">roleRequired</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            设置头像
+            <ng-container i18n="@@my-locale-head">head</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <div nz-row>
@@ -70,7 +70,7 @@
 
               </nz-avatar>
               <nz-tabset [nzSelectedIndex]="avaTabSelectedIndex">
-                <nz-tab [nzTitle]="'从本地上传'">
+                <nz-tab nzTitle="upload" i18n-nzTitle="@@my-locale-upload">
                   <div>
                     <nz-upload
                       [nzAction]="uploadPath"
@@ -80,7 +80,8 @@
                       [nzCustomRequest]="customReq"
                     >
                       <button nz-button>
-                        <i nz-icon type="upload" theme="outline"></i><span>点击上传</span>
+                        <i nz-icon type="upload" theme="outline"></i>
+                        <span i18n="@@my-locale-click-upload">clickUpload</span>
                       </button>
                     </nz-upload>
                   </div>
@@ -104,8 +105,10 @@
   <nz-footer class="fixed-footer">
     <button nz-button *ngIf="saveBtn" [nzType]="'primary'" [nzLoading]="isLoading" (click)="submitForm()">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存
+      <ng-container i18n="@@my-locale-save">save</ng-container>
     </button>
-    <button nz-button type="button" (click)="returnToList($event)">返回上一页</button>
+    <button nz-button type="button" (click)="returnToList($event)">
+      <ng-container i18n="@@my-locale-go-back">goBack</ng-container>
+    </button>
   </nz-footer>
 </nz-layout>

@@ -564,6 +564,177 @@
         </context-group>
         <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
       </trans-unit>
+      <trans-unit id="my-locale-role-name" datatype="html">
+        <source>roleName</source>
+        <target>Role name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-remark" datatype="html">
+        <source>remark</source>
+        <target>Remark</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-category-required" datatype="html">
+        <source>categoryRequired</source>
+        <target>Please choose the category.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-name-required" datatype="html">
+        <source>roleNameRequired</source>
+        <target>Please enter the role name.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-keyword" datatype="html">
+        <source>keyword</source>
+        <target>Keyword</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-reset" datatype="html">
+        <source>reset</source>
+        <target>Reset</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-nickname" datatype="html">
+        <source>nickname</source>
+        <target>Nickname</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-mobile" datatype="html">
+        <source>mobile</source>
+        <target>Mobile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-reload-data" datatype="html">
+        <source>{{roleListError}}roleReloadData</source>
+        <target>{{roleListError}}. Click to reload the data.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-error-mobile" datatype="html">
+        <source>errorMobile</source>
+        <target>Incorrect format of mobile phone number.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-is-administrator" datatype="html">
+        <source>isAdministrator</source>
+        <target>Is it an administrator</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-password" datatype="html">
+        <source>password</source>
+        <target>Password.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-password-default" datatype="html">
+        <source>passwordDefault</source>
+        <target>Password (By default : 123456)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-password-required" datatype="html">
+        <source>passwordRequired</source>
+        <target>Please enter a password.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-age" datatype="html">
+        <source>age</source>
+        <target>Age</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role-required" datatype="html">
+        <source>roleRequired</source>
+        <target>Please select a role.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-head" datatype="html">
+        <source>head</source>
+        <target>Head portrait</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-upload" datatype="html">
+        <source>upload</source>
+        <target>Upload</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-role" datatype="html">
+        <source>role</source>
+        <target>Role</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -3,11 +3,11 @@
     <nz-card [ngStyle]="formHeight">
       <form nz-form [formGroup]="validateForm" class="role-add-form">
         <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
-          <nz-tab [nzTitle]="'基本信息'">
+          <nz-tab nzTitle="basic" i18n-nzTitle="@@my-locale-basic">
 
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                所属频道
+                <ng-container i18n="@@my-locale-channel">channel</ng-container>
               </nz-form-label>
               <nz-form-control class="{{channelList?'ant-col-16':'ant-col-16 haserror'}}">
                 {{channel?.name}}
@@ -19,10 +19,10 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label [nzRequired]="true" class="ant-col-6">
-                所属分类
+                <ng-container i18n="@@my-locale-category">category</ng-container>
               </nz-form-label>
               <nz-form-control class="{{categoryList?'ant-col-16':'ant-col-16 haserror'}}">
-                <nz-select  formControlName="categoryId" [nzPlaceHolder]="'请选择分类'">
+                <nz-select  formControlName="categoryId"  nzPlaceHolder="selectCategory" i18n-nzPlaceHolder="@@my-locale-select-category">
                   <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id" [nzLabel]="category.name">
                     <span style="margin-right: 16px;" *ngFor="let space of category.level|numberArray"></span>
                     <i nz-icon type="folder-open" *ngIf="category.level < 1" theme="outline"></i>
@@ -30,8 +30,10 @@
                     {{category.name}}
                   </nz-option>
                 </nz-select>
-                <nz-form-explain *ngIf="validateForm.get('categoryId').dirty && validateForm.get('categoryId').errors?.required">请选择分类！</nz-form-explain>
-                <span nz-tooltip *ngIf="!categoryList" style="cursor: pointer;" (click)="initCategoryList()" nzTitle="{{categoryListError}}点击重新加载" >
+                <nz-form-explain *ngIf="validateForm.get('categoryId').dirty && validateForm.get('categoryId').errors?.required" i18n="@@my-locale-category-required">
+                  categoryRequired
+                </nz-form-explain>
+                <span nz-tooltip *ngIf="!categoryList" style="cursor: pointer;" (click)="initCategoryList()" nzTitle="{{categoryListError}}categoryReloadData"  i18n-nzTitle="@@my-locale-category-reload-data">
               <i nz-icon type="question-circle" theme="outline" style="color:red" *ngIf="!isLoadingCategoryList"></i>
               <i nz-icon type="loading" style="color:#1890ff" *ngIf="isLoadingCategoryList"></i>
             </span>
