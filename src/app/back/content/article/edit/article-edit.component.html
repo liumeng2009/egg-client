@@ -41,8 +41,8 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                是否发布
-                <i nz-icon nz-tooltip *ngIf="!canAuditing" nzTitle="需要管理员进行审核" type="question-circle" theme="outline"></i>
+                <ng-container i18n="@@my-locale-is-publish">isPublish</ng-container>
+                <i nz-icon nz-tooltip *ngIf="!canAuditing" i18n-nzTitle="@@my-locale-need-audit" nzTitle="needAudit" type="question-circle" theme="outline"></i>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <nz-switch formControlName="status" [nzDisabled]="!canAuditing"></nz-switch>
@@ -50,19 +50,29 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                设置类型
+                <ng-container i18n="@@my-locale-property">property</ng-container>
               </nz-form-label>
               <nz-form-control>
-                <label nz-checkbox formControlName="isComment">允许评论</label>
-                <label nz-checkbox formControlName="isTop">置顶</label>
-                <label nz-checkbox formControlName="isRed">推荐</label>
-                <label nz-checkbox formControlName="isHot">热门</label>
-                <label nz-checkbox formControlName="isSlide">幻灯片</label>
+                <label nz-checkbox formControlName="isComment">
+                  <ng-container i18n="@@my-locale-allow-comment">allowComment</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isTop">
+                  <ng-container i18n="@@my-locale-is-top">isTop</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isRed">
+                  <ng-container i18n="@@my-locale-is-red">isRed</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isHot">
+                  <ng-container i18n="@@my-locale-is-hot">isHot</ng-container>
+                </label>
+                <label nz-checkbox formControlName="isSlide">
+                  <ng-container i18n="@@my-locale-is-slide">isSlide</ng-container>
+                </label>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
               <nz-form-label [nzRequired]="true" class="ant-col-6">
-                内容标题
+                <ng-container i18n="@@my-locale-title">title</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <input type="text" nz-input formControlName="title">
@@ -71,7 +81,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                调用别名
+                <ng-container i18n="@@my-locale-alias">alias</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <input type="text" nz-input formControlName="code">
@@ -79,7 +89,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                封面图片
+                <ng-container i18n="@@my-locale-cover">cover</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <div>
@@ -94,7 +104,9 @@
                     [nzRemove]="handleRemove"
                   >
                     <i nz-icon type="plus" class="upload-icon" theme="outline"></i>
-                    <div class="ant-upload-text">点击上传</div>
+                    <div class="ant-upload-text">
+                      <ng-container i18n="@@my-locale-click-upload">clickUpload</ng-container>
+                    </div>
                   </nz-upload>
                   <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
                     <ng-template #modalContent>
@@ -106,7 +118,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                排序
+                <ng-container i18n="@@my-locale-sort">sort</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <nz-input-number  formControlName="sort" [nzStep]="1"></nz-input-number>
@@ -114,7 +126,7 @@
             </nz-form-item>
             <nz-form-item>
               <nz-form-label class="ant-col-6">
-                点击量
+                <ng-container i18n="@@my-locale-clicks">clicks</ng-container>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
                 <nz-input-number  formControlName="click" [nzStep]="1"></nz-input-number>
@@ -123,8 +135,8 @@
             <nz-form-item>
               <nz-form-label class="ant-col-6">
             <span>
-              发布时间
-              <i nz-icon nz-tooltip nzTitle="不填写则默认为当前时间" type="question-circle" theme="outline"></i>
+              <ng-container i18n="@@my-locale-pubdate">pubdate</ng-container>
+              <i nz-icon nz-tooltip nzTitle="defaultIfNull" i18n-nzTitle="@@my-locale-default-if-null" type="question-circle" theme="outline"></i>
             </span>
               </nz-form-label>
               <nz-form-control class="ant-col-16">
@@ -132,13 +144,13 @@
                   formControlName="publishAt"
                   nzShowTime
                   nzFormat="yyyy-MM-dd HH:mm:ss"
-                  nzPlaceHolder="选择时间"
+                  i18n-nzPlaceHolder = '@@my-locale-choose-date'
                 ></nz-date-picker>
               </nz-form-control>
             </nz-form-item>
 
           </nz-tab>
-          <nz-tab [nzTitle]="'图片相册'" *ngIf="channel?.id === 3">
+          <nz-tab i18n-nzTitle="@@my-locale-gallery" nzTitle="gallery" *ngIf="channel?.id === 3">
             <nz-upload
               [nzAction]="uploadPath"
               nzListType="picture-card"
@@ -150,7 +162,9 @@
               [nzRemove]="handleMultiRemove"
               [nzCustomRequest]="customReq">
               <i nz-icon type="plus"></i>
-              <div class="ant-upload-text">点击上传</div>
+              <div class="ant-upload-text">
+                <ng-container i18n="@@my-locale-click-upload">clickUpload</ng-container>
+              </div>
             </nz-upload>
             <nz-modal [nzVisible]="previewMultiVisible" [nzContent]="modalMultiContent" [nzFooter]="null" (nzOnCancel)="previewMultiVisible=false">
               <ng-template #modalMultiContent>
@@ -159,34 +173,34 @@
               </ng-template>
             </nz-modal>
           </nz-tab>
-          <nz-tab [nzTitle]="'扩展信息'">
+          <nz-tab nzTitle="extendedInformation" i18n-nzTitle="@@my-locale-extended-information">
             <nz-form-item>
-              <nz-form-label class="ant-col-4">
-                摘要
+              <nz-form-label class="ant-col-4" i18n="@@my-locale-summary">
+                summary
               </nz-form-label>
               <nz-form-control class="ant-col-18">
                 <textarea nz-input formControlName="zhaiyao" nzAutosize rows="3"></textarea>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-              <nz-form-label class="ant-col-4">
-                详细内容
+              <nz-form-label class="ant-col-4" i18n="@@my-locale-content">
+                content
               </nz-form-label>
               <nz-form-control class="ant-col-18">
                 <editor [init]="tinyMceInitOption" formControlName="content" language="zh_CN" ></editor>
               </nz-form-control>
             </nz-form-item>
           </nz-tab>
-          <nz-tab [nzTitle]="'全文检索'">
+          <nz-tab i18n-nzTitle="@@my-locale-elasticsearch" nzTitle="elasticsearch">
             <pre>
               {{elasticStr | json}}
             </pre>
             <nz-button-group>
-              <button nz-button [nzType]="'primary'" [nzLoading]="isLoadingElasticStr" (click)="updateElastic(article.id)">
-                更新
+              <button nz-button [nzType]="'primary'" [nzLoading]="isLoadingElasticStr" (click)="updateElastic(article.id)" i18n="@@my-locale-update">
+                update
               </button>
-              <button nz-button [nzType]="'danger'" [nzLoading]="isDeleteElasticLoading" (click)="deleteElastic(article.id)">
-                删除
+              <button nz-button [nzType]="'danger'" [nzLoading]="isDeleteElasticLoading" (click)="deleteElastic(article.id)" i18n="@@my-locale-delete">
+                delete
               </button>
             </nz-button-group>
           </nz-tab>
