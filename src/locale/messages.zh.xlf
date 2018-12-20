@@ -734,6 +734,69 @@
         </context-group>
         <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
       </trans-unit>
+      <trans-unit id="my-locale-change-password" datatype="html">
+        <source>changePassword</source>
+        <target>修改密码</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-old-password" datatype="html">
+        <source>oldPassword</source>
+        <target>原密码</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-new-password" datatype="html">
+        <source>newPassword</source>
+        <target>新密码</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-confirm-password" datatype="html">
+        <source>confirmPassword</source>
+        <target>确认密码</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-old-password-required" datatype="html">
+        <source>oldPasswordRequired</source>
+        <target>请输入原始密码。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-new-password-required" datatype="html">
+        <source>newPasswordRequired</source>
+        <target>请输入新密码。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-inconsistent-password" datatype="html">
+        <source>inconsistentPassword</source>
+        <target>两次输入的新密码不一致。</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -4,7 +4,7 @@
       <form nz-form [formGroup]="validateForm" class="role-add-form" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            用户名（手机号）
+            <ng-container i18n="@@my-locale-mobile">mobile</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="mobile">
@@ -14,7 +14,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            昵称
+            <ng-container i18n="@@my-locale-nickname">nickname</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <input type="text" nz-input formControlName="realname">
@@ -22,17 +22,15 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzRequired]="true" class="ant-col-6">
-            密码
+            <ng-container i18n="@@my-locale-password">password</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
-            <a (click)="showChangePasswordModal()">修改密码</a>
-<!--            <input type="password" nz-input formControlName="password">
-            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码！</nz-form-explain>-->
+            <a (click)="showChangePasswordModal()" i18n="@@my-locale-change-password">changePassword</a>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            年龄
+            <ng-container i18n="@@my-locale-age">age</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <nz-input-number  formControlName="age" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
@@ -40,14 +38,14 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label class="ant-col-6">
-            设置头像
+            <ng-container i18n="@@my-locale-head">head</ng-container>
           </nz-form-label>
           <nz-form-control class="ant-col-16">
             <div nz-row>
               <nz-avatar [nzSrc]="user.avatar ? (serverPath + user.avatar) : ''" style="width: 64px;height:64px;font-size: 48px;line-height: 48px;" [nzIcon]="'user'">
               </nz-avatar>
               <nz-tabset [nzSelectedIndex]="avaTabSelectedIndex">
-                <nz-tab [nzTitle]="'从本地上传'">
+                <nz-tab i18n-nzTitle="@@my-locale-upload" nzTitle="upload">
                   <div>
                     <nz-upload
                       [nzAction]="uploadPath"
@@ -57,7 +55,8 @@
                       (nzChange)="handleChange($event)"
                     >
                       <button nz-button type="button">
-                        <i nz-icon type="upload" theme="outline"></i><span>点击上传</span>
+                        <i nz-icon type="upload" theme="outline"></i>
+                        <span i18n="@@my-locale-click-upload">clickUpload</span>
                       </button>
                     </nz-upload>
                   </div>
@@ -80,7 +79,7 @@
   <nz-footer class="fixed-footer">
     <button nz-button [nzType]="'primary'" [nzLoading]="isSubmitLoading" (click)="submitForm()" [disabled]="!validateForm.valid">
       <i nz-icon type="save" theme="outline"></i>
-      提交保存
+      <ng-container i18n="@@my-locale-save">save</ng-container>
     </button>
     <button nz-button (click)="refresh()" [nzLoading]="isLoading">
       <i nz-icon type="reload" theme="outline"></i>

@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
     private message: NzMessageService,
     private progressService: NgProgress,
   ) {
-    this.title.setTitle('后台管理首页');
+    // this.title.setTitle('后台管理首页');
   }
 
   collapsed = false;
@@ -106,7 +106,7 @@ export class MainComponent implements OnInit {
 
       this.route.firstChild.firstChild.data.subscribe((data => {
         this.breadcrumb[1].name = lang === 'en' ? (data.name_en ? data.name_en : '') : data.name;
-        this.title.setTitle(data.name);
+        this.title.setTitle(lang === 'en' ? (data.name_en ? data.name_en : '') : data.name);
       }));
 
       this.route.firstChild.url.subscribe((url => {
@@ -128,7 +128,7 @@ export class MainComponent implements OnInit {
 
       this.route.firstChild.firstChild.firstChild.firstChild.data.subscribe((data => {
         this.breadcrumb[2].name = lang === 'en' ? (data.name_en ? data.name_en : '') : data.name;
-        this.title.setTitle(data.name);
+        this.title.setTitle(lang === 'en' ? (data.name_en ? data.name_en : '') : data.name);
       }));
 
       this.route.firstChild.firstChild.firstChild.url.subscribe((url => {
@@ -152,7 +152,7 @@ export class MainComponent implements OnInit {
 
       this.route.firstChild.firstChild.firstChild.firstChild.firstChild.data.subscribe((data => {
         this.breadcrumb[3].name = lang === 'en' ? (data.name_en ? data.name_en : '') : data.name;
-        this.title.setTitle(this.breadcrumb[2].name + '-' + data.name);
+        this.title.setTitle(this.breadcrumb[2].name + '-' + (lang === 'en' ? (data.name_en ? data.name_en : '') : data.name));
       }));
 
       this.route.firstChild.firstChild.firstChild.firstChild.firstChild.url.subscribe((url => {

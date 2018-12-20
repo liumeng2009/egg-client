@@ -11,6 +11,7 @@ import {Avatar} from '../../../bean/avatar';
 import {EduConfig} from '../../../config/config';
 import {HttpEvent, HttpResponse} from '@angular/common/http';
 import {PasswordComponent} from './password.component';
+import {RememberService} from '../../../util/remember.service';
 
 @Component({
   selector: 'app-setting-page',
@@ -39,6 +40,7 @@ export class SettingComponent implements OnInit {
     private toolService: ToolService,
     private messageService: NzMessageService,
     private modalService: NzModalService,
+    private rememberService: RememberService,
   ) {}
 
   ngOnInit() {
@@ -182,11 +184,21 @@ export class SettingComponent implements OnInit {
     }
   }
   showChangePasswordModal() {
+    const lang = this.rememberService.getLang();
+    let title;
+    let label;
+    if (lang === 'en') {
+      title = 'Change password';
+      label = 'Save';
+    } else {
+      title = '修改密码';
+      label = '保存';
+    }
     const modal = this.modalService.create({
-      nzTitle: '修改密码',
+      nzTitle: title,
       nzContent: PasswordComponent,
       nzFooter: [{
-        label: '修改',
+        label: label,
         type: 'primary',
         show: true,
         loading:  (contentComponentInstance) => {

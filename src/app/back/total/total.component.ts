@@ -8,9 +8,9 @@ import {Title} from '@angular/platform-browser';
 
 export class TotalComponent implements OnInit {
   constructor(
-    private title: Title,
+
   ) {}
   ngOnInit() {
-    this.title.setTitle('网站信息');
+    // this.title.setTitle('网站信息');
   }
 }
