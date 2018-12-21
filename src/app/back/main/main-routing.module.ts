@@ -27,6 +27,10 @@ const routes: Routes = [
         path: 'setting',
         loadChildren: '../auth/setting/setting.module#SettingModule'
       },
+      {
+        path: 'system',
+        loadChildren: '../systemSetting/systemSetting.module#SystemSettingModule',
+      },
     ]
   },
 ];

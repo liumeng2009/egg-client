@@ -27,6 +27,7 @@ export class RouteList {
           ]}
       ]
     },
+    {path: 'system', data: {name: '系统设置', icon: 'setting'}},
   ];
   en = [
     {path: 'total', data: {name: 'Dashboard', icon: 'appstore'}},
@@ -56,5 +57,6 @@ export class RouteList {
           ]}
       ]
     },
+    {path: 'system', data: {name: 'System', icon: 'setting'}},
   ];
 }
