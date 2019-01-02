@@ -5,17 +5,8 @@
         <nz-tab  nzTitle="basicInfoOfWebsite" i18n-nzTitle="@@my-locale-basic-info-of-website">
           Content of Tab Pane
         </nz-tab>
-        <nz-tab  nzTitle="elasticsearch" i18n-nzTitle="@@my-locale-elasticsearch">
-          <form nz-form class="role-add-form">
-            <nz-form-item>
-              <nz-form-label [nzRequired]="true" class="ant-col-8">
-                <ng-container i18n="@@my-locale-old-password">oldPassword</ng-container>
-              </nz-form-label>
-              <nz-form-control class="ant-col-16">
-                <input type="text" nz-input formControlName="old_password">
-              </nz-form-control>
-            </nz-form-item>
-          </form>
+        <nz-tab  nzTitle="elasticsearch" i18n-nzTitle="@@my-locale-elasticsearch" *ngIf="showElasticTab">
+          <button nz-button class="login-form-button" [nzType]="'primary'" *ngIf="showElasticTab" (click)="createAllElastic()" i18n="@@my-locale-rebuild-all-elastic">rebuildAllElastic</button>
         </nz-tab>
       </nz-tabset>
     </nz-card>

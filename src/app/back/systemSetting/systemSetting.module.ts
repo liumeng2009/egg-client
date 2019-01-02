@@ -3,6 +3,8 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {CommonModule} from '@angular/common';
 import {SystemSettingRoutingModule} from './systemSetting-routing.module';
 import {SystemSettingComponent} from './systemSetting.component';
+import {LoginService} from '../login/login.service';
+import {SystemSettingService} from './systemSetting.service';
 
 /* The @NgModule decorator lets Angular know that this is an NgModule. */
 @NgModule({
@@ -14,6 +16,9 @@ import {SystemSettingComponent} from './systemSetting.component';
     NgZorroAntdModule,
     SystemSettingRoutingModule,
   ],
-  bootstrap: [SystemSettingComponent]
+  bootstrap: [SystemSettingComponent],
+  providers: [
+    SystemSettingService,
+  ],
 })
 export class SystemSettingModule { }

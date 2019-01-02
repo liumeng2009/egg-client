@@ -52,6 +52,7 @@ export class FrontMainComponent implements OnInit {
   ngOnInit() {
     this.addRouteListener();
     this.packages$.subscribe( (value) => {
+      console.log('可以搜索了');
       this.searchFromAlgolia(value);
     });
     this.initLang();
@@ -62,6 +63,11 @@ export class FrontMainComponent implements OnInit {
       this.minHeight.minHeight = window.document.body.clientHeight - 119 - 64 + 'px';
     } else {
       this.minHeight.minHeight = window.document.body.clientHeight - 119 - 40 + 'px';
+    }
+  }
+  focus() {
+    if (this.searchKey !== '') {
+      this.searchFromAlgolia(this.searchKey);
     }
   }
   addRouteListener() {

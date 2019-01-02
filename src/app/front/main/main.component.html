@@ -20,7 +20,7 @@
         <div id="search-box">
           <i nz-icon type="search"></i>
           <span class="algolia-search algolia-autocomplete algolia-autocomplete-left">
-          <input nz-input #search placeholder="搜索" i18n-placeholder="@@my-locale-search" [(ngModel)]="searchKey" (input)="onInput($event.target?.value)">
+          <input nz-input #search placeholder="搜索" i18n-placeholder="@@my-locale-search" [(ngModel)]="searchKey" (focus)="focus()" (input)="onInput($event.target?.value)">
           <span #popupOp class="ds-dropdown-menu" *ngIf="showSearchBox" style="position: absolute;top: 100%;z-index: 100;left: 0px;right: auto;">
             <div class="ds-dataset-1">
               <div class="algolia-docsearch-suggestion" *ngIf="isSearchLoading">
@@ -41,12 +41,11 @@
                     <div *ngFor="let cate of option.categories" class="algolia-docsearch-suggestion--wrapper">
                       <div class="algolia-docsearch-suggestion--subcategory-column">
                         <span class="algolia-docsearch-suggestion--subcategory-column-text">
-                          <span class="algolia-docsearch-suggestion--highlight">I</span>
                           {{cate.category}}
                         </span>
                       </div>
                       <div *ngFor="let article of cate.articles" class="algolia-docsearch-suggestion--content">
-                        <a routerLink="/article/{{article.id}}">
+                        <a routerLink="/article/{{article?.articleId}}">
                           <div class="algolia-docsearch-suggestion--subcategory-inline">
                             <span [innerHtml]="article.title"></span>
                           </div>
