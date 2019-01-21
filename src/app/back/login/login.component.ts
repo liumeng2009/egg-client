@@ -30,7 +30,10 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private rememberService: RememberService,
   ) {
-    this.title.setTitle('登录');
+    // this.title.setTitle('登录');
+    const lang = this.rememberService.getLang();
+    const titleStr = lang === 'en' ? 'Login' : '登录';
+    this.title.setTitle(titleStr);
   }
 
   ngOnInit(): void {

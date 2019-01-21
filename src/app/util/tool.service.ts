@@ -48,6 +48,11 @@ export class ToolService {
           this.message.error(this.getOwnLang('ParameterException'));
         }
         reject(this.getOwnLang('ParameterException'));
+      } else if (data.code === 53314) {
+        // 没有权限的情况
+        this.route.url.subscribe((url) => {
+          console.log(url);
+        });
       } else {
         if (!infoHidden) {
           this.message.error(data.error);

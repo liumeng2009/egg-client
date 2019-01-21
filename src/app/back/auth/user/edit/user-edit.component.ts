@@ -213,11 +213,13 @@ export class UserEditComponent implements OnInit {
       const password = this.validateForm.get('password').value;
       const age = this.validateForm.get('age').value;
       const roleId = this.validateForm.get('roleId').value;
+      const isAdmin = this.validateForm.get('isAdmin').value;
       this.user.mobile = mobile;
       this.user.realname = realname;
       this.user.password = password;
       this.user.age = age;
       this.user.roleId = roleId;
+      this.user.isAdmin = isAdmin;
       this.userService.update(this.user).subscribe(
         (data: ResponseData) => {
           this.isSubmitLoading = false;

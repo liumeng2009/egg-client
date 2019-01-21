@@ -844,7 +844,43 @@
       </trans-unit>
       <trans-unit id="my-locale-rebuild-all-elastic" datatype="html">
         <source>rebuildAllElastic</source>
-        <target>全部重新生成全文检索</target>
+        <target>重新生成全部的全文检索</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-permission" datatype="html">
+        <source>permission</source>
+        <target>拥有权限</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-function-name" datatype="html">
+        <source>functionName</source>
+        <target>功能名称</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-operations" datatype="html">
+        <source>operations</source>
+        <target>功能可操作</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/front/default.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">9349ef63a2bccf507f265c1b182204a56588023a</note>
+      </trans-unit>
+      <trans-unit id="my-locale-all" datatype="html">
+        <source>all</source>
+        <target>全选</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/front/default.component.html</context>
           <context context-type="linenumber">6</context>
