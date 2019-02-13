@@ -40,7 +40,7 @@ export class ArticleAddComponent implements OnInit {
   isLoadingchannel = false;
   formHeight = {
     height : '0px'
-  }
+  };
   article: Article = new Article(null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null, null,
     null, null, null, null, null, [], null,
