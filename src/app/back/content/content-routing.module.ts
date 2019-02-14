@@ -20,6 +20,10 @@ const routes: Routes = [
         path: 'article',
         loadChildren: './article/article.module#ArticleModule',
       },
+      {
+        path: 'file',
+        loadChildren: './file/file.module#FileModule',
+      },
     ]
   }
 ];

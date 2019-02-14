@@ -12,6 +12,9 @@ export class RouteList {
             {path: 'add', data: {name: '新增'}},
             {path: ':id', data: {name: '编辑'}},
           ]},
+        { path: 'category', data: {name: '文件管理'}, children: [
+          {path: 'list', data: {name: '列表'}},
+        ]},
       ]
     },
     {path: 'auth', data: {name: '用户权限管理', icon: 'user'}, children: [
@@ -42,6 +45,9 @@ export class RouteList {
             {path: 'add', data: {name: 'Add'}},
             {path: ':id', data: {name: 'Edit'}},
           ]},
+        { path: 'file', data: {name: 'File'}, children: [
+          {path: 'list', data: {name: 'list'}},
+        ]},
       ]
     },
     {path: 'auth', data: {name: 'Account', icon: 'user'}, children: [

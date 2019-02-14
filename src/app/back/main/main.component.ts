@@ -40,7 +40,7 @@ export class MainComponent implements OnInit {
     minHeight : '0px',
     backgroundColor : '#fff',
     marginTop: '0px'
-  }
+  };
   breadcrumb: Bread[] = [];
   user: User;
   baseImageUrl: string = EduConfig.serverPath;
@@ -223,6 +223,11 @@ export class MainComponent implements OnInit {
         this.createBreadCrumb();
       });
     }
+    if (url === '/admin/content/file') {
+      this.router.navigateByUrl('/admin/content/file/list').then(() => {
+        this.createBreadCrumb();
+      });
+    }
     this.router.events
       .subscribe((event) => {
         if (event instanceof  NavigationStart) {
@@ -234,28 +239,29 @@ export class MainComponent implements OnInit {
             this.router.navigateByUrl('/admin/total').then(() => {
               this.createBreadCrumb();
             });
-          }
-          if (event.url === '/admin/auth/user') {
+          } else if (event.url === '/admin/auth/user') {
             this.router.navigateByUrl('/admin/auth/user/list').then(() => {
               this.createBreadCrumb();
             });
-          }
-          if (event.url === '/admin/auth/role') {
+          } else if (event.url === '/admin/auth/role') {
             this.router.navigateByUrl('/admin/auth/role/list').then(() => {
               this.createBreadCrumb();
             });
-          }
-          if (event.url === '/admin/content/category') {
+          } else if (event.url === '/admin/content/category') {
             this.router.navigateByUrl('/admin/content/category/list').then(() => {
               this.createBreadCrumb();
             });
-          }
-          if (event.url === '/admin/content/article') {
+          } else if (event.url === '/admin/content/article') {
             this.router.navigateByUrl('/admin/content/article/list').then(() => {
               this.createBreadCrumb();
             });
+          } else if (event.url === '/admin/content/file') {
+            this.router.navigateByUrl('/admin/content/file/list').then(() => {
+              this.createBreadCrumb();
+            });
+          } else {
+            this.createBreadCrumb();
           }
-          this.createBreadCrumb();
         }
       });
   }
